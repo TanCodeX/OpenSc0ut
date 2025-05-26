@@ -118,30 +118,8 @@ export default function SearchFilter({
   return (
     <div className="bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md p-6 rounded-lg border border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] mb-8">
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* First Row: Location and Languages */}
+        {/* First Row: Languages and Labels */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Location Input */}
-          <div className="flex-1">
-            <label
-              htmlFor="location"
-              className="block text-sm font-medium text-gray-300 mb-2"
-            >
-              Location (optional)
-            </label>
-            <input
-              id="location"
-              type="text"
-              value={location}
-              onChange={handleLocationChange}
-              placeholder="Leave empty to search globally"
-              className="w-full px-4 py-2 bg-[hsla(0,1.30%,15.50%,0.44)] border border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF0B55] focus:border-[#FF0B55] text-white"
-              aria-required="false"
-            />
-            {!location.trim() && (
-              <p className="mt-1 text-sm text-gray-400">Searching globally</p>
-            )}
-          </div>
-
           {/* Languages Filter */}
           <div className="flex-1 relative">
             <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -178,10 +156,7 @@ export default function SearchFilter({
               </div>
             )}
           </div>
-        </div>
 
-        {/* Second Row: Labels and Sort Options */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Labels Filter */}
           <div className="flex-1 relative">
             <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -218,7 +193,10 @@ export default function SearchFilter({
               </div>
             )}
           </div>
+        </div>
 
+        {/* Second Row: Sort Options and Location */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Sort Options */}
           <div className="flex-1">
             <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -268,13 +246,32 @@ export default function SearchFilter({
               </button>
             </div>
           </div>
+
+          {/* Location Input */}
+          <div className="flex-1">
+            <label
+              htmlFor="location"
+              className="block text-sm font-medium text-gray-300 mb-2"
+            >
+              Location (optional)
+            </label>
+            <input
+              id="location"
+              type="text"
+              value={location}
+              onChange={handleLocationChange}
+              placeholder="Leave empty to search globally"
+              className="w-full px-4 py-2 bg-[hsla(0,1.30%,15.50%,0.44)] border border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF0B55] focus:border-[#FF0B55] text-white"
+              aria-required="false"
+            />
+          </div>
         </div>
 
-        {/* Search Button */}
-        <div className="flex justify-end">
+        {/* Search Button - Centered */}
+        <div className="flex justify-center pt-4">
           <button
             type="submit"
-            className="px-5 py-2 bg-[#FF0B55] text-white rounded-md hover:bg-[#e00a4c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-[#FF0B55] flex items-center"
+            className="px-8 py-2.5 bg-[#FF0B55] text-white rounded-md hover:bg-[#e00a4c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-[#FF0B55] flex items-center transition-colors duration-200"
           >
             Search
           </button>
