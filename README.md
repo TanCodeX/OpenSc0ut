@@ -1,21 +1,34 @@
-# GitHub India Repos
+# OpenSc0ut
 
-A web application to discover GitHub repositories in India where developers can contribute.
+A modern web application to discover and explore GitHub repositories from around the world.
 
 ## Features
 
-- **Search/filter by location** (India)
-- **Filter by tech stack** (e.g., JavaScript, Python, etc.)
-- **Filter by "Good First Issue" / "Help Wanted" labels**
-- **Sort by stars, forks, or recent activity**
-- **Show project details** – stars, description, last updated
-- **Contributor guidelines / link to issues**
+- **Global Repository Search** with optional location filtering
+- **Advanced Filtering Options**:
+  - Multiple programming languages (JavaScript, Python, Java, TypeScript, etc.)
+  - Extensive label filtering (Good First Issue, Help Wanted, Hacktoberfest, etc.)
+  - Sort by stars, forks, recent updates, or creation date
+  - Ascending/descending order options
+- **Modern UI/UX**:
+  - Responsive design with dark mode
+  - Real-time search updates
+  - Loading states and error handling
+  - Pagination support
+  - Beautiful glass-morphism design
+- **Project Details Display**:
+  - Repository stars, forks, and description
+  - Last updated information
+  - Language statistics
+  - Issue labels and counts
 
 ## Tech Stack
 
-- **Frontend**: Next.js, React, TypeScript, Tailwind CSS
+- **Frontend**: Next.js 13.5, React 18, TypeScript
+- **Styling**: Tailwind CSS with custom glass-morphism effects
 - **API**: GitHub REST API
 - **State Management**: React Hooks
+- **HTTP Client**: Axios
 
 ## Getting Started
 
@@ -29,8 +42,8 @@ A web application to discover GitHub repositories in India where developers can 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/github-india-repos.git
-cd github-india-repos
+git clone https://github.com/yourusername/opensc0ut.git
+cd opensc0ut
 ```
 
 2. Install dependencies:
@@ -68,12 +81,15 @@ To avoid rate limiting, it's recommended to use a GitHub Personal Access Token.
 
 ## How It Works
 
-The application uses the GitHub API to search for repositories associated with India. You can filter repositories by:
+The application provides a powerful interface to search GitHub repositories with multiple filtering options:
 
-- Location (India)
-- Programming language
-- Issue labels (Good First Issue, Help Wanted, etc.)
-- Sort by stars, forks, or recent activity
+- Location-based filtering (optional)
+- Multiple programming language selection
+- Comprehensive label filtering
+- Advanced sorting options
+- Real-time search updates with pagination
+
+The search results are presented in a modern, card-based layout with essential repository information and direct links to issues and the repository.
 
 ## Contributing
 
