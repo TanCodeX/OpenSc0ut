@@ -136,7 +136,7 @@ export default function SearchFilter({
               <span>▼</span>
             </button>
             {isLanguageDropdownOpen && (
-              <div className="absolute z-10 mt-1 w-full bg-[hsla(0,1.30%,15.50%,0.95)] border border-[hsla(0,1.10%,36.10%,0.44)] rounded-md shadow-lg max-h-60 overflow-auto">
+              <div className="absolute z-10 mt-1 w-full bg-[hsla(0, 1.30%, 15.50%, 0.98)] backdrop-blur-3xl backdrop-filter backdrop-brightness-50 border border-[hsla(0,1.10%,36.10%,0.44)] rounded-md shadow-lg max-h-60 overflow-auto">
                 <div className="p-2 flex flex-wrap gap-2">
                   {LANGUAGES.map((lang) => (
                     <button
@@ -173,7 +173,7 @@ export default function SearchFilter({
               <span>▼</span>
             </button>
             {isLabelDropdownOpen && (
-              <div className="absolute z-10 mt-1 w-full bg-[hsla(0,1.30%,15.50%,0.95)] border border-[hsla(0,1.10%,36.10%,0.44)] rounded-md shadow-lg max-h-60 overflow-auto">
+              <div className="absolute z-10 mt-1 w-full bg-[hsla(0, 1.30%, 15.50%, 0.98)] backdrop-blur-3xl backdrop-filter backdrop-brightness-50 border border-[hsla(0,1.10%,36.10%,0.44)] rounded-md shadow-lg max-h-60 overflow-auto">
                 <div className="p-2 flex flex-wrap gap-2">
                   {LABELS.map((label) => (
                     <button
@@ -214,7 +214,7 @@ export default function SearchFilter({
                   <span>▼</span>
                 </button>
                 {isSortDropdownOpen && (
-                  <div className="absolute z-10 mt-1 w-full bg-[hsla(0,1.30%,15.50%,0.95)] border border-[hsla(0,1.10%,36.10%,0.44)] rounded-md shadow-lg">
+                  <div className="absolute z-10 mt-1 w-full bg-[hsla(0, 1.30%, 15.50%, 0.98)] backdrop-blur-3xl backdrop-filter backdrop-brightness-50 border border-[hsla(0,1.10%,36.10%,0.44)] rounded-md shadow-lg">
                     <div className="p-2 flex flex-col gap-1">
                       {SORT_OPTIONS.map((option) => (
                         <button
