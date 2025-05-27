@@ -137,6 +137,7 @@ export default function SearchFilter({
               type="button"
               onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
               className="w-full px-4 py-2 bg-[hsla(0,1.30%,15.50%,0.44)] border border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] rounded-md text-left text-white flex justify-between items-center"
+              suppressHydrationWarning
             >
               {selectedLanguages.length
                 ? selectedLanguages.join(", ")
@@ -174,6 +175,7 @@ export default function SearchFilter({
               type="button"
               onClick={() => setIsLabelDropdownOpen(!isLabelDropdownOpen)}
               className="w-full px-4 py-2 bg-[hsla(0,1.30%,15.50%,0.44)] border border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] rounded-md text-left text-white flex justify-between items-center"
+              suppressHydrationWarning
             >
               {selectedLabels.length
                 ? selectedLabels.join(", ")
@@ -237,6 +239,7 @@ export default function SearchFilter({
                               ? "bg-[#FF0B55] text-white"
                               : "bg-[hsla(0,1.30%,20.50%,0.44)] text-gray-300 hover:bg-[hsla(0,1.30%,25.50%,0.44)]"
                           }`}
+                          suppressHydrationWarning
                         >
                           {option.label}
                         </button>
@@ -249,6 +252,7 @@ export default function SearchFilter({
                 type="button"
                 onClick={() => setOrder(order === "desc" ? "asc" : "desc")}
                 className="px-4 h-[42px] border border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] bg-[hsla(0,1.30%,15.50%,0.44)] rounded-md hover:bg-[hsla(0,1.30%,25.50%,0.44)] text-white"
+                suppressHydrationWarning
               >
                 {order === "desc" ? "↓" : "↑"}
               </button>
@@ -271,6 +275,7 @@ export default function SearchFilter({
               placeholder="Leave empty to search globally"
               className="w-full px-4 py-2 bg-[hsla(0,1.30%,15.50%,0.44)] border border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF0B55] focus:border-[#FF0B55] text-white"
               aria-required="false"
+              suppressHydrationWarning
             />
           </div>
         </div>
@@ -280,6 +285,7 @@ export default function SearchFilter({
           <button
             type="submit"
             className="px-8 py-2.5 bg-[#FF0B55] text-black font-semibold rounded-full border-2 border-transparent hover:bg-black hover:text-white hover:border-[#FF0B55] hover:shadow-[0_0_15px_rgba(255,11,85,0.5)] focus:outline-none transition-all duration-100 ease-out"
+            suppressHydrationWarning
           >
             Search
           </button>
