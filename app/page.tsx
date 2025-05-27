@@ -53,7 +53,7 @@ export default function Home() {
   };
 
   // Calculate total pages
-  const totalPages = Math.ceil(totalCount / 10); // 10 items per page
+  const totalPages = Math.ceil(totalCount / 12); // 12 items per page
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -108,7 +108,7 @@ export default function Home() {
                 repositories
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {repositories.map((repo) => (
                   <RepositoryCard key={repo.id} repository={repo} />
                 ))}

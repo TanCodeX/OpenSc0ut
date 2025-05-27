@@ -24,31 +24,40 @@ export async function searchRepositories(
 
     // Location filter
     if (params.location) {
-      query += `location:${params.location} `;
+      query += `location:${params.location.replace(/\s+/g, "")} `;
     }
 
-    // Language filter
+    // Language filter - handle multiple languages
     if (params.language) {
-      query += `language:${params.language} `;
+      const languages = params.language.split(",");
+      query +=
+        languages.map((lang) => `language:${lang.trim()}`).join(" OR ") + " ";
     }
 
-    // Label filter (good first issue, help wanted)
+    // Label filter - handle multiple labels with proper GitHub search syntax
     if (params.label) {
-      query += `${params.label} `;
+      const labels = params.label.split(",");
+      query += labels.map((label) => `label:"${label.trim()}"`).join(" ") + " ";
     }
 
     // Ensure we have some content in the query
-    // If no filters are provided, search for repositories with more than 0 stars
     if (!query.trim()) {
       query = "stars:>0";
     }
+
+    // Add a minimum stars filter to get more relevant results
+    if (!query.includes("stars:")) {
+      query += " stars:>0";
+    }
+
+    console.log("Search Query:", query); // For debugging
 
     const response = await axiosInstance.get("/search/repositories", {
       params: {
         q: query.trim(),
         sort: params.sort || "stars",
         order: params.order || "desc",
-        per_page: 10,
+        per_page: 12,
         page: params.page || 1,
       },
     });

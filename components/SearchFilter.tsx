@@ -47,6 +47,14 @@ const LABELS = [
   { value: "ux", label: "UX" },
   { value: "testing", label: "Testing" },
   { value: "maintenance", label: "Maintenance" },
+  { value: "bounty", label: "Bounty" },
+  { value: "paid", label: "Paid" },
+  { value: "funded", label: "Funded" },
+  { value: "bounty-available", label: "Bounty Available" },
+  { value: "reward", label: "Reward" },
+  { value: "money", label: "Money" },
+  { value: "sponsored", label: "Sponsored" },
+  { value: "tip", label: "Tip" },
 ];
 
 const SORT_OPTIONS = [
@@ -271,7 +279,7 @@ export default function SearchFilter({
         <div className="flex justify-center pt-4">
           <button
             type="submit"
-            className="px-8 py-2.5 bg-[#FF0B55] text-black font-semibold rounded-full border-2 border-transparent hover:bg-black hover:text-white hover:border-[#FF0B55] hover:shadow-[0_0_15px_rgba(255,11,85,0.5)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-[#FF0B55] flex items-center transition-all duration-100 ease-out"
+            className="px-8 py-2.5 bg-[#FF0B55] text-black font-semibold rounded-full border-2 border-transparent hover:bg-black hover:text-white hover:border-[#FF0B55] hover:shadow-[0_0_15px_rgba(255,11,85,0.5)] focus:outline-none transition-all duration-100 ease-out"
           >
             Search
           </button>
