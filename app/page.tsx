@@ -62,17 +62,17 @@ export default function Home() {
       <main className="pt-28">
         {/* Hero Section */}
         <div className="relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
-            <div className="bg-black bg-opacity-95 backdrop-blur-sm py-8 px-4 rounded-lg">
-              <h1 className="text-4xl md:text-6xl text-center mb-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+            <div className="bg-black bg-opacity-95 backdrop-blur-sm py-16 px-8 rounded-lg">
+              <h1 className="text-5xl md:text-7xl text-center mb-8">
                 Introducing <span className="font-extrabold">OpenSc0ut</span>
               </h1>
 
               {/* Subheading */}
-              <p className="text-xl text-center text-gray-300 mb-4">
+              <p className="text-2xl text-center text-gray-300 mb-6">
                 Find. Contribute. Repeat.
               </p>
-              <p className="text-base text-center text-gray-400 mb-12">
+              <p className="text-lg text-center text-gray-400 mb-16 max-w-3xl mx-auto">
                 Find your next project, make your first commit, and grow as a
                 developer — all in one place.
               </p>

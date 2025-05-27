@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${inter.className} bg-black text-white`}>
         <PageTransition>{children}</PageTransition>
       </body>
