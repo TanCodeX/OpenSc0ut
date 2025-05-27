@@ -7,7 +7,6 @@ import Header from "../components/Header";
 import SearchFilter from "../components/SearchFilter";
 import RepositoryCard from "../components/RepositoryCard";
 import Pagination from "../components/Pagination";
-import Link from "next/link";
 
 export default function Home() {
   const [repositories, setRepositories] = useState<Repository[]>([]);
@@ -15,9 +14,6 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [searchParams, setSearchParams] = useState<SearchParams>({
-    location: "",
-    language: "",
-    label: "",
     sort: "stars",
     order: "desc",
     page: 1,
@@ -31,9 +27,13 @@ export default function Home() {
       const { items, total_count } = await searchRepositories(params);
       setRepositories(items);
       setTotalCount(Math.min(total_count, 1000)); // GitHub API limits to 1000 results
-    } catch (err) {
-      setError("Failed to fetch repositories. Please try again later.");
-      console.error(err);
+    } catch (err: any) {
+      const errorMessage =
+        err instanceof Error ? err.message : "An unexpected error occurred";
+      setError(errorMessage);
+      console.error("Search error:", err);
+      setRepositories([]);
+      setTotalCount(0);
     } finally {
       setLoading(false);
     }
@@ -108,7 +108,7 @@ export default function Home() {
                 repositories
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {repositories.map((repo) => (
                   <RepositoryCard key={repo.id} repository={repo} />
                 ))}
