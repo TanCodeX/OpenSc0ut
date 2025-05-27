@@ -271,7 +271,7 @@ export default function SearchFilter({
         <div className="flex justify-center pt-4">
           <button
             type="submit"
-            className="px-8 py-2.5 bg-[#FF0B55] text-white rounded-md hover:bg-[#e00a4c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-[#FF0B55] flex items-center transition-colors duration-200"
+            className="px-8 py-2.5 bg-[#FF0B55] text-black font-semibold rounded-full border-2 border-transparent hover:bg-black hover:text-white hover:border-[#FF0B55] hover:shadow-[0_0_15px_rgba(255,11,85,0.5)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-[#FF0B55] flex items-center transition-all duration-100 ease-out"
           >
             Search
           </button>

@@ -84,7 +84,7 @@ export default function Header() {
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#FF0B55] hover:bg-[#e00a4c] text-white px-3 py-2 text-sm rounded-lg transition-colors duration-200"
+                className="bg-[#FF0B55] hover:bg-[#e00a4c] text-black px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200"
               >
                 Open GitHub
               </Link>

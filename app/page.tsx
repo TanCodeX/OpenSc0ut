@@ -69,10 +69,10 @@ export default function Home() {
               </h1>
 
               {/* Subheading */}
-              <p className="text-2xl text-center text-gray-300 mb-6">
+              <p className="text-2xl text-center text-gray-300 mb-3">
                 Find. Contribute. Repeat.
               </p>
-              <p className="text-lg text-center text-gray-400 mb-16 max-w-3xl mx-auto">
+              <p className="text-lg text-center text-gray-400 mb-16 whitespace-nowrap">
                 Find your next project, make your first commit, and grow as a
                 developer — all in one place.
               </p>
