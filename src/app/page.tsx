@@ -90,7 +90,7 @@ export default function Home() {
         </div>
 
         {/* Content Section */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12">
           <SearchFilter onSearch={handleSearch} initialParams={searchParams} />
 
           {loading ? (
@@ -137,12 +137,78 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md border-t border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] py-8">
+      <footer className="bg-black py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-gray-400 text-sm">
-            Built with Next.js and GitHub API. OpenSc0ut helps developers find
-            open source projects to contribute to.
-          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            {/* Company Information - Wider Column */}
+            <div className="lg:col-span-2">
+              <div className="flex items-center mb-6">
+                <div className="w-8 h-8 bg-white rounded-sm mr-3 flex items-center justify-center">
+                  <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-white">OpenSc0ut</h3>
+              </div>
+              
+              <div className="text-gray-400 text-sm mb-6">
+                <p>Find your next project, make your first commit,</p>
+                <p>and grow as a developer — all in one place.</p>
+              </div>
+              
+              <div className="space-y-4">
+                <div>
+                  <p className="text-gray-400 text-sm mb-1">Email</p>
+                  <p className="text-white">tanmaypatwary@gmail.com</p>
+                </div>
+                <div>
+                  <p className="text-gray-400 text-sm mb-1">GitHub</p>
+                  <p className="text-white">github.com/TanCodeX</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h4 className="text-white font-semibold mb-6">Quick links</h4>
+              <ul className="space-y-3 text-gray-400 text-sm">
+                <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
+                <li><a href="/about" className="hover:text-white transition-colors">About us</a></li>
+                <li><a href="/faq" className="hover:text-white transition-colors">FAQ</a></li>
+                <li><a href="/contact-us" className="hover:text-white transition-colors">Contact us</a></li>
+              </ul>
+            </div>
+
+            {/* Social */}
+            <div>
+              <h4 className="text-white font-semibold mb-6">Social</h4>
+              <ul className="space-y-3 text-gray-400 text-sm">
+                <li><a href="https://github.com/TanCodeX" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a></li>
+                <li><a href="https://x.com/TanCodeX" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Twitter</a></li>
+                <li><a href="https://www.linkedin.com/in/tanmaypatwary" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Discord</a></li>
+              </ul>
+            </div>
+
+            {/* Legal */}
+            <div>
+              <h4 className="text-white font-semibold mb-6">Legal</h4>
+              <ul className="space-y-3 text-gray-400 text-sm">
+                <li><a href="/terms" className="hover:text-white transition-colors">Terms of service</a></li>
+                <li><a href="/privacy" className="hover:text-white transition-colors">Privacy policy</a></li>
+                <li><a href="/cookies" className="hover:text-white transition-colors">Cookie policy</a></li>
+                <li><a href="/license" className="hover:text-white transition-colors">MIT License</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          {/* Bottom Border */}
+          <div className="border-t border-gray-800 mt-12 pt-8">
+            <p className="text-center text-gray-400 text-sm">
+              © 2024 OpenSc0ut. Built with Next.js and GitHub API.
+            </p>
+          </div>
         </div>
       </footer>
     </div>

@@ -28,12 +28,12 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 pt-4 pb-3">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="flex items-center justify-between rounded-xl px-5 py-3 border border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md transition-all duration-300"
+          className="flex items-center justify-between rounded-full px-5 py-3 border border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md transition-all duration-300"
         >
           {/* Logo */}
           <Link
@@ -58,6 +58,7 @@ export default function Header() {
               { href: "/about", label: "About" },
               { href: "/languages", label: "GSOC" },
               { href: "/topics", label: "GSSOC" },
+              { href: "/contact-us", label: "Contact us" },
             ].map((link) => (
               <Link
                 key={link.href}
