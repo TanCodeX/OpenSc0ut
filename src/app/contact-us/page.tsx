@@ -24,33 +24,29 @@ export default function ContactUs() {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus("idle");
-
+  
     try {
-      // Create mailto link with form data
-      const subject = encodeURIComponent(formData.subject || "Contact from OpenSc0ut");
-      const body = encodeURIComponent(
-        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-      );
-      
-      const mailtoLink = `mailto:tanmaypatwary@gmail.com?subject=${subject}&body=${body}`;
-      
-      // Open email client
-      window.location.href = mailtoLink;
-      
-      setSubmitStatus("success");
-      
-      // Reset form after successful submission
-      setTimeout(() => {
+      const res = await fetch("contact-us/api/sendEmail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+  
+      if (res.ok) {
+        setSubmitStatus("success");
         setFormData({ name: "", email: "", subject: "", message: "" });
-        setSubmitStatus("idle");
-      }, 2000);
-      
+      } else {
+        setSubmitStatus("error");
+      }
     } catch (error) {
+      console.error(error);
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
     }
   };
+  
+  
 
   return (
     <div className="min-h-screen bg-black text-white">
