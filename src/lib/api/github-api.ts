@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Repository, SearchParams } from "./types";
+import { Repository, SearchParams } from "../../types/types";
 
 // Create axios instance for our internal API
 const apiInstance = axios.create({
