@@ -29,19 +29,58 @@ export default function Home() {
     <div className="min-h-screen bg-black text-white">
       <Header />
 
-      <main className="pt-28">
+      <main className="pt-20">
         {/* Hero Section */}
         <div className="relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
-            <div className="bg-black bg-opacity-95 backdrop-blur-sm py-16 px-8 rounded-lg">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+            <div className="bg-black bg-opacity-95 backdrop-blur-sm py-12 px-8 rounded-lg">
+              {/* Search Prompt */}
+              <div className="flex justify-center mb-6">
+                <div className="bg-black bg-opacity-95 backdrop-blur-md border border-white border-opacity-20 rounded-full px-4 py-2 flex items-center space-x-3 max-w-sm">
+                  {/* Lightning bolt icon */}
+                  <svg 
+                    className="w-4 h-4 text-white flex-shrink-0" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={2} 
+                      d="M13 10V3L4 14h7v7l9-11h-7z" 
+                    />
+                  </svg>
+                  
+                  {/* Text */}
+                  <span className="text-white text-base font-extralight flex-1 text-center">
+                    Find. Contribute. Repeat.
+                  </span>
+                  
+                  {/* Right arrow button */}
+                  <button className="bg-white rounded-full p-1.5 flex-shrink-0 hover:bg-gray-100 transition-colors">
+                    <svg 
+                      className="w-3 h-3 text-black" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth={2} 
+                        d="M9 5l7 7-7 7" 
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
               <h1 className="text-5xl md:text-7xl text-center mb-8">
                 Introducing <AnimatedText text="OpenSc0ut" className="font-extrabold" />
               </h1>
 
               {/* Subheading */}
-              <p className="text-2xl text-center text-gray-300 mb-3">
-                Find. Contribute. Repeat.
-              </p>
               <p className="text-lg text-center text-gray-400 mb-2 whitespace-nowrap">
                 Find your next project, make your first commit, and grow as a
                 developer — all in one place.

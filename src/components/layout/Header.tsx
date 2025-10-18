@@ -58,23 +58,20 @@ export default function Header() {
               { href: "/about", label: "About" },
               { href: "/languages", label: "GSOC" },
               { href: "/topics", label: "GSSOC" },
-            ].map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={(e) => handleNavigation(link.href, e)}
-                  className={`relative transition-all duration-200 ${
-                    isActive 
-                      ? "text-white text-base font-medium" 
-                      : "text-gray-400 hover:text-gray-300"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleNavigation(link.href, e)}
+                className={`relative transition-all duration-200 ${
+                  pathname === link.href
+                    ? "text-white text-base font-medium"
+                    : "text-gray-400 hover:text-gray-300"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
 
           {/* Right Side - Login/Sign Up */}
