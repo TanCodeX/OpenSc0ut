@@ -72,7 +72,7 @@ export default function Home() {
               <p className="text-2xl text-center text-gray-300 mb-3">
                 Find. Contribute. Repeat.
               </p>
-              <p className="text-lg text-center text-gray-400 mb-16 whitespace-nowrap">
+              <p className="text-lg text-center text-gray-400 mb-2 whitespace-nowrap">
                 Find your next project, make your first commit, and grow as a
                 developer — all in one place.
               </p>
@@ -81,7 +81,7 @@ export default function Home() {
         </div>
 
         {/* Content Section */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
           <SearchFilter onSearch={handleSearch} initialParams={searchParams} />
 
           {loading ? (
