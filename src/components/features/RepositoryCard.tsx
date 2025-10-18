@@ -18,7 +18,7 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
   };
 
   return (
-    <div className="bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md rounded-lg border border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] overflow-hidden hover:border-gray-500 transition-all duration-300 flex flex-col h-full">
+    <div className="bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md rounded-lg border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] overflow-hidden hover:border-gray-500 transition-all duration-300 flex flex-col h-full">
       <div className="p-5 flex-1">
         <div className="flex items-center mb-4">
           <div className="w-10 h-10 relative mr-3">

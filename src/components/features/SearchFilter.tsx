@@ -78,7 +78,7 @@ export default function SearchFilter({
 
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+    <div className="bg-[hsla(0,1.30%,15.50%,0.44)] border border-[hsla(0,1.10%,36.10%,0.44)] rounded-xl shadow-lg p-6 mb-6">
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Filter Category Tabs */}
         <div className="flex gap-2">
