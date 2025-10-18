@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import PageTransition from "../components/PageTransition";
+import GlobalCursor from "../components/GlobalCursor";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${inter.className} bg-black text-white`}>
+        <GlobalCursor />
         <PageTransition>{children}</PageTransition>
       </body>
     </html>

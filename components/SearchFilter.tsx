@@ -39,7 +39,6 @@ export default function SearchFilter({
   const [order, setOrder] = useState<"asc" | "desc">("desc");
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
-  const [isFilterOpen, setIsFilterOpen] = useState(true);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,7 +50,6 @@ export default function SearchFilter({
         language: selectedLanguages.join(","),
       }),
     });
-    setIsFilterOpen(false);
   };
 
   const toggleLanguage = (lang: string) => {
@@ -68,36 +66,12 @@ export default function SearchFilter({
     return parts.join(" · ");
   }, [selectedLanguages, sort, order]);
 
-  if (!isFilterOpen) {
-    return (
-      <div className="bg-[hsla(0,1.30%,15.50%,0.24)] backdrop-blur p-3 rounded-lg border border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] mb-6 flex items-center justify-between">
-        <div className="text-sm text-gray-300">
-          Filters: {activeFiltersSummary || "none"}
-        </div>
-        <button
-          type="button"
-          onClick={() => setIsFilterOpen(true)}
-          className="ml-4 px-3 py-1.5 bg-[#FF0B55] text-black text-sm font-semibold rounded-full border-2 border-transparent hover:bg-black hover:text-white hover:border-[#FF0B55] hover:shadow-[0_0_12px_rgba(255,11,85,0.45)] transition-all duration-100 ease-out"
-          suppressHydrationWarning
-        >
-          Edit Filters
-        </button>
-      </div>
-    );
-  }
 
   return (
     <div className="bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md p-6 rounded-lg border border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] mb-6">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="flex items-start justify-between">
           <h3 className="text-base font-semibold text-gray-200">Filters</h3>
-          <button
-            type="button"
-            onClick={() => setIsFilterOpen(false)}
-            className="text-sm text-gray-400 hover:text-gray-200 underline"
-          >
-            Collapse
-          </button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Languages Filter */}
