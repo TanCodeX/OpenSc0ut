@@ -1,7 +1,7 @@
 "use client";
 
 import { SearchParams } from "../types/types";
-import { useRepositories } from "../lib/hooks/useRepositories";
+import { useRepositories, useScrollAnimation } from "../lib/hooks";
 import { Header, SearchFilter, RepositoryCard, Pagination } from "../components";
 import AnimatedText from "../components/ui/AnimatedText";
 
@@ -22,6 +22,9 @@ export default function Home() {
     handlePageChange,
   } = useRepositories(initialParams);
 
+  // Use scroll animation hook
+  const { heroRef, contentRef } = useScrollAnimation();
+
   // Calculate total pages
   const totalPages = Math.ceil(totalCount / 12); // 12 items per page
 
@@ -31,11 +34,11 @@ export default function Home() {
 
       <main className="pt-20">
         {/* Hero Section */}
-        <div className="relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
-            <div className="bg-black bg-opacity-95 backdrop-blur-sm py-12 px-8 rounded-lg">
+        <div ref={heroRef} className="relative h-screen flex items-start justify-center pt-32">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div className="hero-content bg-black bg-opacity-95 backdrop-blur-sm py-12 px-8 rounded-lg flex flex-col items-center justify-center text-center">
               {/* Search Prompt */}
-              <div className="flex justify-center mb-6">
+              <div className="flex justify-center mb-8">
                 <div className="bg-black bg-opacity-95 backdrop-blur-md border border-white border-opacity-20 rounded-full px-4 py-2 flex items-center space-x-3 max-w-sm">
                   {/* Lightning bolt icon */}
                   <svg 
@@ -76,21 +79,31 @@ export default function Home() {
                 </div>
               </div>
 
-              <h1 className="text-5xl md:text-7xl text-center mb-8">
+              <h1 className="text-5xl md:text-7xl text-center mb-8 leading-tight">
                 Introducing <AnimatedText text="OpenSc0ut" className="font-extrabold" />
               </h1>
 
               {/* Subheading */}
-              <p className="text-lg text-center text-gray-400 mb-2 whitespace-nowrap">
+              <p className="text-lg text-center text-gray-400 mb-8 max-w-2xl">
                 Find your next project, make your first commit, and grow as a
                 developer — all in one place.
               </p>
             </div>
           </div>
+          
+          {/* Scroll Indicator */}
+          <div className="scroll-indicator absolute bottom-24 left-1/2 transform -translate-x-1/2">
+            <div className="flex flex-col items-center space-y-2">
+              <span className="text-gray-400 text-sm">Scroll to explore</span>
+              <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
+                <div className="w-1 h-3 bg-gray-400 rounded-full mt-2 animate-bounce"></div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Content Section */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12">
+        <div ref={contentRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12 relative z-10">
           <SearchFilter onSearch={handleSearch} initialParams={searchParams} />
 
           {loading ? (

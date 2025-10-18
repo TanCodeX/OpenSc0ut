@@ -96,13 +96,14 @@ const GlobalCursor = () => {
     return (
         <div
             ref={$follower}
-            className="pointer-events-none fixed left-0 top-0 w-20 h-20 rounded-full z-50"
+            className="pointer-events-none fixed left-0 top-0 w-20 h-20 rounded-full"
             style={{
                 transform: 'translate(-50%, -50%)',
                 background: 'radial-gradient(circle, rgba(255, 11, 85, 0.9) 0%, rgba(255, 11, 85, 0.7) 50%, rgba(255, 11, 85, 0.5) 100%)',
                 filter: 'blur(15px)',
                 boxShadow: '0 0 40px rgba(255, 11, 85, 0.8), 0 0 80px rgba(255, 11, 85, 0.6)',
                 border: '2px solid rgba(255, 11, 85, 0.3)',
+                zIndex: 1,
             }}
         >
         </div>
