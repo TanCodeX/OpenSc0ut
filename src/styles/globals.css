@@ -59,6 +59,7 @@ body {
   50% {
     box-shadow: 0 0 30px rgba(239, 68, 68, 0.8), 0 0 60px rgba(239, 68, 68, 0.5), 0 0 90px rgba(239, 68, 68, 0.2);
   }
+
 }
 
 .animate-spin-slow {

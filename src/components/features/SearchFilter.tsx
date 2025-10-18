@@ -1,5 +1,7 @@
+"use client";
+
 import { useMemo, useState } from "react";
-import { SearchParams } from "../lib/types";
+import { SearchParams } from "../../types/types";
 
 interface SearchFilterProps {
   onSearch: (params: SearchParams) => void;

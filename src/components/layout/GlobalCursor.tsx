@@ -19,6 +19,7 @@ const GlobalCursor = () => {
         gsap.set($follower.current, {
             x: window.innerWidth / 2,
             y: window.innerHeight / 2,
+            opacity: 0,
         });
 
         const handleMouseMove = (e: MouseEvent) => {
@@ -30,10 +31,30 @@ const GlobalCursor = () => {
             });
         };
 
+        const handleMouseEnter = () => {
+            gsap.to($follower.current, {
+                opacity: 1,
+                duration: 0.3,
+                ease: "power2.out",
+            });
+        };
+
+        const handleMouseLeave = () => {
+            gsap.to($follower.current, {
+                opacity: 0,
+                duration: 0.3,
+                ease: "power2.out",
+            });
+        };
+
         window.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mouseenter", handleMouseEnter);
+        document.addEventListener("mouseleave", handleMouseLeave);
 
         return () => {
             window.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("mouseenter", handleMouseEnter);
+            document.removeEventListener("mouseleave", handleMouseLeave);
         };
     }, []);
 

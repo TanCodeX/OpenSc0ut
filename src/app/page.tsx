@@ -1,56 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { searchRepositories } from "../lib/github-api";
-import { Repository, SearchParams } from "../lib/types";
-import Header from "../components/Header";
-import SearchFilter from "../components/SearchFilter";
-import RepositoryCard from "../components/RepositoryCard";
-import Pagination from "../components/Pagination";
+import { SearchParams } from "../types/types";
+import { useRepositories } from "../lib/hooks/useRepositories";
+import { Header, SearchFilter, RepositoryCard, Pagination } from "../components";
 
 export default function Home() {
-  const [repositories, setRepositories] = useState<Repository[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [totalCount, setTotalCount] = useState<number>(0);
-  const [searchParams, setSearchParams] = useState<SearchParams>({
+  const initialParams: SearchParams = {
     sort: "stars",
     order: "desc",
     page: 1,
-  });
-
-  const fetchRepositories = async (params: SearchParams) => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const { items, total_count } = await searchRepositories(params);
-      setRepositories(items);
-      setTotalCount(Math.min(total_count, 1000)); // GitHub API limits to 1000 results
-    } catch (err: any) {
-      const errorMessage =
-        err instanceof Error ? err.message : "An unexpected error occurred";
-      setError(errorMessage);
-      console.error("Search error:", err);
-      setRepositories([]);
-      setTotalCount(0);
-    } finally {
-      setLoading(false);
-    }
   };
 
-  useEffect(() => {
-    fetchRepositories(searchParams);
-  }, [searchParams.page]);
-
-  const handleSearch = (params: SearchParams) => {
-    setSearchParams(params);
-    fetchRepositories(params);
-  };
-
-  const handlePageChange = (page: number) => {
-    setSearchParams((prev) => ({ ...prev, page }));
-  };
+  const {
+    repositories,
+    loading,
+    error,
+    totalCount,
+    searchParams,
+    handleSearch,
+    handlePageChange,
+  } = useRepositories(initialParams);
 
   // Calculate total pages
   const totalPages = Math.ceil(totalCount / 12); // 12 items per page

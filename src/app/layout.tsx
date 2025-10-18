@@ -1,8 +1,7 @@
-import "./globals.css";
+import "../styles/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import PageTransition from "../components/PageTransition";
-import GlobalCursor from "../components/GlobalCursor";
+import { PageTransition, GlobalCursor } from "../components";
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -1,15 +1,32 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
-        primary: "#10b981",
-        secondary: "#ff4081",
+        primary: "var(--primary)",
+        'primary-dark': "var(--primary-dark)",
+        background: "var(--background)",
+        surface: "var(--surface)",
+        'surface-elevated': "var(--surface-elevated)",
+        border: "var(--border)",
+        'text-primary': "var(--text-primary)",
+        'text-secondary': "var(--text-secondary)",
+        'text-muted': "var(--text-muted)",
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+      },
+      animation: {
+        'fade-in-up': 'fadeInUp 0.6s ease-out',
+        'pulse-slow': 'pulse 2s ease-in-out infinite',
+      },
+      backdropBlur: {
+        xs: '2px',
       },
     },
   },
