@@ -10,6 +10,7 @@ export { default as SearchFilter } from './features/SearchFilter';
 // UI components
 export { default as Pagination } from './ui/Pagination';
 export { default as UICollectionLayout } from './ui/ui-collection-layout';
+export { default as AnimatedText } from './ui/AnimatedText';
 
 // Common components
 export { default as Credit } from './common/Credit';

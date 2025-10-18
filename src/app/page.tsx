@@ -3,6 +3,7 @@
 import { SearchParams } from "../types/types";
 import { useRepositories } from "../lib/hooks/useRepositories";
 import { Header, SearchFilter, RepositoryCard, Pagination } from "../components";
+import AnimatedText from "../components/ui/AnimatedText";
 
 export default function Home() {
   const initialParams: SearchParams = {
@@ -34,7 +35,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
             <div className="bg-black bg-opacity-95 backdrop-blur-sm py-16 px-8 rounded-lg">
               <h1 className="text-5xl md:text-7xl text-center mb-8">
-                Introducing <span className="font-extrabold">OpenSc0ut</span>
+                Introducing <AnimatedText text="OpenSc0ut" className="font-extrabold" />
               </h1>
 
               {/* Subheading */}
