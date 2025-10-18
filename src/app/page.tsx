@@ -103,7 +103,7 @@ export default function Home() {
         </div>
 
         {/* Content Section */}
-        <div ref={contentRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12 relative z-10">
+        <div ref={contentRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12">
           <SearchFilter onSearch={handleSearch} initialParams={searchParams} />
 
           {loading ? (
