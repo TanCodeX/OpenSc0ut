@@ -12,7 +12,6 @@ interface AnimatedTextProps {
 export default function AnimatedText({ text, className = "", onClick }: AnimatedTextProps) {
   const containerRef = useRef<HTMLSpanElement>(null);
   const animationRef = useRef<gsap.core.Timeline | null>(null);
-  const reachedBottom = useRef(false); // track if user reached bottom once
 
   const playAnimation = (duration = 2.5) => {
     if (!containerRef.current) return;
@@ -44,32 +43,29 @@ export default function AnimatedText({ text, className = "", onClick }: Animated
       containerRef.current?.appendChild(span);
     });
 
-    // Initial animation
+    // Play once initially
     setTimeout(() => playAnimation(2.5), 0);
 
-    // Scroll listener
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-
-      // Detect if user reached bottom of page
-      if (scrollTop + windowHeight >= documentHeight - 50) {
-        reachedBottom.current = true;
+    // ✅ Intersection Observer to detect when it comes back into view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Element just came into view
+            animationRef.current?.kill();
+            playAnimation(1); // replay shorter version
+          }
+        });
+      },
+      {
+        threshold: 0.4, // Trigger when 40% of the element is visible
       }
+    );
 
-      // Replay animation only when coming back to top *after reaching bottom once*
-      if (reachedBottom.current && scrollTop <= 10) {
-        reachedBottom.current = false; // reset for next time
-        animationRef.current?.kill();
-        playAnimation(1);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
+    observer.observe(containerRef.current);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
       animationRef.current?.kill();
     };
   }, [text]);
