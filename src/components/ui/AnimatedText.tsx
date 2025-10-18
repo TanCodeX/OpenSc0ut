@@ -10,18 +10,32 @@ interface AnimatedTextProps {
 }
 
 export default function AnimatedText({ text, className = "", onClick }: AnimatedTextProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLSpanElement>(null);
   const animationRef = useRef<gsap.core.Timeline | null>(null);
+  const reachedBottom = useRef(false); // track if user reached bottom once
+
+  const playAnimation = (duration = 2.5) => {
+    if (!containerRef.current) return;
+
+    const charElements = containerRef.current.children;
+    const tl = gsap.timeline();
+
+    tl.fromTo(
+      charElements,
+      { x: 150, opacity: 0 },
+      { x: 0, opacity: 1, duration, ease: "power4.out", stagger: 0.04 }
+    );
+
+    animationRef.current = tl;
+  };
 
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Clear previous content
     containerRef.current.innerHTML = "";
 
-    // Split text into individual characters and create DOM elements
     const chars = text.split("");
-    chars.forEach((char, index) => {
+    chars.forEach((char) => {
       const span = document.createElement("span");
       span.textContent = char;
       span.style.display = "inline-block";
@@ -30,74 +44,45 @@ export default function AnimatedText({ text, className = "", onClick }: Animated
       containerRef.current?.appendChild(span);
     });
 
-    // Rerender to ensure DOM is updated
-    setTimeout(() => {
-      if (!containerRef.current) return;
+    // Initial animation
+    setTimeout(() => playAnimation(2.5), 0);
 
-      // Get all character elements
-      const charElements = containerRef.current.children;
+    // Scroll listener
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
 
-      // Create animation
-      const tl = gsap.timeline();
-      
-      tl.fromTo(charElements, 
-        {
-          x: 150,
-          opacity: 0
-        },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 2.5,
-          ease: "power4.out",
-          stagger: 0.04
-        }
-      );
-
-      animationRef.current = tl;
-    }, 0);
-
-    // Cleanup function
-    return () => {
-      if (animationRef.current) {
-        animationRef.current.kill();
+      // Detect if user reached bottom of page
+      if (scrollTop + windowHeight >= documentHeight - 50) {
+        reachedBottom.current = true;
       }
+
+      // Replay animation only when coming back to top *after reaching bottom once*
+      if (reachedBottom.current && scrollTop <= 10) {
+        reachedBottom.current = false; // reset for next time
+        animationRef.current?.kill();
+        playAnimation(1);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      animationRef.current?.kill();
     };
   }, [text]);
 
   const handleClick = () => {
-    if (animationRef.current && containerRef.current) {
-      // Revert and replay animation
-      animationRef.current.revert();
-      
-      const charElements = containerRef.current.children;
-      const tl = gsap.timeline();
-      
-      tl.fromTo(charElements, 
-        {
-          x: 150,
-          opacity: 0
-        },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.7,
-          ease: "power4.out",
-          stagger: 0.04
-        }
-      );
-      
-      animationRef.current = tl;
-    }
-    
-    if (onClick) {
-      onClick();
-    }
+    animationRef.current?.revert();
+    playAnimation(0.7);
+    onClick?.();
   };
 
   return (
-    <span 
-      ref={containerRef} 
+    <span
+      ref={containerRef}
       className={`cursor-pointer ${className}`}
       onClick={handleClick}
     />
