@@ -6,6 +6,7 @@ import React, { useEffect, useRef } from "react";
 
 const GlobalCursor = () => {
     const $follower = useRef<HTMLDivElement>(null);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         if (!$follower.current) {
@@ -23,15 +24,41 @@ const GlobalCursor = () => {
         });
 
         const handleMouseMove = (e: MouseEvent) => {
+            // Clear any existing timeout
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+
+            // Move cursor to new position
             gsap.to($follower.current, {
                 x: e.clientX,
                 y: e.clientY,
                 duration: 0.5,
                 ease: "power2.out",
             });
+
+            // Show cursor immediately
+            gsap.to($follower.current, {
+                opacity: 1,
+                duration: 0.1,
+                ease: "power2.out",
+            });
+
+            // Set timeout to fade out after 0.5 seconds of no movement
+            timeoutRef.current = setTimeout(() => {
+                gsap.to($follower.current, {
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power2.out",
+                });
+            }, 500);
         };
 
         const handleMouseEnter = () => {
+            // Clear timeout when mouse enters
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
             gsap.to($follower.current, {
                 opacity: 1,
                 duration: 0.3,
@@ -40,6 +67,10 @@ const GlobalCursor = () => {
         };
 
         const handleMouseLeave = () => {
+            // Clear timeout when mouse leaves
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
             gsap.to($follower.current, {
                 opacity: 0,
                 duration: 0.3,
@@ -52,6 +83,10 @@ const GlobalCursor = () => {
         document.addEventListener("mouseleave", handleMouseLeave);
 
         return () => {
+            // Clean up timeout on unmount
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
             window.removeEventListener("mousemove", handleMouseMove);
             document.removeEventListener("mouseenter", handleMouseEnter);
             document.removeEventListener("mouseleave", handleMouseLeave);
