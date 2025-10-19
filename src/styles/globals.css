@@ -69,3 +69,56 @@ body {
 .animate-glow-pulse {
   animation: glow-pulse 3s ease-in-out infinite;
 }
+
+/* Find. Contribute. Repeat. border glow */
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes spin { 
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
+  }
+}
+
+
+.rotating-border-glow {
+  position: relative; 
+  z-index: 0;         
+  border-radius: 9999px; 
+}
+
+.rotating-border-glow::after, 
+.rotating-border-glow::before {
+  --angle: 0deg;
+  content: '';
+  position: absolute;
+  inset: -3px; 
+  z-index: -1; 
+  background-image: conic-gradient(from var(--angle), transparent 70%, #ff0b55);
+  border-radius: inherit; 
+  animation: 1.5s spin linear infinite; 
+}
+
+
+.rotating-border-glow::before {
+  filter: blur(1.5rem); 
+  opacity: 0.5; 
+}
+
+.rotating-border-glow > .content-wrapper {
+  position: relative; 
+  z-index: 1; 
+  background: inherit; 
+  border-radius: inherit;
+  padding: 0.5rem 1rem; 
+  display: flex;        
+  align-items: center;  
+  gap: 0.75rem;       
+}

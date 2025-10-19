@@ -38,8 +38,8 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             <div className="hero-content bg-black bg-opacity-95 backdrop-blur-sm py-12 px-8 rounded-lg flex flex-col items-center justify-center text-center">
               {/* Search Prompt */}
-              <div className="flex justify-center mb-8">
-                <div className="bg-black bg-opacity-95 backdrop-blur-md border border-white border-opacity-20 rounded-full px-4 py-2 flex items-center space-x-3 max-w-sm">
+              <div className="flex justify-center mb-8 rotating-border-glow">
+                <div className="bg-black bg-opacity-95 backdrop-blur-md border border-white border-opacity-20 rounded-full px-4 py-2 flex items-center space-x-3 max-w-sm ">
                   {/* Lightning bolt icon */}
                   <svg 
                     className="w-4 h-4 text-white flex-shrink-0" 
