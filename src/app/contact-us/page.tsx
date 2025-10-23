@@ -261,7 +261,6 @@ export default function ContactUs() {
       <footer className="bg-black py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            
             {/* Company Information - Wider Column */}
             <div className="lg:col-span-2">
               <div className="flex items-center mb-6">
@@ -272,12 +271,10 @@ export default function ContactUs() {
                 </div>
                 <h3 className="text-2xl font-bold text-white">OpenSc0ut</h3>
               </div>
-              
               <div className="text-gray-400 text-sm mb-6">
                 <p>Find your next project, make your first commit,</p>
                 <p>and grow as a developer — all in one place.</p>
               </div>
-              
               <div className="space-y-4">
                 <div>
                   <p className="text-gray-400 text-sm mb-1">Email</p>
@@ -289,7 +286,6 @@ export default function ContactUs() {
                 </div>
               </div>
             </div>
-
             {/* Quick Links */}
             <div>
               <h4 className="text-white font-semibold mb-6">Quick links</h4>
@@ -300,7 +296,6 @@ export default function ContactUs() {
                 <li><a href="/contact-us" className="hover:text-white transition-colors">Contact us</a></li>
               </ul>
             </div>
-
             {/* Social */}
             <div>
               <h4 className="text-white font-semibold mb-6">Social</h4>
@@ -311,7 +306,6 @@ export default function ContactUs() {
                 <li><a href="#" className="hover:text-white transition-colors">Discord</a></li>
               </ul>
             </div>
-
             {/* Legal */}
             <div>
               <h4 className="text-white font-semibold mb-6">Legal</h4>
@@ -323,9 +317,12 @@ export default function ContactUs() {
               </ul>
             </div>
           </div>
-          
-          {/* Bottom Border */}
-          <div className="border-t border-gray-800 mt-12 pt-8">
+        </div> {/* <-- This </div> now closes the max-w-7xl container */}
+
+        {/* Bottom Border is now outside the container, so it's full-width */}
+        <div className="border-t border-gray-800 mt-12 pt-8">
+          {/* Re-add the container here to keep the text centered */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-center text-gray-400 text-sm">
               © 2024 OpenSc0ut. Built with Next.js and GitHub API.
             </p>
