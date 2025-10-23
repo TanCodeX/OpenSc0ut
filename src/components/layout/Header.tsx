@@ -33,7 +33,7 @@ export default function Header() {
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="flex items-center justify-between rounded-full px-5 py-3 border border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md transition-all duration-300"
+          className="flex items-center justify-between rounded-full px-5 py-3 border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md transition-all duration-300"
         >
           {/* Logo */}
           <Link
@@ -96,7 +96,7 @@ export default function Header() {
                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                   />
                 </svg>
-                Login/Sign Up
+                Login
               </Link>
             </motion.div>
           </div>

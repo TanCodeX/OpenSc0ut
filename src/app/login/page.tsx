@@ -28,7 +28,7 @@ export default function LoginPage() {
         <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-16">
           {/* Header Section */}
           <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 whitespace-nowrap items-center justify-center flex">
               Welcome <span className="text-[#FF0B55]">Back</span>
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
