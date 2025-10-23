@@ -17,83 +17,98 @@ const axiosInstance = axios.create({
   },
 });
 
+// Helper function to format the response
+const formatAndSortResponse = (response: any) => {
+  const items = response.data.items.map((repo: any) => ({
+    ...repo,
+    popularity_score:
+      repo.stargazers_count * 0.7 + repo.forks_count * 0.3, // Weight stars more than forks
+  }));
+
+  items.sort((a: any, b: any) => b.popularity_score - a.popularity_score);
+
+  const formattedItems = items.map((item: any) => ({
+    id: item.id,
+    name: item.name,
+    full_name: item.full_name,
+    html_url: item.html_url,
+    description: item.description,
+    owner: item.owner,
+    stargazers_count: item.stargazers_count,
+    forks_count: item.forks_count,
+    open_issues_count: item.open_issues_count,
+    language: item.language,
+    topics: item.topics || [],
+    updated_at: item.updated_at,
+    created_at: item.created_at,
+    has_issues: item.has_issues,
+  }));
+
+  return NextResponse.json({
+    items: formattedItems,
+    total_count: response.data.total_count,
+  });
+};
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const language = searchParams.get('language');
     const page = searchParams.get('page') || '1';
+    // The sort and order params are not used in the GitHub query, but we leave them
     const sort = searchParams.get('sort') || 'stars';
     const order = searchParams.get('order') || 'desc';
 
-    // Build the query string starting with finding repositories
+    // Build the query string
     let query = "is:public has:issues";
-
-    // Language filter - handle multiple languages
     if (language) {
       const languages = language.split(",");
       query += ` (${languages
         .map((lang) => `language:${lang.trim()}`)
         .join(" OR ")})`;
     }
-
-    // Add stars and forks filters to get popular repositories
     query += " stars:>50 forks:>5";
 
     console.log("Search Query:", query); // For debugging
 
+    const githubParams = {
+      q: query.trim(),
+      sort: "stars", // Always sort by stars first
+      order: "desc", // Always descending for popularity
+      per_page: 12,
+      page: parseInt(page),
+    };
+
     try {
       const response = await axiosInstance.get("/search/repositories", {
-        params: {
-          q: query.trim(),
-          sort: "stars", // Always sort by stars first
-          order: "desc", // Always descending for popularity
-          per_page: 12,
-          page: parseInt(page),
-        },
+        params: githubParams,
       });
+      return formatAndSortResponse(response);
 
-      if (response.status === 200 && response.data) {
-        // Sort the results by a combination of stars and forks
-        const items = response.data.items.map((repo: any) => ({
-          ...repo,
-          popularity_score:
-            repo.stargazers_count * 0.7 + repo.forks_count * 0.3, // Weight stars more than forks
-        }));
-
-        items.sort((a: any, b: any) => b.popularity_score - a.popularity_score);
-
-        const formattedItems = items.map((item: any) => ({
-          id: item.id,
-          name: item.name,
-          full_name: item.full_name,
-          html_url: item.html_url,
-          description: item.description,
-          owner: item.owner,
-          stargazers_count: item.stargazers_count,
-          forks_count: item.forks_count,
-          open_issues_count: item.open_issues_count,
-          language: item.language,
-          topics: item.topics || [],
-          updated_at: item.updated_at,
-          created_at: item.created_at,
-          has_issues: item.has_issues,
-        }));
-
-        return NextResponse.json({
-          items: formattedItems,
-          total_count: response.data.total_count,
-        });
-      } else {
-        throw new Error("Invalid response from GitHub API");
-      }
     } catch (apiError: any) {
+      
+      // --- START: MODIFIED 401 ERROR HANDLING ---
       // Handle authentication errors
       if (apiError.response?.status === 401) {
-        console.error("Authentication failed:", apiError.response.data);
-        // Try to continue without authentication
-        axiosInstance.defaults.headers.common["Authorization"] = "";
-        return GET(request); // Retry without auth
+        console.error("Authentication failed. Retrying without token.");
+        
+        // Remove the bad token from the instance
+        delete axiosInstance.defaults.headers.common["Authorization"];
+
+        // Re-try the request *once* without auth
+        try {
+          const retryResponse = await axiosInstance.get("/search/repositories", {
+            params: githubParams,
+          });
+          return formatAndSortResponse(retryResponse);
+        } catch (retryError: any) {
+          // If the *retry* fails, re-assign apiError to be handled by the code below
+          console.error("Unauthenticated retry failed:", retryError.message);
+          apiError = retryError; // Let the generic handlers below take over
+        }
       }
+      // --- END: MODIFIED 401 ERROR HANDLING ---
+
       // Handle rate limiting
       if (apiError.response?.status === 403) {
         const resetTime = apiError.response.headers["x-ratelimit-reset"];
