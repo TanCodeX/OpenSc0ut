@@ -39,13 +39,13 @@ export default function Home() {
       <Header />
       <GlobalCursor targetRef={heroRef} /> {/* <-- 2. ADD IT HERE */}
 
-      <main className="pt-20">
+      <main>
         {/* Hero Section */}
         <div
           ref={heroRef} // <-- 3. THIS REF IS PASSED TO GLOBALCURSOR
-          className="relative h-screen flex items-start justify-center pt-32"
+          className="relative h-screen flex justify-center items-center overflow-hidden"
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full pb-32">
             <div className="hero-content bg-black bg-opacity-95 backdrop-blur-sm py-12 px-8 rounded-lg flex flex-col items-center justify-center text-center">
               {/* Search Prompt */}
               <div className="flex justify-center mb-8 rotating-border-glow">
