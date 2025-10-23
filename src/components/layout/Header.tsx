@@ -58,7 +58,7 @@ export default function Header() {
               { href: "/about", label: "About" },
               { href: "/languages", label: "GSOC" },
               { href: "/topics", label: "GSSOC" },
-              { href: "/contact-us", label: "Contact us" },
+              { href: "contact-us", label: "Contact us" },
             ].map((link) => (
               <Link
                 key={link.href}
