@@ -1,0 +1,8 @@
+{
+  "cron": [
+    {
+      "path": "/api/cron/sync-projects",
+      "schedule": "0 4 * * *" // Every day at 4am UTC
+    }
+  ]
+}

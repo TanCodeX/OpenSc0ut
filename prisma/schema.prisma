@@ -55,3 +55,18 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model ProgramProject {
+  id               String    @id @default(cuid())
+  year             Int
+  program          String
+  organizationName String
+  projectName      String
+  projectUrl       String    @unique
+  topics           String[]
+  description      String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([program, year])
+}
