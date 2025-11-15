@@ -43,6 +43,7 @@ export default function GsocPage() {
       setLoading(true);
       setError(null);
       try {
+        // API will automatically sync data if it doesn't exist for the requested year
         const res = await fetch(
           `/api/program-projects?program=GSoC&year=${year}`,
           { signal: controller.signal }
@@ -140,7 +141,11 @@ export default function GsocPage() {
 
           <div className="flex flex-col gap-2 text-xs text-gray-400 sm:flex-row sm:items-center sm:justify-between">
             <span className="text-center sm:text-left">
-              Showing {resultsLabel} for <span className="font-semibold text-white">GSoC</span> {year}
+              {loading ? (
+                <span>Loading data for <span className="font-semibold text-white">GSoC</span> {year}...</span>
+              ) : (
+                <span>Showing {resultsLabel} for <span className="font-semibold text-white">GSoC</span> {year}</span>
+              )}
             </span>
             {!loading && (
               <button

@@ -2,41 +2,25 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db/prisma';
 import { scrapeProgramArchive } from '@/lib/scrapers/programScraper';
 
-export const runtime = 'nodejs'; // enable node APIs
+export const runtime = 'nodejs';
 
+/**
+ * Development endpoint to sync all years without authentication
+ * WARNING: This should be removed or protected in production!
+ */
 export async function POST(req: NextRequest) {
-
-  console.log("DATABASE_URL_IS:", process.env.DATABASE_URL);
-  // 1. Auth
-  const authHeader = req.headers.get('authorization');
-  if (!authHeader || authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+  // Only allow in development
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json({ error: 'Not available in production' }, { status: 403 });
   }
 
-  // 2. Parse optional year parameter from request body or query
-  let specifiedYear: number | null = null;
-  try {
-    const body = await req.json();
-    if (body?.year) specifiedYear = parseInt(String(body.year), 10);
-  } catch {
-    // Body might be empty or not JSON, try query param
-  }
-  if (!specifiedYear) {
-    const queryYear = new URL(req.url).searchParams.get('year');
-    if (queryYear) specifiedYear = parseInt(queryYear, 10);
-  }
-  
-  // 3. Determine which years to sync
   const currentYear = new Date().getFullYear();
-  const yearsToSync = specifiedYear 
-    ? [specifiedYear] 
-    : Array.from({ length: 6 }, (_, idx) => currentYear - idx); // Sync last 6 years by default
+  const yearsToSync = Array.from({ length: 6 }, (_, idx) => currentYear - idx);
 
   let totalProcessed = 0;
   const results: { year: number; count: number; error?: string }[] = [];
 
   try {
-    // Fetch GSoC projects for each year
     for (const year of yearsToSync) {
       try {
         console.log(`Syncing GSoC projects for year ${year}...`);
@@ -82,3 +66,4 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, error: (err as Error).message }, { status: 500 });
   }
 }
+
