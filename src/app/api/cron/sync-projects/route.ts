@@ -5,6 +5,8 @@ import { scrapeProgramArchive } from '@/lib/scrapers/programScraper';
 export const runtime = 'nodejs'; // enable node APIs
 
 export async function POST(req: NextRequest) {
+
+  console.log("DATABASE_URL_IS:", process.env.DATABASE_URL);
   // 1. Auth
   const authHeader = req.headers.get('authorization');
   if (!authHeader || authHeader !== `Bearer ${process.env.CRON_SECRET}`) {

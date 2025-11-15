@@ -3,8 +3,6 @@
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL") // Uses the Neon connection string
-  // Use shadowDatabaseUrl for migrations in development if needed
-  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 generator client {

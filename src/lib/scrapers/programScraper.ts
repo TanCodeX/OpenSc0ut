@@ -1,6 +1,8 @@
-import axios from 'axios';
-import * as cheerio from 'cheerio';
+// src/lib/scrapers/programScraper.ts
 
+import axios from 'axios';
+
+// This type definition is from your original file
 export type ScrapedProject = {
   year: number;
   program: string;
@@ -11,49 +13,99 @@ export type ScrapedProject = {
   description: string;
 };
 
+// This interface defines the structure of the API response
+interface ApiProject {
+  title: string;
+  description: string;
+  project_url: string;
+  // Add other fields if needed, e.g., student_name
+}
+
+interface ApiOrganization {
+  name: string;
+  topics: string[];
+  projects: ApiProject[];
+  // Add other fields if needed, e.g., url
+}
+
+interface ApiResponse {
+  organizations: ApiOrganization[];
+}
+
 /**
- * Scrapes the HTML archive for the given program and year, extracting projects as structured data.
+ * Fetches project data from the GSoC JSON API for the given year.
  * @param year Target year (e.g., 2024)
- * @param program Program name (e.g., "GSoC", "GSSoC")
+ * @param program Program name (e.g., "GSoC"). Note: This API is GSoC-specific.
  */
 export async function scrapeProgramArchive(year: number, program: string): Promise<ScrapedProject[]> {
-  // In real use, set correct base URL per archive source:
-  const targetUrl = `https://example-archive.com/${program}/${year}`;
+  // Use the GSoC Organizations API endpoint
+  const targetUrl = `https://api.gsocorganizations.dev/${year}.json`;
   const projects: ScrapedProject[] = [];
 
-  let html: string;
+  console.log(`Fetching GSoC projects for ${year} from ${targetUrl}...`);
+
+  let response;
   try {
-    const res = await axios.get(targetUrl);
-    html = res.data;
+    response = await axios.get<ApiResponse>(targetUrl);
   } catch (err) {
-    throw new Error(`Failed to fetch archive page for ${program} ${year}: ${(err as Error).message}`);
+    const errorMessage = err instanceof Error 
+      ? err.message 
+      : axios.isAxiosError(err)
+      ? err.response?.data?.message || err.message || 'Unknown error'
+      : String(err);
+    throw new Error(`Failed to fetch API data for ${program} ${year}: ${errorMessage}`);
   }
 
-  const $ = cheerio.load(html);
-  const projectCardSelector = 'div.project-card-container';
+  const apiData = response.data;
 
-  $(projectCardSelector).each((_i, el) => {
-    const projectName = $(el).find('h3.project-title').text().trim();
-    const organizationName = $(el).find('p.org-name').text().trim();
-    const description = $(el).find('div.description').text().trim();
-    const projectUrl = $(el).find('a.github-link').attr('href') || '';
-    // Expand with more/other selectors if archive HTML differs
+  if (!apiData || !apiData.organizations) {
+    console.warn(`No organizations found in API response for ${year}.`);
+    return [];
+  }
 
-    if (projectName && organizationName && projectUrl) {
-      projects.push({
-        year,
-        program,
-        organizationName,
-        projectName,
-        projectUrl,
-        topics: [], // Could be extended with tag scraping logic
-        description,
-      });
-    } else {
-      // Optionally log/collect parse errors for diagnostics
-      // console.warn('Skipping project with missing required fields:', { program, year, projectName, organizationName, projectUrl });
+  // Loop through each organization, then through each of its projects
+  for (const org of apiData.organizations) {
+    if (!org || !org.name) {
+      continue; // Skip invalid organizations
     }
-  });
 
+    const organizationName = org.name.trim();
+    const topics = Array.isArray(org.topics) ? org.topics : [];
+
+    if (!org.projects || !Array.isArray(org.projects) || org.projects.length === 0) {
+      continue; // Skip organizations with no projects listed
+    }
+
+    for (const project of org.projects) {
+      // Ensure the project has the minimum required data
+      if (!project || !project.title || !project.project_url || !project.description) {
+        continue;
+      }
+
+      // Trim and validate string fields
+      const projectTitle = project.title.trim();
+      const projectUrl = project.project_url.trim();
+      const projectDescription = project.description.trim();
+
+      if (!projectTitle || !projectUrl || !projectDescription) {
+        continue; // Skip projects with empty required fields after trimming
+      }
+
+      // Format the data to match your ScrapedProject type
+      const scrapedProject: ScrapedProject = {
+        year: year,
+        program: program, // Use the program name passed to the function (e.g., "GSoC")
+        organizationName: organizationName,
+        projectName: projectTitle,
+        projectUrl: projectUrl,
+        topics: topics,
+        description: projectDescription,
+      };
+
+      projects.push(scrapedProject);
+    }
+  }
+
+  console.log(`Successfully formatted ${projects.length} projects.`);
   return projects;
 }
