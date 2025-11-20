@@ -10,5 +10,11 @@ export const authClient = createAuthClient({
   baseURL: `${publicUrl}/api/auth`, 
 });
 
-// For easier usage in client components, export core methods:
-export const { signIn, signUp, signOut, useSession } = authClient;
+export const signIn = authClient.signIn;
+export const signUp = authClient.signUp;
+export const signOut = authClient.signOut;
+
+export function useSession(...args: any) {
+  // @ts-ignore: This ensures the hook is always treated as a callable function
+  return (authClient as any).useSession(...args);
+}
