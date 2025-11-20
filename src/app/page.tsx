@@ -69,7 +69,10 @@ export default function Home() {
                     Find. Contribute. Repeat.
                   </span>
                   {/* Right arrow button */}
-                  <button className="bg-white rounded-full p-1.5 flex-shrink-0 hover:bg-gray-100 transition-colors">
+                  <button
+                    suppressHydrationWarning
+                    className="bg-white rounded-full p-1.5 flex-shrink-0 hover:bg-gray-100 transition-colors"
+                  >
                     <svg
                       className="w-3 h-3 text-black"
                       fill="none"

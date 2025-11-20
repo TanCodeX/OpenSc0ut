@@ -4,10 +4,11 @@
 import { useState, useRef } from "react";
 import { Header } from "../../components";
 import Link from "next/link";
-// Assuming you created and exported 'signIn' from src/lib/auth-client.ts
-import { signIn } from "@/lib/auth-client"; 
+import { useRouter } from "next/navigation";
+import { signIn } from "@/lib/auth-client";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,15 +26,16 @@ export default function LoginPage() {
     setError(null);
     
     try {
-      // Use signIn.email for credentials login
-      const { error: authError } = await signIn.email({ 
+      const { error: authError } = await signIn.email({
         email,
         password,
-        callbackURL: "/", 
+        callbackURL: "/",
       });
-      
+
       if (authError) {
         setError(authError.message || "Failed to sign in.");
+      } else {
+        router.push("/");
       }
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred.");
@@ -45,12 +47,18 @@ export default function LoginPage() {
   const handleGitHubSignIn = async () => {
     setIsGithubLoading(true);
     try {
-      await signIn.social({
-        provider: "github", //
-        // Optional: callbackURL is usually handled by the provider flow
+      const { error: authError } = await signIn.social({
+        provider: "github",
+        callbackURL: "/",
       });
+
+      if (authError) {
+        setError(authError.message || "GitHub sign in failed. Try again.");
+      }
+    } catch (err: any) {
+      setError(err.message || "GitHub sign in failed. Try again.");
     } finally {
-      setIsGithubLoading(false); // In practice, redirect usually happens, but for fallback
+      setIsGithubLoading(false);
     }
   };
 

@@ -38,6 +38,7 @@ function ProfileAvatar({ user }: any) {
         </div>
 
         <button
+          suppressHydrationWarning
           onClick={() =>
             authClient.signOut().then(() => (window.location.href = "/"))
           }
@@ -75,6 +76,7 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-[100] pt-4 pb-3">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
+          suppressHydrationWarning
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3 }}
@@ -125,6 +127,7 @@ export default function Header() {
             ) : (
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <button
+                  suppressHydrationWarning
                   onClick={(e) => handleNavigation("/login", e)}
                   className="bg-[#FF0B55] hover:bg-black hover:border-[#FF0B55] hover:border-2 hover:shadow-[0_0_15px_rgba(255,11,85,0.5)] text-black hover:text-white px-4 py-2 rounded-full font-semibold text-sm"
                 >
