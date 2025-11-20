@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { ProgramProjectCard } from "@/components/ProgramProjectCard";
+import { Header } from "@/components";
 
 interface ProgramProject {
   id: string;
@@ -36,6 +37,25 @@ export default function GsocPage() {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [refreshIndex, setRefreshIndex] = useState(0);
+  const [isYearDropdownOpen, setIsYearDropdownOpen] = useState(false);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (isYearDropdownOpen && !target.closest('.year-dropdown-container')) {
+        setIsYearDropdownOpen(false);
+      }
+    };
+
+    if (isYearDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isYearDropdownOpen]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -80,9 +100,11 @@ export default function GsocPage() {
   const resultsLabel = `${filteredProjects.length} project${filteredProjects.length === 1 ? "" : "s"}`;
 
   return (
-    <section className="relative overflow-hidden">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(255,11,85,0.2),_transparent_65%)]" />
-      <div className="container mx-auto px-5 py-24">
+    <div className="min-h-screen bg-black text-white">
+      <Header />
+      <section className="relative overflow-hidden min-h-screen bg-black">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(255,11,85,0.2),_transparent_65%)]" />
+        <div className="container mx-auto px-5 py-24 pt-32">
         <header className="mb-12 max-w-4xl mx-auto text-center">
           <span className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.25em] text-[#FF0B55]">
             Open Source Programs
@@ -95,21 +117,50 @@ export default function GsocPage() {
           </p>
         </header>
 
-        <section className="mb-10 max-w-5xl mx-auto flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur">
+        <section className="mb-10 max-w-5xl mx-auto flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur z-20">
           <div className="grid gap-4 md:grid-cols-2">
             <label className="flex flex-col gap-2 text-sm text-gray-300">
               <span className="font-medium text-white">Year</span>
-              <select
-                value={year}
-                onChange={(e) => setYear(Number(e.target.value))}
-                className="h-11 rounded-lg border border-white/10 bg-black/40 px-3 text-sm text-white shadow-sm outline-none focus:border-[#FF0B55] focus:ring-1 focus:ring-[#FF0B55]"
-              >
-                {YEARS.map((optionYear) => (
-                  <option key={optionYear} value={optionYear}>
-                    {optionYear}
-                  </option>
-                ))}
-              </select>
+              <div className="relative year-dropdown-container">
+                <button
+                  type="button"
+                  onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
+                  className="w-full h-11 px-4 py-2 bg-black/30 border border-[hsla(0,1.10%,36.10%,0.44)] rounded-full text-left text-gray-300 flex justify-between items-center hover:border-gray-500 transition-colors"
+                >
+                  <span className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    {year}
+                  </span>
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {isYearDropdownOpen && (
+                  <div className="absolute z-50 mt-1 w-full bg-black/30 backdrop-blur-md border border-[hsla(0,1.10%,36.10%,0.44)] rounded-xl shadow-lg">
+                    <div className="p-2 flex flex-col gap-1">
+                      {YEARS.map((optionYear) => (
+                        <button
+                          key={optionYear}
+                          type="button"
+                          onClick={() => {
+                            setYear(optionYear);
+                            setIsYearDropdownOpen(false);
+                          }}
+                          className={`w-full text-left px-3 py-2 text-sm rounded-lg transition-colors ${
+                            year === optionYear
+                              ? "bg-black text-white"
+                              : "text-gray-300 hover:bg-black/50"
+                          }`}
+                        >
+                          {optionYear}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </label>
 
             <label className="flex flex-col gap-2 text-sm text-gray-300">
@@ -118,7 +169,7 @@ export default function GsocPage() {
                 <input
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="h-11 w-full rounded-lg border border-white/10 bg-black/40 px-3 pl-9 text-sm text-white shadow-sm outline-none focus:border-[#FF0B55] focus:ring-1 focus:ring-[#FF0B55]"
+                  className="h-11 w-full rounded-full border border-[hsla(0,1.10%,36.10%,0.44)] bg-black/30 px-3 pl-9 text-sm text-gray-300 placeholder-gray-500 hover:border-gray-500 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
                   placeholder="Search by organization, project, or topics"
                 />
                 <svg
@@ -210,7 +261,8 @@ export default function GsocPage() {
             ))}
           </div>
         )}
-      </div>
-    </section>
+        </div>
+      </section>
+    </div>
   );
 }
