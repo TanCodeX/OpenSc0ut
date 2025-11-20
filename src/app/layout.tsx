@@ -17,7 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body className={`${inter.className} bg-black text-white`}>
+      <body
+        className={`${inter.className} bg-black text-white`}
+        suppressHydrationWarning
+      >
         {/* <GlobalCursor />  <-- REMOVED FROM HERE */}
         <PageTransition>{children}</PageTransition>
       </body>
