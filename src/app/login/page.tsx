@@ -1,52 +1,22 @@
 // src/app/login/page.tsx
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Header } from "../../components";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "@/lib/auth-client";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // Removed email/password state and related handlers
   const [error, setError] = useState<string | null>(null);
-  const formRef = useRef<HTMLFormElement | null>(null);
   const [isGithubLoading, setIsGithubLoading] = useState(false);
   
-  const handleEmailScroll = () => {
-    formRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const handleEmailSignIn = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError(null);
-    
-    try {
-      const { error: authError } = await signIn.email({
-        email,
-        password,
-        callbackURL: "/",
-      });
-
-      if (authError) {
-        setError(authError.message || "Failed to sign in.");
-      } else {
-        router.push("/");
-      }
-    } catch (err: any) {
-      setError(err.message || "An unexpected error occurred.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const handleGitHubSignIn = async () => {
     setIsGithubLoading(true);
+    setError(null); // Clear previous errors
     try {
+      // Use signIn.social directly
       const { error: authError } = await signIn.social({
         provider: "github",
         callbackURL: "/",
@@ -55,6 +25,7 @@ export default function LoginPage() {
       if (authError) {
         setError(authError.message || "GitHub sign in failed. Try again.");
       }
+      // The better-auth library handles the redirect after successful sign-in
     } catch (err: any) {
       setError(err.message || "GitHub sign in failed. Try again.");
     } finally {
@@ -67,13 +38,18 @@ export default function LoginPage() {
       <Header />
       <main className="pt-20">
         <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          {/* Header Section */}
-          {/* ... */}
-
-          {/* Login Form */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-white mb-2">
+              Sign In to <span className="text-[#FF0B55]">OpenSc0ut</span>
+            </h1>
+            <p className="text-gray-400">
+              Only GitHub login is supported for seamless open source contribution.
+            </p>
+          </div>
+          
           <div className="bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] rounded-xl shadow-lg p-8">
             
-            {/* 💡 GitHub Sign In Button */}
+            {/* 💡 GitHub Sign In Button - Now the only button */}
             <button
               type="button"
               onClick={handleGitHubSignIn}
@@ -83,100 +59,19 @@ export default function LoginPage() {
               {isGithubLoading ? (
                 <>
                   <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"></div>
-                  Signing in...
+                  Redirecting to GitHub...
                 </>
               ) : (
                 "Sign In with GitHub"
               )}
             </button>
             
-            <div className="relative flex justify-center text-xs uppercase mb-6">
-                <button
-                  type="button"
-                  onClick={handleEmailScroll}
-                  className="bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md px-2 text-gray-500 underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF0B55] rounded"
-                  aria-label="Scroll to email sign in form"
-                >
-                    Or continue with email
-                </button>
-            </div>
-
-            <form ref={formRef} onSubmit={handleEmailSignIn} className="space-y-6">
-              {/* Email Input */}
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  autoComplete="email"
-                  required
-                  className="mt-1 p-3 block w-full rounded-md bg-gray-900 text-white border border-gray-700 focus:border-[#FF0B55] focus:outline-none"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  disabled={isSubmitting}
-                />
+            {error && (
+              <div className="text-center text-red-400 text-sm mt-4">
+                ✗ {error}
               </div>
-              {/* Password Input */}
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-300">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  required
-                  minLength={8}
-                  className="mt-1 p-3 block w-full rounded-md bg-gray-900 text-white border border-gray-700 focus:border-[#FF0B55] focus:outline-none"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  disabled={isSubmitting}
-                />
-                <div className="flex justify-end mt-1">
-                  <Link href="/reset-password" className="text-xs text-[#FF0B55] hover:text-[#e00a4c] underline">
-                    Forgot password?
-                  </Link>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-[#FF0B55] hover:bg-black hover:border-[#FF0B55] hover:border-2 hover:shadow-[0_0_15px_rgba(255,11,85,0.5)] text-black hover:text-white font-semibold px-6 py-3 text-sm rounded-full border-2 border-transparent transition-all duration-100 ease-out inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-current"></div>
-                    Signing In...
-                  </>
-                ) : (
-                  "Sign In"
-                )}
-              </button>
-
-              {error && (
-                <div className="text-center text-red-400 text-sm">
-                  {/* Check if it's an unverified error from Better Auth */}
-                  {error.includes("verify") || error.includes("email") || error.includes("unverified") || error.includes("403") ? (
-                    <>✗ Please verify your email address. (Check your inbox for a verification link.)</>
-                  ) : (
-                    <>✗ {error}</>
-                  )}
-                </div>
-              )}
-
-              <div className="text-center text-gray-400 text-sm">
-                Don't have an account?{" "}
-                <Link
-                  href="/signup"
-                  className="text-[#FF0B55] hover:text-[#e00a4c]"
-                >
-                  Sign Up
-                </Link>
-              </div>
-            </form>
+            )}
+            
           </div>
         </div>
       </main>

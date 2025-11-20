@@ -40,36 +40,20 @@ export async function sendEmail({ to, subject, text }: EmailPayload) {
 // within the main config object, not imported as separate 'plugins'.
 
 export const auth = betterAuth({
-  adapter: prismaAdapter(prisma),
-  secret: process.env.BETTER_AUTH_SECRET!,
   socialProviders: {
     github: {
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     },
   },
-  emailAndPassword: {
-    enabled: true,
-    requireEmailVerification: false,
-    sendResetPassword: async ({ user, url }) => {
-      await sendEmail({
-        to: user.email,
-        subject: "Reset your OpenSc0ut password",
-        text: `Click here to reset your password: ${url}`,
-      });
-    },
-    onPasswordReset: async ({ user }) => {
-      console.log(`Password for user ${user.email} reset.`);
-    },
+  emailAndPassword: { // Disabled email and password login
+    enabled: false,
   },
   emailVerification: {
-    sendOnSignUp: true,
+    sendOnSignUp: false, // Disabled email verification
     sendVerificationEmail: async ({ user, url }) => {
-      await sendEmail({
-        to: user.email,
-        subject: "Verify your OpenSc0ut email",
-        text: `Please verify by clicking: ${url}`,
-      });
+      // Stub function to prevent errors, as it will never be called
+      console.log(`Skipping email verification for ${user.email}`);
     },
   },
   plugins: [nextCookies()],

@@ -56,7 +56,7 @@ export default function Header() {
   const router = useRouter();
 
   // ✅ Correct: Better Auth session hook
-  const { data: session, isLoading } = useSession();
+  const { data: session,} = useSession();
   const user = session?.user;
 
   const handleNavigation = (href: string, e: React.MouseEvent) => {
@@ -122,7 +122,7 @@ export default function Header() {
 
           {/* Right Section */}
           <div className="flex items-center space-x-4">
-            {!isLoading && user ? (
+            {user ? (
               <ProfileAvatar user={user} />
             ) : (
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
