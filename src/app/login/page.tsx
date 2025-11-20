@@ -94,8 +94,44 @@ export default function LoginPage() {
             </div>
 
             <form ref={formRef} onSubmit={handleEmailSignIn} className="space-y-6">
-              {/* ... Email Input ... */}
-              {/* ... Password Input ... */}
+              {/* Email Input */}
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  autoComplete="email"
+                  required
+                  className="mt-1 p-3 block w-full rounded-md bg-gray-900 text-white border border-gray-700 focus:border-[#FF0B55] focus:outline-none"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  disabled={isSubmitting}
+                />
+              </div>
+              {/* Password Input */}
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  required
+                  minLength={8}
+                  className="mt-1 p-3 block w-full rounded-md bg-gray-900 text-white border border-gray-700 focus:border-[#FF0B55] focus:outline-none"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  disabled={isSubmitting}
+                />
+                <div className="flex justify-end mt-1">
+                  <Link href="/reset-password" className="text-xs text-[#FF0B55] hover:text-[#e00a4c] underline">
+                    Forgot password?
+                  </Link>
+                </div>
+              </div>
 
               <button
                 type="submit"
@@ -114,14 +150,19 @@ export default function LoginPage() {
 
               {error && (
                 <div className="text-center text-red-400 text-sm">
-                  ✗ {error}
+                  {/* Check if it's an unverified error from Better Auth */}
+                  {error.includes("verify") || error.includes("email") || error.includes("unverified") || error.includes("403") ? (
+                    <>✗ Please verify your email address. (Check your inbox for a verification link.)</>
+                  ) : (
+                    <>✗ {error}</>
+                  )}
                 </div>
               )}
 
               <div className="text-center text-gray-400 text-sm">
                 Don't have an account?{" "}
                 <Link
-                  href="/signup" 
+                  href="/signup"
                   className="text-[#FF0B55] hover:text-[#e00a4c]"
                 >
                   Sign Up
