@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 export default function Header() {
   const pathname = usePathname();
@@ -78,8 +79,12 @@ export default function Header() {
           {/* Right Side - Login/Sign Up */}
           <div className="flex items-center space-x-4">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href="/login"
+              {/* Change this Link to use Better Auth's signIn for OAuth or link to custom login */}
+              <button
+                // Example: Trigger GitHub OAuth sign-in
+                // onClick={() => authClient.signIn('github')}
+                // Alternatively, link to your custom login page:
+                onClick={(e) => handleNavigation('/login', e)}
                 className="bg-[#FF0B55] hover:bg-black hover:border-[#FF0B55] hover:border-2 hover:shadow-[0_0_15px_rgba(255,11,85,0.5)] text-black hover:text-white font-semibold px-4 py-2 text-sm rounded-full border-2 border-transparent transition-all duration-100 ease-out inline-flex items-center gap-2"
               >
                 <svg
@@ -97,7 +102,7 @@ export default function Header() {
                   />
                 </svg>
                 Login
-              </Link>
+              </button>
             </motion.div>
           </div>
         </motion.div>

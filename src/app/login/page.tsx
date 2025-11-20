@@ -1,81 +1,101 @@
+// src/app/login/page.tsx
 "use client";
 
-import { useState } from "react";
-import { Header } from "../../components"; // Assuming components are accessible
+import { useState, useRef } from "react";
+import { Header } from "../../components";
 import Link from "next/link";
+// Assuming you created and exported 'signIn' from src/lib/auth-client.ts
+import { signIn } from "@/lib/auth-client"; 
 
 export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const [isGithubLoading, setIsGithubLoading] = useState(false);
+  
+  const handleEmailScroll = () => {
+    formRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Handle login logic here
-    console.log("Logging in with:", email, password);
-    // Simulate API call
-    setTimeout(() => {
+    setError(null);
+    
+    try {
+      // Use signIn.email for credentials login
+      const { error: authError } = await signIn.email({ 
+        email,
+        password,
+        callbackURL: "/", 
+      });
+      
+      if (authError) {
+        setError(authError.message || "Failed to sign in.");
+      }
+    } catch (err: any) {
+      setError(err.message || "An unexpected error occurred.");
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
+  };
+
+  const handleGitHubSignIn = async () => {
+    setIsGithubLoading(true);
+    try {
+      await signIn.social({
+        provider: "github", //
+        // Optional: callbackURL is usually handled by the provider flow
+      });
+    } finally {
+      setIsGithubLoading(false); // In practice, redirect usually happens, but for fallback
+    }
   };
 
   return (
     <div className="min-h-screen bg-black text-white">
       <Header />
-
       <main className="pt-20">
         <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-16">
           {/* Header Section */}
-          <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 whitespace-nowrap items-center justify-center flex">
-              Welcome <span className="text-[#FF0B55]">Back</span>
-            </h1>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Sign in to continue to OpenSc0ut.
-            </p>
-          </div>
+          {/* ... */}
 
           {/* Login Form */}
           <div className="bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] rounded-xl shadow-lg p-8">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-semibold text-white mb-2"
+            
+            {/* 💡 GitHub Sign In Button */}
+            <button
+              type="button"
+              onClick={handleGitHubSignIn}
+              className={`w-full mb-6 text-black font-semibold px-6 py-3 text-sm rounded-full transition-colors inline-flex items-center justify-center gap-2 ${isGithubLoading ? "bg-[#FF0B55] text-white cursor-not-allowed opacity-75" : "bg-white hover:bg-gray-100"}`}
+              disabled={isGithubLoading}
+            >
+              {isGithubLoading ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"></div>
+                  Signing in...
+                </>
+              ) : (
+                "Sign In with GitHub"
+              )}
+            </button>
+            
+            <div className="relative flex justify-center text-xs uppercase mb-6">
+                <button
+                  type="button"
+                  onClick={handleEmailScroll}
+                  className="bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md px-2 text-gray-500 underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF0B55] rounded"
+                  aria-label="Scroll to email sign in form"
                 >
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="w-full px-4 py-2 bg-black/30 border border-[hsla(0,1.10%,36.10%,0.44)] rounded-full text-gray-300 placeholder-gray-500 hover:border-gray-500 transition-colors focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/50 focus:border-transparent"
-                  placeholder="your@email.com"
-                />
-              </div>
+                    Or continue with email
+                </button>
+            </div>
 
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-semibold text-white mb-2"
-                >
-                  Password *
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="w-full px-4 py-2 bg-black/30 border border-[hsla(0,1.10%,36.10%,0.44)] rounded-full text-gray-300 placeholder-gray-500 hover:border-gray-500 transition-colors focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/50 focus:border-transparent"
-                  placeholder="Your password"
-                />
-              </div>
+            <form ref={formRef} onSubmit={handleEmailSignIn} className="space-y-6">
+              {/* ... Email Input ... */}
+              {/* ... Password Input ... */}
 
               <button
                 type="submit"
@@ -92,10 +112,16 @@ export default function LoginPage() {
                 )}
               </button>
 
+              {error && (
+                <div className="text-center text-red-400 text-sm">
+                  ✗ {error}
+                </div>
+              )}
+
               <div className="text-center text-gray-400 text-sm">
                 Don't have an account?{" "}
                 <Link
-                  href="/signup" // Assuming a separate signup route
+                  href="/signup" 
                   className="text-[#FF0B55] hover:text-[#e00a4c]"
                 >
                   Sign Up
@@ -105,8 +131,6 @@ export default function LoginPage() {
           </div>
         </div>
       </main>
-      
-      {/* You can optionally add the footer here */}
     </div>
   );
 }

@@ -9,16 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next-auth/prisma-adapter": "^1.0.7",
     "@prisma/client": "^6.17.1",
     "@types/react": "18.2.31",
     "@types/react-dom": "18.2.14",
     "autoprefixer": "10.4.16",
     "axios": "^1.5.1",
+    "better-auth": "^1.3.34",
     "framer-motion": "^10.18.0",
     "gsap": "^3.13.0",
     "next": "^15.3.2",
-    "next-auth": "^4.24.11",
     "nodemailer": "^7.0.10",
     "postcss": "8.4.31",
     "react": "18.2.0",
