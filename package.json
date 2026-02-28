@@ -17,7 +17,7 @@
     "better-auth": "^1.3.34",
     "framer-motion": "^10.18.0",
     "gsap": "^3.13.0",
-    "next": "^15.3.2",
+    "next": "15.3.8",
     "nodemailer": "^7.0.10",
     "postcss": "8.4.31",
     "react": "18.2.0",
