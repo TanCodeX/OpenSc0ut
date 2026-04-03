@@ -324,7 +324,7 @@ export default function ContactUs() {
           {/* Re-add the container here to keep the text centered */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-center text-gray-400 text-sm">
-              © 2024 OpenSc0ut. Built with Next.js and GitHub API.
+              © 2025 OpenSc0ut. Built with Next.js and GitHub API.
             </p>
           </div>
         </div>
