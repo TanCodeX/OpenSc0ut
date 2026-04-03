@@ -303,7 +303,7 @@ export default function Home() {
               <h3 className="text-xl font-semibold text-white mb-2">No repositories found</h3>
               <p className="text-gray-400 mb-6">Try adjusting your search or filters to find what you're looking for.</p>
               <button
-                onClick={() => handleSearch({ sort: "stars", order: "desc", page: 1, query: "" })}
+                onClick={() => handleSearch({ sort: "stars", order: "desc", page: 1 })}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#FF0B55] text-black font-medium hover:bg-[#FF0B55]/90 transition-colors"
               >
                 Clear Filters
