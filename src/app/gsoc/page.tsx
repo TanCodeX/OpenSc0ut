@@ -117,7 +117,7 @@ export default function GsocPage() {
           </p>
         </header>
 
-        <section className="mb-10 max-w-5xl mx-auto flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur z-20">
+        <section className="relative z-50 mb-10 max-w-5xl mx-auto flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur">
           <div className="grid gap-4 md:grid-cols-2">
             <label className="flex flex-col gap-2 text-sm text-gray-300">
               <span className="font-medium text-white">Year</span>
@@ -138,7 +138,7 @@ export default function GsocPage() {
                   </svg>
                 </button>
                 {isYearDropdownOpen && (
-                  <div className="absolute z-50 mt-1 w-full bg-black/30 backdrop-blur-md border border-[hsla(0,1.10%,36.10%,0.44)] rounded-xl shadow-lg">
+                  <div className="absolute z-[1000] mt-1 w-full bg-black backdrop-blur-xl border border-white/20 rounded-xl shadow-2xl shadow-black/50">
                     <div className="p-2 flex flex-col gap-1">
                       {YEARS.map((optionYear) => (
                         <button
@@ -190,7 +190,7 @@ export default function GsocPage() {
             </label>
           </div>
 
-          <div className="flex flex-col gap-2 text-xs text-gray-400 sm:flex-row sm:items-center sm:justify-between">
+          <div className=" z-20 flex flex-col gap-2 text-xs text-gray-400 sm:flex-row sm:items-center sm:justify-between">
             <span className="text-center sm:text-left">
               {loading ? (
                 <span>Loading data for <span className="font-semibold text-white">GSoC</span> {year}...</span>
@@ -211,7 +211,7 @@ export default function GsocPage() {
         </section>
 
         {loading ? (
-          <div className="max-w-6xl mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="relative z-10 max-w-6xl mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, idx) => (
               <SkeletonCard key={`skeleton-${idx}`} />
             ))}
@@ -255,7 +255,7 @@ export default function GsocPage() {
             </div>
           </div>
         ) : (
-          <div className="max-w-6xl mx-auto grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="relative z-10 max-w-6xl mx-auto grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {filteredProjects.map((project) => (
               <ProgramProjectCard key={project.id} project={project} />
             ))}

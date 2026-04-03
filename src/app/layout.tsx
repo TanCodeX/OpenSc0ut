@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { PageTransition } from "@/components"; // Removed GlobalCursor import
 import "../styles/globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-jakarta",
+});
 
 export const metadata: Metadata = {
   title: "OpenSc0ut - Repository Explorer",
@@ -18,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className={`${inter.className} bg-black text-white`}
+        className={`${jakarta.variable} font-sans bg-black text-white`}
         suppressHydrationWarning
       >
         {/* <GlobalCursor />  <-- REMOVED FROM HERE */}

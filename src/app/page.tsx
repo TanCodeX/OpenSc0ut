@@ -40,72 +40,172 @@ export default function Home() {
       <GlobalCursor targetRef={heroRef} /> {/* <-- 2. ADD IT HERE */}
 
       <main>
-        {/* Hero Section */}
+        {/* Hero Section - Modern Grid Design */}
         <div
-          ref={heroRef} // <-- 3. THIS REF IS PASSED TO GLOBALCURSOR
-          className="relative h-screen flex justify-center items-center overflow-hidden"
+          ref={heroRef}
+          className="relative min-h-screen flex justify-center items-center overflow-hidden"
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full pb-32">
-            <div className="hero-content bg-black bg-opacity-95 backdrop-blur-sm py-12 px-8 rounded-lg flex flex-col items-center justify-center text-center">
-              {/* Search Prompt */}
-              <div className="flex justify-center mb-8 rotating-border-glow">
-                <div className="bg-black bg-opacity-95 backdrop-blur-md border border-white border-opacity-20 rounded-full px-4 py-2 flex items-center space-x-3 max-w-sm ">
-                  {/* ... (rest of hero content) ... */}
-                  <svg
-                    className="w-4 h-4 text-white flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 10V3L4 14h7v7l9-11h-7z"
-                    />
-                  </svg>
-                  {/* Text */}
-                  <span className="text-white text-base font-extralight flex-1 text-center">
-                    Find. Contribute. Repeat.
-                  </span>
-                  {/* Right arrow button */}
-                  <button
-                    suppressHydrationWarning
-                    className="bg-white rounded-full p-1.5 flex-shrink-0 hover:bg-gray-100 transition-colors"
-                  >
-                    <svg
-                      className="w-3 h-3 text-black"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
+          {/* Animated Grid Background */}
+          <div className="absolute inset-0 z-0">
+            {/* Main grid - more visible */}
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `
+                  linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px)
+                `,
+                backgroundSize: '50px 50px'
+              }}
+            />
+
+            {/* Secondary finer grid */}
+            <div
+              className="absolute inset-0 opacity-30"
+              style={{
+                backgroundImage: `
+                  linear-gradient(rgba(255, 11, 85, 0.08) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(255, 11, 85, 0.08) 1px, transparent 1px)
+                `,
+                backgroundSize: '100px 100px'
+              }}
+            />
+
+            {/* Glowing gradient orbs */}
+            <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-[#FF0B55]/25 rounded-full blur-[128px] animate-pulse" />
+            <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-[#FF0B55]/15 rounded-full blur-[128px] animate-pulse delay-1000" />
+
+            {/* Corner accents */}
+            <div className="absolute top-0 left-0 w-32 h-32 border-t-2 border-l-2 border-[#FF0B55]/30 rounded-tl-3xl" />
+            <div className="absolute bottom-0 right-0 w-32 h-32 border-b-2 border-r-2 border-[#FF0B55]/30 rounded-br-3xl" />
+
+            {/* Floating grid particles */}
+            <div className="absolute top-1/3 left-1/4 w-2 h-2 bg-[#FF0B55]/60 rounded-full animate-ping" style={{ animationDuration: '3s' }} />
+            <div className="absolute top-2/3 right-1/3 w-2 h-2 bg-[#FF0B55]/60 rounded-full animate-ping" style={{ animationDuration: '4s', animationDelay: '1s' }} />
+            <div className="absolute top-1/2 left-2/3 w-1 h-1 bg-white/40 rounded-full animate-ping" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }} />
+          </div>
+
+          {/* Content Container */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+              {/* Left Column - Text Content */}
+              <div className="text-center lg:text-left space-y-8">
+                {/* Badge */}
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+                  <span className="w-2 h-2 bg-[#FF0B55] rounded-full animate-pulse" />
+                  <span className="text-sm text-gray-300">Now Live</span>
+                </div>
+
+                {/* Main Heading */}
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight">
+                  <span className="block text-gray-400 text-3xl md:text-4xl mb-2 font-light">Introducing</span>
+                  <AnimatedText text="OpenSc0ut" className="text-white" />
+                </h1>
+
+                {/* Subheading */}
+                <p className="text-lg md:text-xl text-gray-400 max-w-xl mx-auto lg:mx-0">
+                  Find your next project, make your first commit, and grow as a developer — all in one place.
+                </p>
+
+                {/* Search Prompt Pill */}
+                <div className="flex justify-center lg:justify-start">
+                  <div className="rotating-border-glow">
+                    <div className="bg-black/80 backdrop-blur-md border border-white/20 rounded-full px-5 py-3 flex items-center space-x-3">
+                      <svg
+                        className="w-5 h-5 text-[#FF0B55] flex-shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13 10V3L4 14h7v7l9-11h-7z"
+                        />
+                      </svg>
+                      <span className="text-white text-sm font-medium">
+                        Find. Contribute. Repeat.
+                      </span>
+                      <button
+                        suppressHydrationWarning
+                        className="bg-[#FF0B55] rounded-full p-1.5 flex-shrink-0 hover:bg-[#FF0B55]/80 transition-colors"
+                      >
+                        <svg
+                          className="w-3 h-3 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <h1 className="text-5xl md:text-7xl text-center mb-8 leading-tight">
-                Introducing{" "}
-                <AnimatedText text="OpenSc0ut" className="font-extrabold" />
-              </h1>
-              {/* Subheading */}
-              <p className="text-lg text-center text-gray-400 mb-8 max-w-2xl">
-                Find your next project, make your first commit, and grow as a
-                developer — all in one place.
-              </p>
+
+              {/* Right Column - Grid Cards */}
+              <div className="hidden lg:grid grid-cols-2 gap-4">
+                {/* Card 1 */}
+                <div className="group relative bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 transition-all duration-300 hover:scale-105">
+                  <div className="w-12 h-12 bg-[#FF0B55]/20 rounded-xl flex items-center justify-center mb-4">
+                    <svg className="w-6 h-6 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-1">Discover</h3>
+                  <p className="text-sm text-gray-400">Explore curated open source projects</p>
+                </div>
+
+                {/* Card 2 */}
+                <div className="group relative bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 transition-all duration-300 hover:scale-105 translate-y-8">
+                  <div className="w-12 h-12 bg-[#FF0B55]/20 rounded-xl flex items-center justify-center mb-4">
+                    <svg className="w-6 h-6 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-1">Contribute</h3>
+                  <p className="text-sm text-gray-400">Make meaningful contributions</p>
+                </div>
+
+                {/* Card 3 */}
+                <div className="group relative bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 transition-all duration-300 hover:scale-105">
+                  <div className="w-12 h-12 bg-[#FF0B55]/20 rounded-xl flex items-center justify-center mb-4">
+                    <svg className="w-6 h-6 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-1">Community</h3>
+                  <p className="text-sm text-gray-400">Join developers worldwide</p>
+                </div>
+
+                {/* Card 4 */}
+                <div className="group relative bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 transition-all duration-300 hover:scale-105 translate-y-8">
+                  <div className="w-12 h-12 bg-[#FF0B55]/20 rounded-xl flex items-center justify-center mb-4">
+                    <svg className="w-6 h-6 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-1">Grow</h3>
+                  <p className="text-sm text-gray-400">Level up your skills</p>
+                </div>
+              </div>
             </div>
           </div>
+
           {/* Scroll Indicator */}
-          <div className="scroll-indicator absolute bottom-24 left-1/2 transform -translate-x-1/2">
+          <div className="scroll-indicator absolute bottom-8 left-1/2 transform -translate-x-1/2">
             <div className="flex flex-col items-center space-y-2">
-              <span className="text-gray-400 text-sm">Scroll to explore</span>
-              <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
-                <div className="w-1 h-3 bg-gray-400 rounded-full mt-2 animate-bounce"></div>
+              <span className="text-gray-500 text-xs uppercase tracking-widest">Scroll to explore</span>
+              <div className="w-6 h-10 border border-gray-700 rounded-full flex justify-center">
+                <div className="w-1 h-2 bg-[#FF0B55] rounded-full mt-2 animate-bounce"></div>
               </div>
             </div>
           </div>
@@ -114,41 +214,123 @@ export default function Home() {
         {/* Content Section */}
         <div
           ref={contentRef}
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 pb-24 relative z-10"
         >
-          {/* ... (rest of the page) ... */}
-          <SearchFilter onSearch={handleSearch} initialParams={searchParams} />
+          {/* Section Header */}
+          <div className="mb-12 relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-[#FF0B55]/10 to-transparent blur-3xl -z-10" />
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-1 h-8 bg-[#FF0B55] rounded-full" />
+              <h2 className="text-2xl md:text-3xl font-bold text-white">Trending Repositories</h2>
+            </div>
+            <p className="text-gray-400 max-w-2xl">
+              Discover the most popular and actively maintained projects from the community
+            </p>
+          </div>
+
+          {/* Search Filter */}
+          <div className="mb-10">
+            <SearchFilter onSearch={handleSearch} initialParams={searchParams} />
+          </div>
+
+          {/* Stats Bar */}
+          {!loading && !error && repositories.length > 0 && (
+            <div className="mb-8 flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <div className="flex items-center gap-6">
+                <div>
+                  <p className="text-xs text-gray-500 uppercase tracking-wider">Showing</p>
+                  <p className="text-xl font-bold text-white">{repositories.length}</p>
+                </div>
+                <div className="w-px h-10 bg-white/10" />
+                <div>
+                  <p className="text-xs text-gray-500 uppercase tracking-wider">Total</p>
+                  <p className="text-xl font-bold text-white">{totalCount.toLocaleString()}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-400">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                </svg>
+                <span>Page {searchParams.page} of {totalPages}</span>
+              </div>
+            </div>
+          )}
 
           {loading ? (
-            <div className="flex justify-center items-center py-20">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FF0B55]"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="rounded-2xl border border-white/10 bg-white/5 p-6 animate-pulse">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-white/10" />
+                    <div className="w-20 h-6 rounded-full bg-white/10" />
+                  </div>
+                  <div className="h-6 w-3/4 rounded bg-white/10 mb-2" />
+                  <div className="h-4 w-full rounded bg-white/10 mb-2" />
+                  <div className="h-4 w-2/3 rounded bg-white/10 mb-4" />
+                  <div className="flex gap-2">
+                    <div className="w-16 h-6 rounded bg-white/10" />
+                    <div className="w-16 h-6 rounded bg-white/10" />
+                  </div>
+                </div>
+              ))}
             </div>
           ) : error ? (
-            <div className="bg-gray-900 border border-red-800 text-red-400 px-4 py-3 rounded-md">
-              {error}
+            <div className="rounded-2xl border border-red-500/30 bg-red-500/10 p-8 text-center">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-red-500/20 flex items-center justify-center">
+                <svg className="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-red-300 mb-2">Something went wrong</h3>
+              <p className="text-red-400/80 text-sm mb-4">{error}</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/20 border border-red-500/30 text-red-300 hover:bg-red-500/30 transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                Try Again
+              </button>
             </div>
           ) : repositories.length === 0 ? (
-            <div className="text-center py-20">
-              <p className="text-gray-300 text-lg">
-                No repositories found matching your criteria.
-              </p>
-              <p className="text-gray-400">
-                Try adjusting your search filters.
-              </p>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-12 text-center">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-white/5 flex items-center justify-center">
+                <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">No repositories found</h3>
+              <p className="text-gray-400 mb-6">Try adjusting your search or filters to find what you're looking for.</p>
+              <button
+                onClick={() => handleSearch({ sort: "stars", order: "desc", page: 1, query: "" })}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#FF0B55] text-black font-medium hover:bg-[#FF0B55]/90 transition-colors"
+              >
+                Clear Filters
+              </button>
             </div>
           ) : (
             <>
-              <p className="text-sm text-gray-400 mb-4">
-                Showing {repositories.length} of {totalCount.toLocaleString()}{" "}
-                repositories
-              </p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {repositories.map((repo) => (
-                  <RepositoryCard key={repo.id} repository={repo} />
+                {repositories.map((repo, index) => (
+                  <div
+                    key={repo.id}
+                    className="group relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 hover:shadow-lg hover:shadow-[#FF0B55]/10 transition-all duration-300"
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    {/* Hover gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#FF0B55]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+
+                    {/* Card Content */}
+                    <div className="relative z-10">
+                      <RepositoryCard repository={repo} />
+                    </div>
+                  </div>
                 ))}
               </div>
+
               {totalPages > 1 && (
-                <div className="mt-10">
+                <div className="mt-12 flex justify-center">
                   <Pagination
                     currentPage={searchParams.page}
                     totalPages={totalPages}
@@ -161,74 +343,92 @@ export default function Home() {
         </div>
       </main>
 
-       <footer className="bg-black py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Company Information - Wider Column */}
+      {/* Footer */}
+      <footer className="relative border-t border-white/10 bg-gradient-to-b from-black to-gray-950">
+        {/* Glow effect */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-px bg-gradient-to-r from-transparent via-[#FF0B55]/50 to-transparent" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+            {/* Brand */}
             <div className="lg:col-span-2">
-              <div className="flex items-center mb-6">
-                <div className="w-8 h-8 bg-white rounded-sm mr-3 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 24 24">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FF0B55] to-[#FF0B55]/60 flex items-center justify-center">
+                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-white">OpenSc0ut</h3>
+                <h3 className="text-xl font-bold text-white">OpenSc0ut</h3>
               </div>
-              <div className="text-gray-400 text-sm mb-6">
-                <p>Find your next project, make your first commit,</p>
-                <p>and grow as a developer — all in one place.</p>
-              </div>
-              <div className="space-y-4">
-                <div>
-                  <p className="text-gray-400 text-sm mb-1">Email</p>
-                  <p className="text-white">tanmaypatwary@gmail.com</p>
-                </div>
-                <div>
-                  <p className="text-gray-400 text-sm mb-1">GitHub</p>
-                  <p className="text-white">github.com/TanCodeX</p>
-                </div>
+              <p className="text-gray-400 text-sm mb-6 max-w-sm">
+                Discover, contribute, and grow with open source projects from around the world.
+              </p>
+              <div className="flex items-center gap-4">
+                <a href="https://github.com/TanCodeX" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:border-[#FF0B55] hover:text-[#FF0B55] transition-all">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <a href="https://x.com/TanCodeX" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:border-[#FF0B55] hover:text-[#FF0B55] transition-all">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/tanmaypatwary" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:border-[#FF0B55] hover:text-[#FF0B55] transition-all">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
               </div>
             </div>
+
             {/* Quick Links */}
             <div>
-              <h4 className="text-white font-semibold mb-6">Quick links</h4>
-              <ul className="space-y-3 text-gray-400 text-sm">
-                <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
-                <li><a href="/about" className="hover:text-white transition-colors">About us</a></li>
-                <li><a href="/faq" className="hover:text-white transition-colors">FAQ</a></li>
-                <li><a href="/contact-us" className="hover:text-white transition-colors">Contact us</a></li>
+              <h4 className="text-white font-semibold mb-5">Quick Links</h4>
+              <ul className="space-y-3 text-sm">
+                <li><a href="/" className="text-gray-400 hover:text-[#FF0B55] transition-colors">Home</a></li>
+                <li><a href="/about" className="text-gray-400 hover:text-[#FF0B55] transition-colors">About</a></li>
+                <li><a href="/gsoc" className="text-gray-400 hover:text-[#FF0B55] transition-colors">GSOC</a></li>
+                <li><a href="/ai-repo" className="text-gray-400 hover:text-[#FF0B55] transition-colors">AI Repo</a></li>
               </ul>
             </div>
-            {/* Social */}
+
+            {/* Resources */}
             <div>
-              <h4 className="text-white font-semibold mb-6">Social</h4>
-              <ul className="space-y-3 text-gray-400 text-sm">
-                <li><a href="https://github.com/TanCodeX" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a></li>
-                <li><a href="https://x.com/TanCodeX" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Twitter</a></li>
-                <li><a href="https://www.linkedin.com/in/tanmaypatwary" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Discord</a></li>
+              <h4 className="text-white font-semibold mb-5">Resources</h4>
+              <ul className="space-y-3 text-sm">
+                <li><a href="/faq" className="text-gray-400 hover:text-[#FF0B55] transition-colors">FAQ</a></li>
+                <li><a href="/contact-us" className="text-gray-400 hover:text-[#FF0B55] transition-colors">Contact</a></li>
+                <li><a href="/terms" className="text-gray-400 hover:text-[#FF0B55] transition-colors">Terms</a></li>
+                <li><a href="/privacy" className="text-gray-400 hover:text-[#FF0B55] transition-colors">Privacy</a></li>
               </ul>
             </div>
-            {/* Legal */}
+
+            {/* Contact */}
             <div>
-              <h4 className="text-white font-semibold mb-6">Legal</h4>
-              <ul className="space-y-3 text-gray-400 text-sm">
-                <li><a href="/terms" className="hover:text-white transition-colors">Terms of service</a></li>
-                <li><a href="/privacy" className="hover:text-white transition-colors">Privacy policy</a></li>
-                <li><a href="/cookies" className="hover:text-white transition-colors">Cookie policy</a></li>
-                <li><a href="/license" className="hover:text-white transition-colors">MIT License</a></li>
+              <h4 className="text-white font-semibold mb-5">Contact</h4>
+              <ul className="space-y-3 text-sm">
+                <li className="flex items-center gap-2 text-gray-400">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  tanmaypatwary@gmail.com
+                </li>
+                <li className="flex items-center gap-2 text-gray-400">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  India
+                </li>
               </ul>
             </div>
           </div>
-        </div> {/* <-- This </div> now closes the max-w-7xl container */}
 
-        {/* Bottom Border is now outside the container, so it's full-width */}
-        <div className="border-t border-gray-800 mt-12 pt-8">
-          {/* Re-add the container here to keep the text centered */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="text-center text-gray-400 text-sm">
-              © 2025 OpenSc0ut. Built with Next.js and GitHub API.
-            </p>
+          {/* Bottom */}
+          <div className="mt-12 pt-8 border-t border-white/10">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <p className="text-gray-500 text-sm">
+                © {new Date().getFullYear()} OpenSc0ut. All rights reserved.
+              </p>
+              <p className="text-gray-500 text-sm">
+                Built with <span className="text-[#FF0B55]">♥</span> using Next.js & GitHub API
+              </p>
+            </div>
           </div>
         </div>
       </footer>

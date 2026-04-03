@@ -19,7 +19,7 @@ module.exports = {
         'text-muted': "var(--text-muted)",
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-jakarta)', 'system-ui', 'sans-serif'],
       },
       animation: {
         'fade-in-up': 'fadeInUp 0.6s ease-out',

@@ -31,52 +31,51 @@ export const useScrollAnimation = () => {
       opacity: 1
     });
 
-    // Create timeline for hero fade backward animation
-    const tl = gsap.timeline({
+    // Hero section slides up and disappears on scroll
+    gsap.to(hero, {
+      y: -150,
+      opacity: 0,
+      scale: 0.95,
+      duration: 1,
+      ease: "power2.inOut",
       scrollTrigger: {
         trigger: hero,
         start: "top top",
         end: "bottom top",
-        scrub: 1,
-        pin: true,
-        pinSpacing: false,
+        scrub: true,
       }
     });
 
-    // Fade hero content backward as user scrolls
-    tl.to(hero.querySelector('.hero-content'), {
+    // Fade out scroll indicator slightly before hero disappears
+    gsap.to(hero.querySelector('.scroll-indicator'), {
       opacity: 0,
-      y: -80,
-      scale: 0.85,
-      duration: 0.8,
-      ease: "power3.out"
-    })
-    // Also fade out scroll indicator
-    .to(hero.querySelector('.scroll-indicator'), {
-      opacity: 0,
-      duration: 0.3,
-      ease: "power3.out"
-    }, 0.1);
+      y: -50,
+      duration: 0.5,
+      ease: "power2.in",
+      scrollTrigger: {
+        trigger: hero,
+        start: "top top",
+        end: "+=300",
+        scrub: true,
+      }
+    });
 
-    // Create separate animation for content section coming upwards
-    gsap.fromTo(content, 
+    // Content section fades in from bottom
+    gsap.fromTo(content,
       {
         opacity: 0,
-        y: 150,
-        scale: 0.92
+        y: 100,
       },
       {
         opacity: 1,
         y: 0,
-        scale: 1,
-        duration: 1.0,
+        duration: 1,
         ease: "power3.out",
         scrollTrigger: {
           trigger: content,
-          start: "top 90%",
-          end: "top 10%",
-          scrub: 0.8,
-          toggleActions: "play none none reverse"
+          start: "top 85%",
+          end: "top 30%",
+          scrub: true,
         }
       }
     );
