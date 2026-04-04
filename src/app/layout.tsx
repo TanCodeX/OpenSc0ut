@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
-import { PageTransition } from "@/components"; // Removed GlobalCursor import
+import { PageTransition, Header, SiteFooter } from "@/components";
 import "../styles/globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -25,8 +25,9 @@ export default function RootLayout({
         className={`${jakarta.variable} font-sans bg-black text-white`}
         suppressHydrationWarning
       >
-        {/* <GlobalCursor />  <-- REMOVED FROM HERE */}
+        <Header />
         <PageTransition>{children}</PageTransition>
+        <SiteFooter />
       </body>
     </html>
   );

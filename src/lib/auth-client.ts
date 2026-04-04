@@ -1,5 +1,5 @@
 // src/lib/auth-client.ts
-"use client"; // Should be a client component file
+"use client";
 
 import { createAuthClient } from "better-auth/react";
 
@@ -23,3 +23,11 @@ export const signIn = authClient.signIn;
 export const signUp = authClient.signUp;
 export const signOut = authClient.signOut;
 export const useSession = authClient.useSession;
+
+// Email OTP methods
+export const sendEmailOtp = authClient.sendOtp;
+export const verifyEmailOtp = authClient.verifyOtp;
+
+// Phone verification methods
+export const sendPhoneOtp = authClient.phoneNumber.sendOtp;
+export const verifyPhoneOtp = authClient.phoneNumber.verifyOtp;

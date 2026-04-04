@@ -140,9 +140,6 @@ export default function SiteFooter() {
             <p className="text-gray-500 text-sm">
               © {new Date().getFullYear()} OpenSc0ut. All rights reserved.
             </p>
-            <p className="text-gray-500 text-sm">
-              Built with <span className="text-[#FF0B55]">♥</span> using Next.js & GitHub API
-            </p>
           </div>
         </div>
       </div>

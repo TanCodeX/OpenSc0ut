@@ -3,12 +3,10 @@
 import { SearchParams } from "../types/types";
 import { useRepositories, useScrollAnimation } from "../lib/hooks";
 import {
-  Header,
   SearchFilter,
   RepositoryCard,
   Pagination,
   GlobalCursor,
-  SiteFooter,
 } from "../components";
 import AnimatedText from "../components/ui/AnimatedText";
 
@@ -37,8 +35,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <Header />
-      <GlobalCursor targetRef={heroRef} /> {/* <-- 2. ADD IT HERE */}
+      <GlobalCursor targetRef={heroRef} />
 
       <main>
         {/* Hero Section - Modern Grid Design */}
@@ -87,7 +84,7 @@ export default function Home() {
           </div>
 
           {/* Content Container */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-16">
+          <div className="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
               {/* Left Column - Text Content */}
@@ -343,8 +340,6 @@ export default function Home() {
           )}
         </div>
       </main>
-
-      <SiteFooter />
     </div>
   );
 }

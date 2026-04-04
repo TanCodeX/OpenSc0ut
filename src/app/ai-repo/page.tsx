@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Header, SiteFooter, SitePageHero } from "../../components";
+import { SitePageHero } from "../../components";
 import { cn } from "@/lib/utils";
 
 // --- Types ---
@@ -305,7 +305,6 @@ export default function AIRepoPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <Header />
       <main>
         <SitePageHero
           badge="AI tools"
@@ -374,7 +373,6 @@ export default function AIRepoPage() {
           </div>
         </div>
       </main>
-      <SiteFooter />
     </div>
   );
 }

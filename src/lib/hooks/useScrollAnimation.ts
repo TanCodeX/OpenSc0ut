@@ -18,18 +18,24 @@ export const useScrollAnimation = () => {
 
     const hero = heroRef.current;
     const content = contentRef.current;
+    const heroContent = hero.querySelector<HTMLElement>('.hero-content');
+    const scrollIndicator = hero.querySelector<HTMLElement>('.scroll-indicator');
 
     // Set initial state - hero content starts visible
-    gsap.set(hero.querySelector('.hero-content'), {
-      opacity: 1,
-      y: 0,
-      scale: 1
-    });
+    if (heroContent) {
+      gsap.set(heroContent, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+      });
+    }
 
     // Set initial state for scroll indicator
-    gsap.set(hero.querySelector('.scroll-indicator'), {
-      opacity: 1
-    });
+    if (scrollIndicator) {
+      gsap.set(scrollIndicator, {
+        opacity: 1,
+      });
+    }
 
     // Hero section slides up and disappears on scroll
     gsap.to(hero, {
@@ -47,18 +53,20 @@ export const useScrollAnimation = () => {
     });
 
     // Fade out scroll indicator slightly before hero disappears
-    gsap.to(hero.querySelector('.scroll-indicator'), {
-      opacity: 0,
-      y: -50,
-      duration: 0.5,
-      ease: "power2.in",
-      scrollTrigger: {
-        trigger: hero,
-        start: "top top",
-        end: "+=300",
-        scrub: true,
-      }
-    });
+    if (scrollIndicator) {
+      gsap.to(scrollIndicator, {
+        opacity: 0,
+        y: -50,
+        duration: 0.5,
+        ease: "power2.in",
+        scrollTrigger: {
+          trigger: hero,
+          start: "top top",
+          end: "+=300",
+          scrub: true,
+        },
+      });
+    }
 
     // Content section fades in from bottom
     gsap.fromTo(content,

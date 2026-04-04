@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { ProgramProjectCard } from "@/components/ProgramProjectCard";
-import { Header, SiteFooter, SitePageHero } from "@/components";
+import { SitePageHero } from "@/components";
 
 interface ProgramProject {
   id: string;
@@ -101,7 +101,6 @@ export default function GsocPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <Header />
       <main>
         <SitePageHero
           badge="Open source programs"
@@ -276,7 +275,6 @@ export default function GsocPage() {
         )}
         </div>
       </main>
-      <SiteFooter />
     </div>
   );
 }

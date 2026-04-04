@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Header, SiteFooter, SitePageHero } from "../../components";
+import { SitePageHero } from "../../components";
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
@@ -54,8 +54,6 @@ export default function ContactUs() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <Header />
-
       <main>
         <SitePageHero
           badge="Contact"
@@ -296,8 +294,6 @@ export default function ContactUs() {
           </div>
         </div>
       </main>
-
-      <SiteFooter />
     </div>
   );
 }

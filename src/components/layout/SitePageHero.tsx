@@ -27,7 +27,7 @@ export default function SitePageHero({
       className={`relative flex items-center overflow-hidden ${minHeightClass}`}
     >
       <PageGridBackground />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-24 md:py-28">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full pt-28 pb-24 md:pt-32 md:pb-28">
         <div className={alignClass}>
           <div
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-6 ${align === "left" ? "" : "mx-auto"}`}

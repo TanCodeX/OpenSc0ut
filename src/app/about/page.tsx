@@ -1,14 +1,12 @@
 "use client";
 
-import { Header, SiteFooter, PageGridBackground } from "../../components";
+import { PageGridBackground } from "../../components";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function About() {
   return (
     <div className="min-h-screen bg-black text-white">
-      <Header />
-
       <main>
         {/* Hero Section with Grid Background */}
         <div className="relative min-h-[60vh] flex items-center overflow-hidden">
@@ -215,8 +213,6 @@ export default function About() {
           </motion.div>
         </div>
       </main>
-
-      <SiteFooter />
     </div>
   );
 }
