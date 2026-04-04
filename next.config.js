@@ -2,6 +2,9 @@
 const path = require("path");
 
 const nextConfig = {
+  // Next 16: dev uses Turbopack by default; a custom `webpack` hook requires an explicit
+  // turbopack section so the bundler choice is intentional (see Next.js docs).
+  turbopack: {},
   images: {
     domains: ["avatars.githubusercontent.com"],
     unoptimized: true,
