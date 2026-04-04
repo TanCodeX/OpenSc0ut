@@ -4,7 +4,15 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { SitePageHero } from "../../components";
-import { signIn, signUp, sendEmailOtp, verifyEmailOtp, useSession } from "@/lib/auth-client";
+import {
+  signIn,
+  signUp,
+  sendEmailOtp,
+  checkEmailVerificationOtp,
+  sendPhoneOtp,
+  verifyPhoneOtp,
+  useSession,
+} from "@/lib/auth-client";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -95,7 +103,10 @@ export default function SignUpPage() {
     setIsEmailOtpLoading(true);
     setError(null);
     try {
-      const { error: otpError } = await sendEmailOtp({ email });
+      const { error: otpError } = await sendEmailOtp({
+        email,
+        type: "email-verification",
+      });
       if (otpError) {
         setError(otpError.message || "Failed to send OTP. Try again.");
       } else {
@@ -117,7 +128,10 @@ export default function SignUpPage() {
     setIsEmailOtpLoading(true);
     setError(null);
     try {
-      const { error: verifyError } = await verifyEmailOtp({ email, code: emailOtp });
+      const { error: verifyError } = await checkEmailVerificationOtp({
+        email,
+        code: emailOtp,
+      });
       if (verifyError) {
         setError(verifyError.message || "Invalid OTP. Please try again.");
       } else {
@@ -147,8 +161,7 @@ export default function SignUpPage() {
     setIsPhoneOtpLoading(true);
     setError(null);
     try {
-      // Use better-auth phone number API
-      const { error: otpError } = await signUp.phone({
+      const { error: otpError } = await sendPhoneOtp({
         phoneNumber: `+1${cleanPhone}`,
       });
       if (otpError) {
@@ -174,9 +187,11 @@ export default function SignUpPage() {
     try {
       const cleanPhone = phone.replace(/\D/g, "");
       // Verify phone OTP
-      const { error: verifyError } = await verifyEmailOtp({
-        email: `+1${cleanPhone}`,
-        code: phoneOtp
+      const { error: verifyError } = await verifyPhoneOtp({
+        phoneNumber: `+1${cleanPhone}`,
+        code: phoneOtp,
+        disableSession: true,
+        updatePhoneNumber: false,
       });
       if (verifyError) {
         setError(verifyError.message || "Invalid OTP. Please try again.");

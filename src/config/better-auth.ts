@@ -2,6 +2,7 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
+import { emailOTP, phoneNumber } from "better-auth/plugins";
 import { prisma } from "@/lib/db/prisma";
 import nodemailer from "nodemailer";
 
@@ -38,16 +39,9 @@ export async function sendEmail({ to, subject, text, html }: EmailPayload) {
   });
 }
 
-// Generate 6-digit OTP
-function generateOTP() {
-  return Math.floor(100000 + Math.random() * 900000).toString();
-}
-
-// Store OTPs in memory (in production, use Redis or database)
-const otpStore = new Map<string, { code: string; expires: number; phone?: string }>();
-
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
+    provider: "postgresql",
     usePlural: true,
   }),
   socialProviders: {
@@ -76,31 +70,17 @@ export const auth = betterAuth({
       });
     },
   },
-  otp: {
-    enabled: true,
-    sendVerificationOnSignUp: true,
-    sendOtp: async ({ email, otp, phone }) => {
-      // Store OTP with 5 minute expiry
-      otpStore.set(email, {
-        code: otp,
-        expires: Date.now() + 5 * 60 * 1000,
-        phone,
-      });
-
-      if (phone) {
-        // Send SMS OTP (using Twilio or similar - stub for now)
-        console.log(`[SMS OTP] Sending ${otp} to ${phone}`);
-        // In production, integrate with Twilio:
-        // await twilioClient.messages.create({
-        //   body: `Your OpenSc0ut verification code is: ${otp}`,
-        //   from: process.env.TWILIO_PHONE_NUMBER,
-        //   to: phone,
-        // });
-      } else {
-        // Send Email OTP
+  plugins: [
+    nextCookies(),
+    emailOTP({
+      sendVerificationOTP: async ({ email, otp, type }) => {
+        const subject =
+          type === "sign-in"
+            ? "Your OpenSc0ut sign-in code"
+            : "Your OpenSc0ut verification code";
         await sendEmail({
           to: email,
-          subject: "Your OpenSc0ut Verification Code",
+          subject,
           text: `Your verification code is: ${otp}\n\nThis code expires in 5 minutes.`,
           html: `
             <div style="font-family: sans-serif; max-width: 400px; margin: 0 auto;">
@@ -114,30 +94,22 @@ export const auth = betterAuth({
             </div>
           `,
         });
-      }
-    },
-    opts: {
-      expiry: 5 * 60, // 5 minutes
-      length: 6, // 6 digit OTP
-    },
-  },
-  phoneNumber: {
-    enabled: true,
-    sendVerification: async ({ phoneNumber, code }) => {
-      // Store phone OTP
-      otpStore.set(phoneNumber, {
-        code,
-        expires: Date.now() + 5 * 60 * 1000,
-      });
-
-      console.log(`[Phone Verification] Sending ${code} to ${phoneNumber}`);
-      // In production, integrate with Twilio for SMS
-      // await twilioClient.messages.create({
-      //   body: `Your OpenSc0ut verification code is: ${code}`,
-      //   from: process.env.TWILIO_PHONE_NUMBER,
-      //   to: phoneNumber,
-      // });
-    },
-  },
-  plugins: [nextCookies()],
+      },
+      expiresIn: 5 * 60,
+      otpLength: 6,
+    }),
+    phoneNumber({
+      sendOTP: async ({ phoneNumber: toPhone, code }) => {
+        console.log(`[Phone Verification] Sending ${code} to ${toPhone}`);
+        // In production, integrate with Twilio for SMS
+        // await twilioClient.messages.create({
+        //   body: `Your OpenSc0ut verification code is: ${code}`,
+        //   from: process.env.TWILIO_PHONE_NUMBER,
+        //   to: toPhone,
+        // });
+      },
+      expiresIn: 5 * 60,
+      otpLength: 6,
+    }),
+  ],
 });
