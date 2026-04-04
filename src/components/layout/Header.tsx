@@ -102,7 +102,7 @@ export default function Header() {
               { href: "/", label: "Home" },
               { href: "/about", label: "About" },
               { href: "/gsoc", label: "GSOC" },
-              { href: "/ai-analysis", label: "AI Analysis" },
+              { href: "/ai-repo", label: "AI Analysis" },
                             { href: "/contact-us", label: "Contact us" },
             ].map((link) => (
               <Link

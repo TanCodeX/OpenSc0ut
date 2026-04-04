@@ -2,6 +2,9 @@
 export { default as Header } from './layout/Header';
 export { default as PageTransition } from './layout/PageTransition';
 export { default as GlobalCursor } from './layout/GlobalCursor';
+export { default as SiteFooter } from './layout/SiteFooter';
+export { default as SitePageHero } from './layout/SitePageHero';
+export { default as PageGridBackground } from './layout/PageGridBackground';
 
 // Feature components
 export { default as RepositoryCard } from './features/RepositoryCard';

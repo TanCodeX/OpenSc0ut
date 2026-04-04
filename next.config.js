@@ -2,6 +2,9 @@
 const path = require("path");
 
 const nextConfig = {
+  // Prisma must load the generated client from node_modules at runtime; bundling it
+  // (especially with Turbopack in dev) resolves the stub and throws "did not initialize yet".
+  serverExternalPackages: ["@prisma/client", "prisma"],
   // Next 16: dev uses Turbopack by default; a custom `webpack` hook requires an explicit
   // turbopack section so the bundler choice is intentional (see Next.js docs).
   turbopack: {},

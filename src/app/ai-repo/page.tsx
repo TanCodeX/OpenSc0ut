@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Header } from "../../components";
+import { Header, SiteFooter, SitePageHero } from "../../components";
 import { cn } from "@/lib/utils";
 
 // --- Types ---
@@ -44,7 +44,7 @@ const ScoreBreakdownCard: React.FC<{ factor: ScoreFactor }> = ({ factor }) => {
     score >= 90 ? "bg-green-500" : score >= 70 ? "bg-yellow-500" : "bg-red-500";
 
   return (
-    <div className="p-3 bg-black/30 rounded-lg border border-gray-700/50 flex flex-col">
+    <div className="p-3 bg-black/30 rounded-xl border border-white/10 flex flex-col">
       <div className="flex justify-between items-center mb-1">
         <span className="text-sm font-medium text-gray-300">{factor.factor}</span>
         <span className={cn("text-lg font-bold", getColor(factor.score))}>{factor.score}%</span>
@@ -96,13 +96,13 @@ const AnalysisReportDisplay: React.FC<{ result: AIAnalysisResult }> = ({ result 
       {/* Overview & Scores */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Overview */}
-        <div className="md:col-span-2 bg-gray-900/50 border border-white/10 rounded-xl p-6">
+        <div className="md:col-span-2 bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
           <h3 className="text-2xl font-semibold text-white mb-3">Overview</h3>
           <p className="text-gray-300 leading-relaxed text-sm">{result.summary}</p>
         </div>
 
         {/* Overall Health */}
-        <div className="bg-gray-900/50 border border-white/10 rounded-xl p-6 flex flex-col items-center justify-center">
+        <div className="bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center">
           <p className="text-sm text-gray-400 font-medium mb-2">Overall Project Health</p>
           <div className="relative w-20 h-20">
             <svg viewBox="0 0 36 36" className="w-full h-full transform -rotate-90">
@@ -130,7 +130,7 @@ const AnalysisReportDisplay: React.FC<{ result: AIAnalysisResult }> = ({ result 
         </div>
 
         {/* Code Quality */}
-        <div className="bg-gray-900/50 border border-white/10 rounded-xl p-6 flex flex-col items-center justify-center">
+        <div className="bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center">
           <p className="text-sm text-gray-400 font-medium mb-2">Code Quality Score</p>
           <div className="relative w-20 h-20">
             <svg viewBox="0 0 36 36" className="w-full h-full transform -rotate-90">
@@ -160,7 +160,7 @@ const AnalysisReportDisplay: React.FC<{ result: AIAnalysisResult }> = ({ result 
 
       {/* Score Breakdowns */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-4">
-        <div className="bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] rounded-xl p-6">
+        <div className="bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
           <h3 className="text-xl font-semibold text-white mb-4">Overall Health Breakdown</h3>
           <div className="space-y-4">
             {result.healthBreakdown.map((factor, i) => (
@@ -169,7 +169,7 @@ const AnalysisReportDisplay: React.FC<{ result: AIAnalysisResult }> = ({ result 
           </div>
         </div>
 
-        <div className="bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] rounded-xl p-6">
+        <div className="bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
           <h3 className="text-xl font-semibold text-white mb-4">Code Quality Breakdown</h3>
           <div className="space-y-4">
             {result.qualityBreakdown.map((factor, i) => (
@@ -180,7 +180,7 @@ const AnalysisReportDisplay: React.FC<{ result: AIAnalysisResult }> = ({ result 
       </div>
 
       {/* Potential Issues */}
-      <div className="bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] rounded-xl p-6 mt-6">
+      <div className="bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 mt-6">
         <h3 className="text-xl font-semibold text-white mb-4">Potential Issues ({result.potentialBugs.length})</h3>
         <ul className="space-y-3">
           {result.potentialBugs.length ? (
@@ -237,7 +237,10 @@ const AnalysisReportDisplay: React.FC<{ result: AIAnalysisResult }> = ({ result 
           <h3 className="text-lg font-semibold text-white mb-2">Tech Stack</h3>
           <div className="flex flex-wrap gap-2">
             {result.techStack.map((tech, i) => (
-              <span key={i} className="px-2 py-1 bg-gray-800 rounded-full text-sm text-gray-300">
+              <span
+                key={i}
+                className="px-3 py-1 rounded-full bg-[#FF0B55]/10 border border-[#FF0B55]/25 text-sm text-gray-200"
+              >
                 {tech}
               </span>
             ))}
@@ -303,50 +306,75 @@ export default function AIRepoPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <Header />
-      <main className="pt-28 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-5xl md:text-6xl font-bold text-center mb-10">
-          <span className="text-[#FF0B55]">AI</span> Repository Scout
-        </h1>
+      <main>
+        <SitePageHero
+          badge="AI tools"
+          title={
+            <>
+              <span className="text-[#FF0B55]">AI</span> repository scout
+            </>
+          }
+          description="Paste a GitHub URL and get a structured health and quality snapshot — same visual language as the rest of OpenSc0ut."
+        />
 
-        <div className="bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] rounded-xl shadow-lg p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <label className="block text-sm font-semibold text-white mb-2">GitHub Repository URL</label>
-            <div className="flex gap-4">
-              <input
-                type="url"
-                value={repoUrl}
-                onChange={(e) => setRepoUrl(e.target.value)}
-                placeholder="https://github.com/owner/repo"
-                className="flex-1 px-4 py-2 bg-black/30 border border-[hsla(0,1.10%,36.10%,0.44)] rounded-full text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/50"
-                required
-              />
-              <button
-                type="submit"
-                disabled={loading || !repoUrl}
-                className="bg-[#FF0B55] hover:bg-black text-black hover:text-white font-semibold px-6 py-2 rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? "Analyzing..." : "Run AI Analysis"}
-              </button>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 -mt-8 relative z-10">
+          <div className="mb-10 relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-[#FF0B55]/10 to-transparent blur-3xl -z-10 rounded-3xl" />
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-1 h-8 bg-[#FF0B55] rounded-full" />
+              <h2 className="text-2xl md:text-3xl font-bold text-white">Analyze a repository</h2>
             </div>
-          </form>
+            <p className="text-gray-400 max-w-2xl">
+              We call the AI repo API and render scores, breakdowns, and notes in cards below.
+            </p>
+          </div>
 
-          {error && (
-            <div className="mt-8 bg-red-900/30 border border-red-800/50 p-4 rounded-lg text-red-300">{error}</div>
-          )}
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#FF0B55]/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+            <div className="relative bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <label className="block text-sm font-medium text-gray-300 mb-2">GitHub repository URL</label>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <input
+                    type="url"
+                    value={repoUrl}
+                    onChange={(e) => setRepoUrl(e.target.value)}
+                    placeholder="https://github.com/owner/repo"
+                    className="flex-1 min-w-0 px-4 py-3 bg-black/40 border border-white/15 rounded-full text-gray-300 placeholder-gray-500 hover:border-[#FF0B55]/40 focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/30 focus:border-transparent"
+                    required
+                  />
+                  <button
+                    type="submit"
+                    disabled={loading || !repoUrl}
+                    className="shrink-0 rounded-full bg-[#FF0B55] px-8 py-3 text-sm font-semibold text-black transition hover:bg-[#FF0B55]/90 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {loading ? "Analyzing..." : "Run analysis"}
+                  </button>
+                </div>
+              </form>
 
-          {loading && (
-            <div className="flex justify-center mt-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#FF0B55]"></div>
+              {error && (
+                <div className="mt-8 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200">
+                  {error}
+                </div>
+              )}
+
+              {loading && (
+                <div className="flex justify-center mt-10">
+                  <div className="h-10 w-10 animate-spin rounded-full border-2 border-[#FF0B55] border-t-transparent" />
+                </div>
+              )}
+
+              {analysisResult && (
+                <div className="mt-10 pt-10 border-t border-white/10">
+                  <AnalysisReportDisplay result={analysisResult} />
+                </div>
+              )}
             </div>
-          )}
-
-          {analysisResult && (
-            <div className="mt-8 pt-6 border-t border-gray-700">
-              <AnalysisReportDisplay result={analysisResult} />
-            </div>
-          )}
+          </div>
         </div>
       </main>
+      <SiteFooter />
     </div>
   );
 }

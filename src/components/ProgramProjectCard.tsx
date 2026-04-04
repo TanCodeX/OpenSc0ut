@@ -19,8 +19,8 @@ interface ProgramProjectCardProps {
 
 export function ProgramProjectCard({ project }: ProgramProjectCardProps) {
   return (
-    <div className="bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md rounded-lg border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] overflow-hidden hover:border-gray-500 transition-all duration-300 flex flex-col h-full">
-      <div className="p-5 flex flex-col flex-1">
+    <div className="group relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-sm overflow-hidden hover:border-[#FF0B55]/50 transition-all duration-300 flex flex-col h-full">
+      <div className="relative z-10 p-6 flex flex-col flex-1">
         <div className="mb-2 flex items-center justify-between">
           <span className="text-xs bg-gray-900/60 text-white px-2 py-1 rounded-full font-semibold">{project.program} {project.year}</span>
         </div>

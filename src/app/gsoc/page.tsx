@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { ProgramProjectCard } from "@/components/ProgramProjectCard";
-import { Header } from "@/components";
+import { Header, SiteFooter, SitePageHero } from "@/components";
 
 interface ProgramProject {
   id: string;
@@ -21,12 +21,12 @@ const CURRENT_YEAR = new Date().getFullYear();
 const YEARS = Array.from({ length: 6 }, (_, idx) => CURRENT_YEAR - idx);
 
 const SkeletonCard = () => (
-  <div className="rounded-lg border border-white/10 bg-white/5 p-5 animate-pulse">
-    <div className="mb-4 h-4 w-24 rounded bg-white/10" />
-    <div className="mb-2 h-6 w-3/4 rounded bg-white/10" />
-    <div className="mb-1 h-4 w-1/2 rounded bg-white/10" />
-    <div className="mb-6 h-16 w-full rounded bg-white/10" />
-    <div className="h-4 w-20 rounded bg-white/10" />
+  <div className="rounded-2xl border border-white/10 bg-white/5 p-6 animate-pulse backdrop-blur-sm">
+    <div className="mb-4 h-4 w-24 rounded-full bg-white/10" />
+    <div className="mb-2 h-6 w-3/4 rounded-lg bg-white/10" />
+    <div className="mb-1 h-4 w-1/2 rounded-lg bg-white/10" />
+    <div className="mb-6 h-16 w-full rounded-lg bg-white/10" />
+    <div className="h-4 w-20 rounded-full bg-white/10" />
   </div>
 );
 
@@ -102,22 +102,30 @@ export default function GsocPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <Header />
-      <section className="relative overflow-hidden min-h-screen bg-black">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(255,11,85,0.2),_transparent_65%)]" />
-        <div className="container mx-auto px-5 py-24 pt-32">
-        <header className="mb-12 max-w-4xl mx-auto text-center">
-          <span className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.25em] text-[#FF0B55]">
-            Open Source Programs
-          </span>
-          <h1 className="mt-4 text-4xl font-bold text-white sm:text-5xl">
-            Discover Google Summer of Code Projects
-          </h1>
-          <p className="mt-4 text-base text-gray-300 sm:text-lg">
-            Explore curated community projects sourced automatically from program archives. Filter by program, year, or keywords to find organizations and projects that match your interests.
-          </p>
-        </header>
+      <main>
+        <SitePageHero
+          badge="Open source programs"
+          title={
+            <>
+              Google Summer of <span className="text-[#FF0B55]">Code</span>
+            </>
+          }
+          description="Explore curated community projects sourced from program archives. Filter by year or keywords to find organizations and projects that match your interests."
+        />
 
-        <section className="relative z-50 mb-10 max-w-5xl mx-auto flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 -mt-8 relative z-10">
+          <div className="mb-10 relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-[#FF0B55]/10 to-transparent blur-3xl -z-10 rounded-3xl" />
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-1 h-8 bg-[#FF0B55] rounded-full" />
+              <h2 className="text-2xl md:text-3xl font-bold text-white">Browse projects</h2>
+            </div>
+            <p className="text-gray-400 max-w-2xl">
+              Pick a year and search by organization, project name, or topics.
+            </p>
+          </div>
+
+        <section className="relative z-50 mb-10 flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
           <div className="grid gap-4 md:grid-cols-2">
             <label className="flex flex-col gap-2 text-sm text-gray-300">
               <span className="font-medium text-white">Year</span>
@@ -125,7 +133,7 @@ export default function GsocPage() {
                 <button
                   type="button"
                   onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
-                  className="w-full h-11 px-4 py-2 bg-black/30 border border-[hsla(0,1.10%,36.10%,0.44)] rounded-full text-left text-gray-300 flex justify-between items-center hover:border-gray-500 transition-colors"
+                  className="w-full h-11 px-4 py-2 bg-black/40 border border-white/15 rounded-full text-left text-gray-300 flex justify-between items-center hover:border-[#FF0B55]/40 transition-colors"
                 >
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -138,7 +146,7 @@ export default function GsocPage() {
                   </svg>
                 </button>
                 {isYearDropdownOpen && (
-                  <div className="absolute z-[1000] mt-1 w-full bg-black backdrop-blur-xl border border-white/20 rounded-xl shadow-2xl shadow-black/50">
+                  <div className="absolute z-[1000] mt-1 w-full bg-gray-950/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl shadow-black/50">
                     <div className="p-2 flex flex-col gap-1">
                       {YEARS.map((optionYear) => (
                         <button
@@ -169,7 +177,7 @@ export default function GsocPage() {
                 <input
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="h-11 w-full rounded-full border border-[hsla(0,1.10%,36.10%,0.44)] bg-black/30 px-3 pl-9 text-sm text-gray-300 placeholder-gray-500 hover:border-gray-500 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
+                  className="h-11 w-full rounded-full border border-white/15 bg-black/40 px-3 pl-9 text-sm text-gray-300 placeholder-gray-500 hover:border-[#FF0B55]/40 transition-colors focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/30 focus:border-transparent"
                   placeholder="Search by organization, project, or topics"
                 />
                 <svg
@@ -193,9 +201,9 @@ export default function GsocPage() {
           <div className=" z-20 flex flex-col gap-2 text-xs text-gray-400 sm:flex-row sm:items-center sm:justify-between">
             <span className="text-center sm:text-left">
               {loading ? (
-                <span>Loading data for <span className="font-semibold text-white">GSoC</span> {year}...</span>
+                <span>Loading data for <span className="font-medium text-white">GSoC</span> {year}...</span>
               ) : (
-                <span>Showing {resultsLabel} for <span className="font-semibold text-white">GSoC</span> {year}</span>
+                <span>Showing {resultsLabel} for <span className="font-medium text-white">GSoC</span> {year}</span>
               )}
             </span>
             {!loading && (
@@ -211,17 +219,22 @@ export default function GsocPage() {
         </section>
 
         {loading ? (
-          <div className="relative z-10 max-w-6xl mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="relative z-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, idx) => (
               <SkeletonCard key={`skeleton-${idx}`} />
             ))}
           </div>
         ) : error ? (
-          <div className="max-w-3xl mx-auto rounded-2xl border border-red-500/30 bg-red-500/10 p-8 text-center text-sm text-red-200">
+          <div className="max-w-3xl mx-auto rounded-2xl border border-red-500/30 bg-red-500/10 p-8 text-center">
+            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-red-500/20 flex items-center justify-center">
+              <svg className="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
             <h2 className="mb-2 text-lg font-semibold text-red-300">We hit a snag loading projects</h2>
-            <p className="mb-6">{error}</p>
+            <p className="mb-6 text-sm text-red-200/90">{error}</p>
             <button
-              className="rounded-full border border-red-400/40 px-5 py-2 text-xs uppercase tracking-widest text-red-200 transition hover:border-red-400 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-red-400/40 bg-red-500/20 px-5 py-2 text-sm text-red-200 transition hover:border-red-400 hover:bg-red-500/30 hover:text-white"
               onClick={() => {
                 setError(null);
                 setRefreshIndex((prev) => prev + 1);
@@ -255,14 +268,15 @@ export default function GsocPage() {
             </div>
           </div>
         ) : (
-          <div className="relative z-10 max-w-6xl mx-auto grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="relative z-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {filteredProjects.map((project) => (
               <ProgramProjectCard key={project.id} project={project} />
             ))}
           </div>
         )}
         </div>
-      </section>
+      </main>
+      <SiteFooter />
     </div>
   );
 }

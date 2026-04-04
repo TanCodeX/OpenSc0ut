@@ -1,6 +1,6 @@
 "use client";
 
-import { Header } from "../../components";
+import { Header, SiteFooter, PageGridBackground } from "../../components";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -12,35 +12,7 @@ export default function About() {
       <main>
         {/* Hero Section with Grid Background */}
         <div className="relative min-h-[60vh] flex items-center overflow-hidden">
-          {/* Grid Background */}
-          <div className="absolute inset-0 z-0">
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: `
-                  linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                  linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)
-                `,
-                backgroundSize: '60px 60px'
-              }}
-            />
-            <div
-              className="absolute inset-0 opacity-30"
-              style={{
-                backgroundImage: `
-                  linear-gradient(rgba(255, 11, 85, 0.08) 1px, transparent 1px),
-                  linear-gradient(90deg, rgba(255, 11, 85, 0.08) 1px, transparent 1px)
-                `,
-                backgroundSize: '100px 100px'
-              }}
-            />
-            {/* Glowing orbs */}
-            <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-[#FF0B55]/20 rounded-full blur-[128px]" />
-            <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-[#FF0B55]/10 rounded-full blur-[128px]" />
-            {/* Corner accents */}
-            <div className="absolute top-0 left-0 w-32 h-32 border-t-2 border-l-2 border-[#FF0B55]/30 rounded-tl-3xl" />
-            <div className="absolute bottom-0 right-0 w-32 h-32 border-b-2 border-r-2 border-[#FF0B55]/30 rounded-br-3xl" />
-          </div>
+          <PageGridBackground />
 
           {/* Content */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-32">
@@ -244,15 +216,7 @@ export default function About() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="relative border-t border-white/10 bg-gradient-to-b from-black to-gray-950">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-px bg-gradient-to-r from-transparent via-[#FF0B55]/50 to-transparent" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <p className="text-center text-gray-500 text-sm">
-            © {new Date().getFullYear()} OpenSc0ut. Built with Next.js and GitHub API.
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

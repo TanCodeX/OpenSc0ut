@@ -3,30 +3,31 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Header } from "../../components";
+import { Header, SiteFooter, SitePageHero } from "../../components";
 
 export default function ResetPasswordPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Redirect to login page as password reset is not applicable for GitHub-only authentication
-    router.replace("/login"); 
+    router.replace("/login");
   }, [router]);
 
   return (
     <div className="min-h-screen bg-black text-white">
       <Header />
-      <main className="pt-20">
-        <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Redirecting...</h1>
-          <p className="text-gray-400">
-            Password reset is not required for GitHub-only authentication.
-          </p>
-          <div className="flex justify-center mt-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#FF0B55]"></div>
-          </div>
+      <main>
+        <SitePageHero
+          badge="Account"
+          title="Redirecting..."
+          description="Password reset is not used for GitHub-only authentication. You are being sent to sign in."
+          minHeightClass="min-h-[48vh]"
+        />
+
+        <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8 pb-24 -mt-8 relative z-10 flex justify-center">
+          <div className="h-10 w-10 animate-spin rounded-full border-2 border-[#FF0B55] border-t-transparent" />
         </div>
       </main>
+      <SiteFooter />
     </div>
   );
 }
