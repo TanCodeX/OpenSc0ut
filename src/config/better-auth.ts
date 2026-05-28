@@ -42,7 +42,6 @@ export async function sendEmail({ to, subject, text, html }: EmailPayload) {
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
-    usePlural: true,
   }),
   socialProviders: {
     github: {
