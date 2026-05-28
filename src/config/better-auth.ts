@@ -3,7 +3,6 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { emailOTP, phoneNumber } from "better-auth/plugins";
-import { dash } from "@better-auth/infra";
 import { prisma } from "@/lib/db/prisma";
 import nodemailer from "nodemailer";
 
@@ -71,7 +70,6 @@ export const auth = betterAuth({
     },
   },
   plugins: [
-    dash(),
     nextCookies(),
     emailOTP({
       sendVerificationOTP: async ({ email, otp, type }) => {
