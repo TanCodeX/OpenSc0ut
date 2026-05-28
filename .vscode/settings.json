@@ -13,5 +13,9 @@
   "editor.quickSuggestions": {
     "strings": true
   },
-  "css.customData": [".vscode/css_custom_data.json"]
+  "css.customData": [
+    ".vscode/css_custom_data.json"
+  ],
+  "editor.fontSize": 14,
+  "files.autoSave": "onWindowChange"
 }

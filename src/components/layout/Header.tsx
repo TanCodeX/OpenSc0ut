@@ -139,7 +139,7 @@ export default function Header() {
                   <button
                     suppressHydrationWarning
                     onClick={(e) => handleNavigation("/signup", e)}
-                    className="bg-[#FF0B55] hover:bg-black hover:border-[#FF0B55] hover:border-2 hover:shadow-[0_0_15px_rgba(255,11,85,0.5)] text-black hover:text-white px-4 py-2 rounded-full font-semibold text-sm transition-all"
+                    className="bg-[#FF0B55] border-2 border-transparent hover:bg-black hover:border-[#FF0B55] hover:shadow-[0_0_15px_rgba(255,11,85,0.5)] text-black hover:text-white px-4 py-2 rounded-full font-semibold text-sm transition-all"
                   >
                     Sign Up
                   </button>
