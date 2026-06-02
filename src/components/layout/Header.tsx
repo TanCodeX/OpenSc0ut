@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
-import { authClient, useSession } from "@/lib/auth-client";
+import { createClient } from "@/lib/auth-client";
+import { useEffect, useState } from "react";
 
 /* Profile Avatar Component */
 function ProfileAvatar({ user }: any) {
   const isSocialUser = !!user.image;
   const initial =
-    user?.name?.charAt(0)?.toUpperCase() ||
+    user?.user_metadata?.full_name?.charAt(0)?.toUpperCase() ||
     user?.email?.charAt(0)?.toUpperCase() ||
     "?";
 
@@ -18,7 +19,7 @@ function ProfileAvatar({ user }: any) {
       <div className="w-10 h-10 rounded-full border-2 border-[#FF0B55] bg-gray-800 flex items-center justify-center overflow-hidden hover:scale-105 transition-all">
         {isSocialUser ? (
           <img
-            src={user.image}
+            src={user.user_metadata?.avatar_url}
             alt="avatar"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover"
@@ -32,7 +33,7 @@ function ProfileAvatar({ user }: any) {
       <div className="absolute right-0 mt-2 w-48 bg-gray-900 border border-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
         <div className="p-3 border-b border-gray-700">
           <p className="text-sm font-medium text-white line-clamp-1">
-            {user.name || user.email}
+            {user.user_metadata?.full_name || user.email}
           </p>
           <p className="text-xs text-[#FF0B55] mt-1">Logged In</p>
         </div>
@@ -40,7 +41,7 @@ function ProfileAvatar({ user }: any) {
         <button
           suppressHydrationWarning
           onClick={() =>
-            authClient.signOut().then(() => (window.location.href = "/"))
+            createClient().auth.signOut().then(() => (window.location.href = "/"))
           }
           className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-[#FF0B55] hover:text-black rounded-b-lg transition-colors"
         >
@@ -55,9 +56,23 @@ export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
 
-  // ✅ Correct: Better Auth session hook
-  const { data: session,} = useSession();
-  const user = session?.user;
+  const supabase = createClient();
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user || null);
+    };
+
+    fetchSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [supabase.auth]);
 
   const handleNavigation = (href: string, e: React.MouseEvent) => {
     e.preventDefault();

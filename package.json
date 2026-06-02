@@ -10,14 +10,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@better-auth/core": "^1.6.11",
-    "@better-fetch/fetch": "^1.1.21",
     "@prisma/client": "^6.17.1",
+    "@supabase/ssr": "^0.10.3",
+    "@supabase/supabase-js": "^2.106.2",
     "@types/react": "18.2.31",
     "@types/react-dom": "18.2.14",
     "autoprefixer": "10.4.16",
     "axios": "^1.5.1",
-    "better-auth": "^1.3.34",
     "framer-motion": "^10.18.0",
     "gsap": "^3.13.0",
     "next": "^16.2.2",

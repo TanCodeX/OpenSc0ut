@@ -1,57 +1,45 @@
 // src/app/login/page.tsx
 "use client";
 
-import { useState, useEffect, Suspense } from "react"; // Added Suspense import
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState, Suspense, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { SitePageHero } from "../../components";
-import { signIn, useSession, sendEmailOtp, verifyEmailOtp } from "@/lib/auth-client";
+import { createClient } from "@/lib/auth-client";
 
-// Move the login logic into a separate component to be wrapped in Suspense
 function LoginContent() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const { data: session } = useSession();
+  const supabase = createClient();
   const [error, setError] = useState<string | null>(null);
   const [isGithubLoading, setIsGithubLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
-  const [showEmailOtp, setShowEmailOtp] = useState(false);
+  const [isEmailLoading, setIsEmailLoading] = useState(false);
+  
   const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");
-  const [isOtpSent, setIsOtpSent] = useState(false);
-  const [isOtpLoading, setIsOtpLoading] = useState(false);
+  const [password, setPassword] = useState("");
 
-  // Check for OAuth error in URL params
   useEffect(() => {
-    const errorCode = searchParams.get("error");
-    const errorMessage = searchParams.get("error_description");
-
-    if (errorCode) {
-      setError(errorMessage || "Authentication failed. Please try again.");
-    }
-  }, [searchParams]);
-
-  // Redirect if already logged in
-  useEffect(() => {
-    if (session?.user) {
-      router.push("/");
-    }
-  }, [session, router]);
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        router.push("/");
+      }
+    };
+    checkSession();
+  }, [router, supabase.auth]);
 
   const handleGitHubSignIn = async () => {
     setIsGithubLoading(true);
     setError(null);
     try {
-      const { error: authError } = await signIn.social({
+      const { error: authError } = await supabase.auth.signInWithOAuth({
         provider: "github",
-        callbackURL: "/",
+        options: {
+          redirectTo: `${window.location.origin}/`,
+        },
       });
-
-      if (authError) {
-        setError(authError.message || "GitHub sign in failed. Try again.");
-      }
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "GitHub sign in failed. Try again.";
-      setError(message);
+      if (authError) setError(authError.message);
+    } catch (err: any) {
+      setError(err.message || "GitHub sign in failed.");
     } finally {
       setIsGithubLoading(false);
     }
@@ -61,63 +49,41 @@ function LoginContent() {
     setIsGoogleLoading(true);
     setError(null);
     try {
-      const { error: authError } = await signIn.social({
+      const { error: authError } = await supabase.auth.signInWithOAuth({
         provider: "google",
-        callbackURL: "/",
+        options: {
+          redirectTo: `${window.location.origin}/`,
+        },
       });
-
-      if (authError) {
-        setError(authError.message || "Google sign in failed. Try again.");
-      }
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Google sign in failed. Try again.";
-      setError(message);
+      if (authError) setError(authError.message);
+    } catch (err: any) {
+      setError(err.message || "Google sign in failed.");
     } finally {
       setIsGoogleLoading(false);
     }
   };
 
-  const handleSendOtp = async () => {
-    if (!email || !email.includes("@")) {
-      setError("Please enter a valid email address");
+  const handleEmailSignIn = async () => {
+    if (!email || !password) {
+      setError("Please enter both email and password.");
       return;
     }
-    setIsOtpLoading(true);
+    setIsEmailLoading(true);
     setError(null);
     try {
-      const { error: otpError } = await sendEmailOtp({ email });
-      if (otpError) {
-        setError(otpError.message || "Failed to send OTP. Try again.");
-      } else {
-        setIsOtpSent(true);
-      }
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Failed to send OTP. Try again.";
-      setError(message);
-    } finally {
-      setIsOtpLoading(false);
-    }
-  };
-
-  const handleVerifyOtp = async () => {
-    if (!otp || otp.length !== 6) {
-      setError("Please enter a valid 6-digit OTP");
-      return;
-    }
-    setIsOtpLoading(true);
-    setError(null);
-    try {
-      const { error: verifyError } = await verifyEmailOtp({ email, code: otp });
-      if (verifyError) {
-        setError(verifyError.message || "Invalid OTP. Please try again.");
+      const { error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (authError) {
+        setError(authError.message);
       } else {
         router.push("/");
       }
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Invalid OTP. Please try again.";
-      setError(message);
+    } catch (err: any) {
+      setError(err.message || "Email sign in failed.");
     } finally {
-      setIsOtpLoading(false);
+      setIsEmailLoading(false);
     }
   };
 
@@ -130,7 +96,7 @@ function LoginContent() {
             Sign in to <span className="text-[#FF0B55]">OpenSc0ut</span>
           </>
         }
-        description="Choose your preferred sign-in method — GitHub, Google, or Email OTP."
+        description="Choose your preferred sign-in method — GitHub, Google, or Email."
         minHeightClass="min-h-[48vh]"
       />
 
@@ -138,7 +104,7 @@ function LoginContent() {
         <div className="relative group">
           <div className="absolute inset-0 bg-gradient-to-br from-[#FF0B55]/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
           <div className="relative bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8 space-y-4">
-            {/* GitHub Sign In */}
+            
             <button
               type="button"
               onClick={handleGitHubSignIn}
@@ -152,7 +118,7 @@ function LoginContent() {
               {isGithubLoading ? (
                 <>
                   <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                  Redirecting to GitHub...
+                  Redirecting...
                 </>
               ) : (
                 <>
@@ -164,7 +130,6 @@ function LoginContent() {
               )}
             </button>
 
-            {/* Google Sign In */}
             <button
               type="button"
               onClick={handleGoogleSignIn}
@@ -178,7 +143,7 @@ function LoginContent() {
               {isGoogleLoading ? (
                 <>
                   <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                  Redirecting to Google...
+                  Redirecting...
                 </>
               ) : (
                 <>
@@ -193,103 +158,46 @@ function LoginContent() {
               )}
             </button>
 
-            {/* Divider */}
             <div className="relative py-2">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-700" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-gray-900 px-2 text-gray-500">Or continue with email</span>
+                <span className="bg-gray-900 px-2 text-gray-500">Or sign in with email</span>
               </div>
             </div>
 
-            {/* Email OTP Form */}
-            {!showEmailOtp ? (
+            <div className="space-y-3">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-3 bg-black/40 border border-white/15 rounded-full text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/30 focus:border-transparent"
+              />
+              <input
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-3 bg-black/40 border border-white/15 rounded-full text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/30 focus:border-transparent"
+              />
               <button
                 type="button"
-                onClick={() => setShowEmailOtp(true)}
-                className="w-full rounded-full px-6 py-3 text-sm font-semibold inline-flex items-center justify-center gap-2 bg-gray-800 text-white hover:bg-gray-700 transition-colors"
+                onClick={handleEmailSignIn}
+                disabled={isEmailLoading || !email || !password}
+                className="w-full rounded-full px-6 py-3 text-sm font-semibold bg-[#FF0B55] text-black hover:bg-[#FF0B55]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                Sign in with Email OTP
-              </button>
-            ) : (
-              <div className="space-y-3">
-                {!isOtpSent ? (
-                  <>
-                    <div className="relative">
-                      <input
-                        type="email"
-                        placeholder="Enter your email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="w-full px-4 py-3 bg-black/40 border border-white/15 rounded-full text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/30 focus:border-transparent"
-                      />
-                    </div>
-                    <button
-                      type="button"
-                      onClick={handleSendOtp}
-                      disabled={isOtpLoading || !email}
-                      className="w-full rounded-full px-6 py-3 text-sm font-semibold bg-[#FF0B55] text-black hover:bg-[#FF0B55]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {isOtpLoading ? (
-                        <span className="flex items-center justify-center gap-2">
-                          <span className="h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent" />
-                          Sending OTP...
-                        </span>
-                      ) : (
-                        "Send OTP"
-                      )}
-                    </button>
-                  </>
+                {isEmailLoading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent" />
+                    Signing in...
+                  </span>
                 ) : (
-                  <>
-                    <div className="text-center text-sm text-gray-400">
-                      OTP sent to <span className="text-white">{email}</span>
-                    </div>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        placeholder="Enter 6-digit OTP"
-                        value={otp}
-                        onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
-                        maxLength={6}
-                        className="w-full px-4 py-3 bg-black/40 border border-white/15 rounded-full text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/30 focus:border-transparent text-center tracking-widest"
-                      />
-                    </div>
-                    <button
-                      type="button"
-                      onClick={handleVerifyOtp}
-                      disabled={isOtpLoading || otp.length !== 6}
-                      className="w-full rounded-full px-6 py-3 text-sm font-semibold bg-[#FF0B55] text-black hover:bg-[#FF0B55]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {isOtpLoading ? (
-                        <span className="flex items-center justify-center gap-2">
-                          <span className="h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent" />
-                          Verifying...
-                        </span>
-                      ) : (
-                        "Verify & Sign In"
-                      )}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setShowEmailOtp(false);
-                        setIsOtpSent(false);
-                        setEmail("");
-                        setOtp("");
-                      }}
-                      className="w-full rounded-full px-6 py-2 text-xs text-gray-400 hover:text-white transition-colors"
-                    >
-                      Back to sign in methods
-                    </button>
-                  </>
+                  "Sign In"
                 )}
-              </div>
-            )}
+              </button>
+            </div>
 
             {error && <p className="mt-4 text-center text-sm text-red-400">{error}</p>}
           </div>
@@ -299,7 +207,6 @@ function LoginContent() {
   );
 }
 
-// Export the page wrapped in a Suspense boundary to fix the prerendering error
 export default function LoginPage() {
   return (
     <Suspense fallback={
