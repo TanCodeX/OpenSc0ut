@@ -103,6 +103,7 @@ export default function GsocPage() {
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300">
       <main>
         <SitePageHero
+          badge="GSoC"
           title={
             <>
               Google Summer of Code <span className="text-[#FF0B55]">Projects</span>
