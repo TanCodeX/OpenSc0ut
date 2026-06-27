@@ -18,7 +18,7 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
   };
 
   return (
-    <div className="bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md rounded-lg border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] overflow-hidden hover:border-gray-500 transition-all duration-300 flex flex-col h-full">
+    <div className="bg-white/80 dark:bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md rounded-lg border-[0.5px] border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] overflow-hidden hover:border-gray-400 dark:hover:border-gray-500 transition-all duration-300 flex flex-col h-full">
       <div className="p-5 flex-1">
         <div className="flex items-center mb-4">
           <div className="w-10 h-10 relative mr-3">
@@ -35,7 +35,7 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
               href={repository.owner.html_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-medium text-gray-300 hover:text-[#FF0B55]"
+              className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#FF0B55]"
             >
               {repository.owner.login}
             </a>
@@ -43,7 +43,7 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
         </div>
 
         <div className="flex flex-col flex-1">
-          <h3 className="text-xl font-bold mb-2 text-white hover:text-[#FF0B55]">
+          <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white hover:text-[#FF0B55]">
             <a
               href={repository.html_url}
               target="_blank"
@@ -54,14 +54,14 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
           </h3>
 
           {repository.description && (
-            <p className="text-gray-400 mb-4 line-clamp-2">
+            <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
               {repository.description}
             </p>
           )}
 
           <div className="flex flex-wrap gap-2 mb-4">
             {repository.language && (
-              <span className="px-2 py-1 bg-black/30 text-[#FF0B55] text-xs rounded-full">
+              <span className="px-2 py-1 bg-gray-100 dark:bg-black/30 text-[#FF0B55] text-xs rounded-full">
                 {repository.language}
               </span>
             )}
@@ -70,14 +70,14 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
               repository.topics.slice(0, 3).map((topic) => (
                 <span
                   key={topic}
-                  className="px-2 py-1 bg-black/30 text-gray-300 text-xs rounded-full"
+                  className="px-2 py-1 bg-gray-100 dark:bg-black/30 text-gray-700 dark:text-gray-300 text-xs rounded-full"
                 >
                   {topic}
                 </span>
               ))}
           </div>
 
-          <div className="flex justify-between text-sm text-gray-400 w-full mt-auto">
+          <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 w-full mt-auto">
             <div className="flex space-x-4">
               <span className="flex items-center">
                 <svg
@@ -129,7 +129,7 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
         </div>
       </div>
 
-      <div className="px-5 py-3 bg-black/30 border-t border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] text-center">
+      <div className="px-5 py-3 bg-gray-50 dark:bg-black/30 border-t border-[0.5px] border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] text-center">
         <a
           href={`${repository.html_url}/issues`}
           target="_blank"

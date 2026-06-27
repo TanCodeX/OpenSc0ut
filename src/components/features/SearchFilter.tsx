@@ -48,7 +48,7 @@ export default function SearchFilter({
       {/* Glow effect */}
       <div className="absolute -inset-0.5 bg-gradient-to-r from-[#FF0B55]/30 to-purple-500/30 rounded-2xl blur-lg opacity-40 group-hover:opacity-60 transition duration-500" />
 
-      <div className="relative bg-gray-900/90 backdrop-blur-2xl border border-white/10 rounded-2xl p-6 shadow-2xl">
+      <div className="relative bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl border border-gray-200 dark:border-white/10 rounded-2xl p-6 shadow-xl dark:shadow-2xl">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Active Filters Summary */}
           <div className="flex items-center justify-between mb-2">
@@ -89,7 +89,7 @@ export default function SearchFilter({
                   value={languageInput}
                   onChange={(e) => setLanguageInput(e.target.value)}
                   placeholder="JavaScript, Python..."
-                  className="w-full pl-11 pr-4 py-3 bg-black/40 border border-white/10 rounded-xl text-gray-200 placeholder-gray-600 focus:outline-none focus:border-[#FF0B55]/50 focus:ring-1 focus:ring-[#FF0B55]/50 transition-all duration-300 group-hover/input:border-white/20"
+                  className="w-full pl-11 pr-4 py-3 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-[#FF0B55]/50 focus:ring-1 focus:ring-[#FF0B55]/50 transition-all duration-300 group-hover/input:border-gray-300 dark:group-hover/input:border-white/20"
                   suppressHydrationWarning
                 />
                 <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
@@ -110,7 +110,7 @@ export default function SearchFilter({
                   <button
                     type="button"
                     onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
-                    className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-left text-gray-200 flex justify-between items-center hover:border-white/20 transition-all duration-300 focus:outline-none focus:border-[#FF0B55]/50 focus:ring-1 focus:ring-[#FF0B55]/50"
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl text-left text-gray-900 dark:text-gray-200 flex justify-between items-center hover:border-gray-300 dark:hover:border-white/20 transition-all duration-300 focus:outline-none focus:border-[#FF0B55]/50 focus:ring-1 focus:ring-[#FF0B55]/50"
                     suppressHydrationWarning
                   >
                     <span className="flex items-center gap-2">
@@ -124,7 +124,7 @@ export default function SearchFilter({
                     </svg>
                   </button>
                   {isSortDropdownOpen && (
-                    <div className="absolute z-[1000] mt-2 w-full bg-gray-900 border border-white/10 rounded-xl shadow-2xl shadow-black/50 overflow-hidden backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="absolute z-[1000] mt-2 w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-white/10 rounded-xl shadow-2xl shadow-black/10 dark:shadow-black/50 overflow-hidden backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-200">
                       <div className="p-2 flex flex-col gap-1">
                         {SORT_OPTIONS.map((option) => (
                           <button
@@ -137,7 +137,7 @@ export default function SearchFilter({
                             className={`text-left px-3 py-2.5 text-sm rounded-lg transition-all ${
                               sort === option.value
                                 ? "bg-[#FF0B55]/20 text-[#FF0B55] font-semibold"
-                                : "text-gray-400 hover:bg-white/5 hover:text-white"
+                                : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white"
                             }`}
                             suppressHydrationWarning
                           >
@@ -153,7 +153,7 @@ export default function SearchFilter({
                 <button
                   type="button"
                   onClick={() => setOrder(order === "desc" ? "asc" : "desc")}
-                  className="px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-gray-200 hover:border-white/20 hover:bg-white/5 transition-all duration-300 focus:outline-none focus:border-[#FF0B55]/50 focus:ring-1 focus:ring-[#FF0B55]/50 flex items-center justify-center group"
+                  className="px-4 py-3 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-gray-200 hover:border-gray-300 dark:hover:border-white/20 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300 focus:outline-none focus:border-[#FF0B55]/50 focus:ring-1 focus:ring-[#FF0B55]/50 flex items-center justify-center group"
                   title={`Sort ${order === "desc" ? "Descending" : "Ascending"}`}
                   suppressHydrationWarning
                 >
