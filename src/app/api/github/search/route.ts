@@ -98,7 +98,7 @@ export async function GET(request: NextRequest) {
           const retryResponse = await axiosInstance.get("/search/repositories", {
             params: githubParams,
           });
-          return formatAndSortResponse(retryResponse);
+          return formatResponse(retryResponse);
         } catch (retryError: any) {
           // If the *retry* fails, re-assign apiError to be handled by the code below
           console.error("Unauthenticated retry failed:", retryError.message);
