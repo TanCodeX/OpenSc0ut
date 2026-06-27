@@ -69,8 +69,8 @@ export default function Pagination({
           disabled={currentPage === 1}
           className={`relative inline-flex items-center px-3 py-2 rounded-l-md border border-[0.5px] text-sm font-medium ${
             currentPage === 1
-              ? "border-[hsla(0,1.10%,36.10%,0.44)] bg-black/30 text-gray-600 cursor-not-allowed"
-              : "border-[hsla(0,1.10%,36.10%,0.44)] bg-black/30 text-gray-400 hover:bg-black/50 hover:text-gray-300"
+              ? "border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] bg-gray-100 dark:bg-black/30 text-gray-400 dark:text-gray-600 cursor-not-allowed"
+              : "border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] bg-gray-100 dark:bg-black/30 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-black/50 hover:text-gray-800 dark:hover:text-gray-300"
           }`}
         >
           <span className="sr-only">Previous</span>
@@ -95,7 +95,7 @@ export default function Pagination({
             return (
               <span
                 key={`ellipsis-${index}`}
-                className="relative inline-flex items-center px-4 py-2 border border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] bg-black/30 text-sm font-medium text-gray-400"
+                className="relative inline-flex items-center px-4 py-2 border border-[0.5px] border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] bg-gray-100 dark:bg-black/30 text-sm font-medium text-gray-600 dark:text-gray-400"
               >
                 ...
               </span>
@@ -108,8 +108,8 @@ export default function Pagination({
               onClick={() => onPageChange(pageNumber)}
               className={`relative inline-flex items-center px-4 py-2 text-sm font-medium ${
                 currentPage === pageNumber
-                  ? "z-10 bg-[#FF0B55] text-black"
-                  : "bg-black/30 border border-[0.5px] border-[hsla(0,1.10%,36.10%,0.44)] text-gray-400 hover:bg-black/50 hover:text-gray-300"
+                  ? "z-10 bg-[#FF0B55] text-white dark:text-black"
+                  : "bg-gray-100 dark:bg-black/30 border border-[0.5px] border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-black/50 hover:text-gray-800 dark:hover:text-gray-300"
               }`}
               aria-current={currentPage === pageNumber ? "page" : undefined}
             >
@@ -125,8 +125,8 @@ export default function Pagination({
           disabled={currentPage === totalPages}
           className={`relative inline-flex items-center px-3 py-2 rounded-r-md border border-[0.5px] text-sm font-medium ${
             currentPage === totalPages
-              ? "border-[hsla(0,1.10%,36.10%,0.44)] bg-black/30 text-gray-600 cursor-not-allowed"
-              : "border-[hsla(0,1.10%,36.10%,0.44)] bg-black/30 text-gray-400 hover:bg-black/50 hover:text-gray-300"
+              ? "border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] bg-gray-100 dark:bg-black/30 text-gray-400 dark:text-gray-600 cursor-not-allowed"
+              : "border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] bg-gray-100 dark:bg-black/30 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-black/50 hover:text-gray-800 dark:hover:text-gray-300"
           }`}
         >
           <span className="sr-only">Next</span>
