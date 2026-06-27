@@ -17,17 +17,14 @@ const axiosInstance = axios.create({
   },
 });
 
-// Helper function to format the response
-const formatAndSortResponse = (response: any) => {
-  const items = response.data.items.map((repo: any) => ({
-    ...repo,
-    popularity_score:
-      repo.stargazers_count * 0.7 + repo.forks_count * 0.3, // Weight stars more than forks
-  }));
+  // We keep the popularity_score but don't force a sort on it unless explicitly asked or by default
+  // if custom sorting isn't applied (wait, we are passing sort and order to github so github will sort them, but we override it here!)
+  // Instead of sorting here, we will just return items since github already sorted them based on params.
+  // Although, if sort === 'popularity' we could sort it here, but github doesn't support 'popularity' natively.
+  // Let's remove the hardcoded popularity sort so github's sorting works.
 
-  items.sort((a: any, b: any) => b.popularity_score - a.popularity_score);
-
-  const formattedItems = items.map((item: any) => ({
+const formatResponse = (response: any) => {
+  const formattedItems = response.data.items.map((item: any) => ({
     id: item.id,
     name: item.name,
     full_name: item.full_name,
@@ -67,14 +64,15 @@ export async function GET(request: NextRequest) {
         .map((lang) => `language:${lang.trim()}`)
         .join(" OR ")})`;
     }
+    
     query += " stars:>50 forks:>5";
 
     console.log("Search Query:", query); // For debugging
 
     const githubParams = {
       q: query.trim(),
-      sort: "stars", // Always sort by stars first
-      order: "desc", // Always descending for popularity
+      sort: sort, 
+      order: order, 
       per_page: 12,
       page: parseInt(page),
     };
@@ -83,7 +81,7 @@ export async function GET(request: NextRequest) {
       const response = await axiosInstance.get("/search/repositories", {
         params: githubParams,
       });
-      return formatAndSortResponse(response);
+      return formatResponse(response);
 
     } catch (apiError: any) {
       

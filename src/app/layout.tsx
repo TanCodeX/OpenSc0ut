@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className={`${jakarta.variable} font-sans bg-black text-white`}
+        className={`${jakarta.variable} font-sans bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300`}
         suppressHydrationWarning
       >
         <Header />
