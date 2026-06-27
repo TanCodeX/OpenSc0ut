@@ -44,18 +44,18 @@ const ScoreBreakdownCard: React.FC<{ factor: ScoreFactor }> = ({ factor }) => {
     score >= 90 ? "bg-green-500" : score >= 70 ? "bg-yellow-500" : "bg-red-500";
 
   return (
-    <div className="p-3 bg-black/30 rounded-xl border border-white/10 flex flex-col">
+    <div className="p-3 bg-gray-100 dark:bg-black/30 rounded-xl border border-gray-200 dark:border-white/10 flex flex-col">
       <div className="flex justify-between items-center mb-1">
-        <span className="text-sm font-medium text-gray-300">{factor.factor}</span>
+        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{factor.factor}</span>
         <span className={cn("text-lg font-bold", getColor(factor.score))}>{factor.score}%</span>
       </div>
-      <div className="w-full bg-gray-700 rounded-full h-2.5">
+      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
         <div
           className={cn("h-2.5 rounded-full transition-all duration-500", getBarColor(factor.score))}
           style={{ width: `${factor.score}%` }}
         />
       </div>
-      <p className="text-xs text-gray-500 mt-1">Weight: {factor.weight}%</p>
+      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Weight: {factor.weight}%</p>
     </div>
   );
 };
@@ -90,24 +90,24 @@ const AnalysisReportDisplay: React.FC<{ result: AIAnalysisResult }> = ({ result 
       {/* Repo Title */}
       <div className="text-center">
         <h2 className="text-4xl font-extrabold text-[#FF0B55] mb-2">{result.repositoryName}</h2>
-        <p className="text-gray-400">AI Generated Analysis Report</p>
+        <p className="text-gray-600 dark:text-gray-400">AI Generated Analysis Report</p>
       </div>
 
       {/* Overview & Scores */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Overview */}
-        <div className="md:col-span-2 bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
-          <h3 className="text-2xl font-semibold text-white mb-3">Overview</h3>
-          <p className="text-gray-300 leading-relaxed text-sm">{result.summary}</p>
+        <div className="md:col-span-2 bg-gray-50 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl p-6">
+          <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3">Overview</h3>
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">{result.summary}</p>
         </div>
 
         {/* Overall Health */}
-        <div className="bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center">
-          <p className="text-sm text-gray-400 font-medium mb-2">Overall Project Health</p>
+        <div className="bg-gray-50 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center">
+          <p className="text-sm text-gray-600 dark:text-gray-400 font-medium mb-2">Overall Project Health</p>
           <div className="relative w-20 h-20">
             <svg viewBox="0 0 36 36" className="w-full h-full transform -rotate-90">
               <path
-                className="text-gray-700"
+                className="text-gray-200 dark:text-gray-700"
                 d="M18 2.0845a15.9155 15.9155 0 010 31.831 15.9155 15.9155 0 010-31.831"
                 strokeWidth="3"
                 fill="none"
@@ -121,7 +121,7 @@ const AnalysisReportDisplay: React.FC<{ result: AIAnalysisResult }> = ({ result 
               />
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
-              <p className="text-xl font-bold text-white">
+              <p className="text-xl font-bold text-gray-900 dark:text-white">
                 {result.score}
                 <span className="text-xs">%</span>
               </p>
@@ -130,12 +130,12 @@ const AnalysisReportDisplay: React.FC<{ result: AIAnalysisResult }> = ({ result 
         </div>
 
         {/* Code Quality */}
-        <div className="bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center">
-          <p className="text-sm text-gray-400 font-medium mb-2">Code Quality Score</p>
+        <div className="bg-gray-50 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center">
+          <p className="text-sm text-gray-600 dark:text-gray-400 font-medium mb-2">Code Quality Score</p>
           <div className="relative w-20 h-20">
             <svg viewBox="0 0 36 36" className="w-full h-full transform -rotate-90">
               <path
-                className="text-gray-700"
+                className="text-gray-200 dark:text-gray-700"
                 d="M18 2.0845a15.9155 15.9155 0 010 31.831 15.9155 15.9155 0 010-31.831"
                 strokeWidth="3"
                 fill="none"
@@ -149,7 +149,7 @@ const AnalysisReportDisplay: React.FC<{ result: AIAnalysisResult }> = ({ result 
               />
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
-              <p className="text-xl font-bold text-white">
+              <p className="text-xl font-bold text-gray-900 dark:text-white">
                 {result.codeQualityScore}
                 <span className="text-xs">%</span>
               </p>
@@ -160,8 +160,8 @@ const AnalysisReportDisplay: React.FC<{ result: AIAnalysisResult }> = ({ result 
 
       {/* Score Breakdowns */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-4">
-        <div className="bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
-          <h3 className="text-xl font-semibold text-white mb-4">Overall Health Breakdown</h3>
+        <div className="bg-gray-50 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl p-6">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Overall Health Breakdown</h3>
           <div className="space-y-4">
             {result.healthBreakdown.map((factor, i) => (
               <ScoreBreakdownCard key={i} factor={factor} />
@@ -169,8 +169,8 @@ const AnalysisReportDisplay: React.FC<{ result: AIAnalysisResult }> = ({ result 
           </div>
         </div>
 
-        <div className="bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
-          <h3 className="text-xl font-semibold text-white mb-4">Code Quality Breakdown</h3>
+        <div className="bg-gray-50 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl p-6">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Code Quality Breakdown</h3>
           <div className="space-y-4">
             {result.qualityBreakdown.map((factor, i) => (
               <ScoreBreakdownCard key={i} factor={factor} />
@@ -180,40 +180,40 @@ const AnalysisReportDisplay: React.FC<{ result: AIAnalysisResult }> = ({ result 
       </div>
 
       {/* Potential Issues */}
-      <div className="bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 mt-6">
-        <h3 className="text-xl font-semibold text-white mb-4">Potential Issues ({result.potentialBugs.length})</h3>
+      <div className="bg-gray-50 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl p-6 mt-6">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Potential Issues ({result.potentialBugs.length})</h3>
         <ul className="space-y-3">
           {result.potentialBugs.length ? (
             result.potentialBugs.map((bug, i) => (
               <li
                 key={i}
-                className="flex items-start text-sm bg-black/30 p-3 rounded-lg border border-yellow-800/50"
+                className="flex items-start text-sm bg-gray-100 dark:bg-black/30 p-3 rounded-lg border border-yellow-200 dark:border-yellow-800/50"
               >
-                <span className="text-yellow-400 mr-3 mt-0.5">•</span>
-                <span className="text-gray-300 flex-1">
+                <span className="text-yellow-500 dark:text-yellow-400 mr-3 mt-0.5">•</span>
+                <span className="text-gray-700 dark:text-gray-300 flex-1">
                   {bug.query.file} | {bug.query.snippet.slice(0, 80)}... (similarity: {bug.similarity.toFixed(2)})
                 </span>
               </li>
             ))
           ) : (
-            <li className="text-green-400 flex items-center">No major issues detected. Great job!</li>
+            <li className="text-green-500 dark:text-green-400 flex items-center">No major issues detected. Great job!</li>
           )}
         </ul>
       </div>
 
       {/* License & Last Commit */}
       <div className="flex justify-between mt-6">
-        <p className="text-gray-400 text-sm">
-          License: <span className="text-white">{result.license}</span>
+        <p className="text-gray-600 dark:text-gray-400 text-sm">
+          License: <span className="text-gray-900 dark:text-white">{result.license}</span>
         </p>
-        <p className="text-gray-400 text-sm">
-          Last Commit: <span className="text-white">{formattedLastCommit}</span>
+        <p className="text-gray-600 dark:text-gray-400 text-sm">
+          Last Commit: <span className="text-gray-900 dark:text-white">{formattedLastCommit}</span>
         </p>
       </div>
 
       {/* Contribution Guide */}
       <div className="mt-4">
-        <h3 className="text-lg font-semibold text-white mb-2">Contribution Guide</h3>
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Contribution Guide</h3>
         <p
           className={cn(
             "inline-block px-3 py-1 rounded-full text-sm font-medium border",
@@ -234,12 +234,12 @@ const AnalysisReportDisplay: React.FC<{ result: AIAnalysisResult }> = ({ result 
       {/* Tech Stack */}
       {result.techStack.length > 0 && (
         <div className="mt-4">
-          <h3 className="text-lg font-semibold text-white mb-2">Tech Stack</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Tech Stack</h3>
           <div className="flex flex-wrap gap-2">
             {result.techStack.map((tech, i) => (
               <span
                 key={i}
-                className="px-3 py-1 rounded-full bg-[#FF0B55]/10 border border-[#FF0B55]/25 text-sm text-gray-200"
+                className="px-3 py-1 rounded-full bg-[#FF0B55]/10 border border-[#FF0B55]/25 text-sm text-gray-700 dark:text-gray-200"
               >
                 {tech}
               </span>
@@ -304,7 +304,7 @@ export default function AIRepoPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300">
       <main>
         <SitePageHero
           badge="AI tools"
@@ -321,25 +321,25 @@ export default function AIRepoPage() {
             <div className="absolute inset-0 bg-gradient-to-r from-[#FF0B55]/10 to-transparent blur-3xl -z-10 rounded-3xl" />
             <div className="flex items-center gap-3 mb-4">
               <div className="w-1 h-8 bg-[#FF0B55] rounded-full" />
-              <h2 className="text-2xl md:text-3xl font-bold text-white">Analyze a repository</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Analyze a repository</h2>
             </div>
-            <p className="text-gray-400 max-w-2xl">
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl">
               We call the AI repo API and render scores, breakdowns, and notes in cards below.
             </p>
           </div>
 
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-br from-[#FF0B55]/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-            <div className="relative bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+            <div className="relative bg-gray-50 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
-                <label className="block text-sm font-medium text-gray-300 mb-2">GitHub repository URL</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">GitHub repository URL</label>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <input
                     type="url"
                     value={repoUrl}
                     onChange={(e) => setRepoUrl(e.target.value)}
                     placeholder="https://github.com/owner/repo"
-                    className="flex-1 min-w-0 px-4 py-3 bg-black/40 border border-white/15 rounded-full text-gray-300 placeholder-gray-500 hover:border-[#FF0B55]/40 focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/30 focus:border-transparent"
+                    className="flex-1 min-w-0 px-4 py-3 bg-white dark:bg-black/40 border border-gray-200 dark:border-white/15 rounded-full text-gray-900 dark:text-gray-300 placeholder-gray-500 hover:border-[#FF0B55]/40 focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/30 focus:border-transparent transition-colors"
                     required
                   />
                   <button
@@ -353,7 +353,7 @@ export default function AIRepoPage() {
               </form>
 
               {error && (
-                <div className="mt-8 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200">
+                <div className="mt-8 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-600 dark:text-red-200">
                   {error}
                 </div>
               )}
@@ -365,7 +365,7 @@ export default function AIRepoPage() {
               )}
 
               {analysisResult && (
-                <div className="mt-10 pt-10 border-t border-white/10">
+                <div className="mt-10 pt-10 border-t border-gray-200 dark:border-white/10">
                   <AnalysisReportDisplay result={analysisResult} />
                 </div>
               )}

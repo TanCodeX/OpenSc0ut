@@ -34,7 +34,7 @@ export default function Home() {
   const totalPages = Math.ceil(totalCount / 12); // 12 items per page
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300">
       <GlobalCursor targetRef={heroRef} />
 
       <main>
@@ -80,7 +80,7 @@ export default function Home() {
             {/* Floating grid particles */}
             <div className="absolute top-1/3 left-1/4 w-2 h-2 bg-[#FF0B55]/60 rounded-full animate-ping" style={{ animationDuration: '3s' }} />
             <div className="absolute top-2/3 right-1/3 w-2 h-2 bg-[#FF0B55]/60 rounded-full animate-ping" style={{ animationDuration: '4s', animationDelay: '1s' }} />
-            <div className="absolute top-1/2 left-2/3 w-1 h-1 bg-white/40 rounded-full animate-ping" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }} />
+            <div className="absolute top-1/2 left-2/3 w-1 h-1 bg-black/20 dark:bg-white/40 rounded-full animate-ping" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }} />
           </div>
 
           {/* Content Container */}
@@ -90,26 +90,26 @@ export default function Home() {
               {/* Left Column - Text Content */}
               <div className="text-center lg:text-left space-y-8">
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 backdrop-blur-sm">
                   <span className="w-2 h-2 bg-[#FF0B55] rounded-full animate-pulse" />
-                  <span className="text-sm text-gray-300">Now Live</span>
+                  <span className="text-sm text-gray-700 dark:text-gray-300">Now Live</span>
                 </div>
 
                 {/* Main Heading */}
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight">
-                  <span className="block text-gray-400 text-3xl md:text-4xl mb-2 font-light">Introducing</span>
-                  <AnimatedText text="OpenSc0ut" className="text-white" />
+                  <span className="block text-gray-600 dark:text-gray-400 text-3xl md:text-4xl mb-2 font-light">Introducing</span>
+                  <AnimatedText text="OpenSc0ut" className="text-gray-900 dark:text-white" />
                 </h1>
 
                 {/* Subheading */}
-                <p className="text-lg md:text-xl text-gray-400 max-w-xl mx-auto lg:mx-0">
-                  Find your next project, make your first commit, and grow as a developer — all in one place.
+                <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-xl mx-auto lg:mx-0">
+                  Your ultimate destination for discovering, analyzing, and contributing to the most impactful open-source projects worldwide.
                 </p>
 
                 {/* Search Prompt Pill */}
                 <div className="flex justify-center lg:justify-start">
                   <div className="rotating-border-glow">
-                    <div className="bg-black/80 backdrop-blur-md border border-white/20 rounded-full px-5 py-3 flex items-center space-x-3">
+                    <div className="bg-white/80 dark:bg-black/80 backdrop-blur-md border border-gray-200 dark:border-white/20 rounded-full px-5 py-3 flex items-center space-x-3">
                       <svg
                         className="w-5 h-5 text-[#FF0B55] flex-shrink-0"
                         fill="none"
@@ -123,26 +123,16 @@ export default function Home() {
                           d="M13 10V3L4 14h7v7l9-11h-7z"
                         />
                       </svg>
-                      <span className="text-white text-sm font-medium">
+                      <span className="text-gray-900 dark:text-white text-sm font-medium">
                         Find. Contribute. Repeat.
                       </span>
                       <button
-                        suppressHydrationWarning
-                        className="bg-[#FF0B55] rounded-full p-1.5 flex-shrink-0 hover:bg-[#FF0B55]/80 transition-colors"
+                        onClick={() => {
+                          contentRef.current?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        className="ml-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-[#FF0B55]/10 text-[#FF0B55] hover:bg-[#FF0B55]/20 transition-colors"
                       >
-                        <svg
-                          className="w-3 h-3 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 5l7 7-7 7"
-                          />
-                        </svg>
+                        Explore Now
                       </button>
                     </div>
                   </div>
@@ -152,47 +142,47 @@ export default function Home() {
               {/* Right Column - Grid Cards */}
               <div className="hidden lg:grid grid-cols-2 gap-4">
                 {/* Card 1 */}
-                <div className="group relative bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 transition-all duration-300 hover:scale-105">
+                <div className="group relative bg-gradient-to-br from-gray-100 dark:from-white/5 to-transparent border border-gray-200 dark:border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 transition-all duration-300 hover:scale-105">
                   <div className="w-12 h-12 bg-[#FF0B55]/20 rounded-xl flex items-center justify-center mb-4">
                     <svg className="w-6 h-6 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold text-white mb-1">Discover</h3>
-                  <p className="text-sm text-gray-400">Explore curated open source projects</p>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Discover</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Explore curated open source projects</p>
                 </div>
 
                 {/* Card 2 */}
-                <div className="group relative bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 transition-all duration-300 hover:scale-105 translate-y-8">
+                <div className="group relative bg-gradient-to-br from-gray-100 dark:from-white/5 to-transparent border border-gray-200 dark:border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 transition-all duration-300 hover:scale-105 translate-y-8">
                   <div className="w-12 h-12 bg-[#FF0B55]/20 rounded-xl flex items-center justify-center mb-4">
                     <svg className="w-6 h-6 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold text-white mb-1">Contribute</h3>
-                  <p className="text-sm text-gray-400">Make meaningful contributions</p>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Contribute</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Make meaningful contributions</p>
                 </div>
 
                 {/* Card 3 */}
-                <div className="group relative bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 transition-all duration-300 hover:scale-105">
+                <div className="group relative bg-gradient-to-br from-gray-100 dark:from-white/5 to-transparent border border-gray-200 dark:border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 transition-all duration-300 hover:scale-105">
                   <div className="w-12 h-12 bg-[#FF0B55]/20 rounded-xl flex items-center justify-center mb-4">
                     <svg className="w-6 h-6 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold text-white mb-1">Community</h3>
-                  <p className="text-sm text-gray-400">Join developers worldwide</p>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Analyze</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">AI-powered code insights</p>
                 </div>
 
                 {/* Card 4 */}
-                <div className="group relative bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 transition-all duration-300 hover:scale-105 translate-y-8">
+                <div className="group relative bg-gradient-to-br from-gray-100 dark:from-white/5 to-transparent border border-gray-200 dark:border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 transition-all duration-300 hover:scale-105 translate-y-8">
                   <div className="w-12 h-12 bg-[#FF0B55]/20 rounded-xl flex items-center justify-center mb-4">
                     <svg className="w-6 h-6 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold text-white mb-1">Grow</h3>
-                  <p className="text-sm text-gray-400">Level up your skills</p>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Grow</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Level up your skills</p>
                 </div>
               </div>
             </div>
@@ -257,17 +247,17 @@ export default function Home() {
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="rounded-2xl border border-white/10 bg-white/5 p-6 animate-pulse">
+                <div key={i} className="rounded-2xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 p-6 animate-pulse">
                   <div className="flex items-start justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-white/10" />
-                    <div className="w-20 h-6 rounded-full bg-white/10" />
+                    <div className="w-12 h-12 rounded-xl bg-gray-200 dark:bg-white/10" />
+                    <div className="w-20 h-6 rounded-full bg-gray-200 dark:bg-white/10" />
                   </div>
-                  <div className="h-6 w-3/4 rounded bg-white/10 mb-2" />
-                  <div className="h-4 w-full rounded bg-white/10 mb-2" />
-                  <div className="h-4 w-2/3 rounded bg-white/10 mb-4" />
+                  <div className="h-6 w-3/4 rounded bg-gray-200 dark:bg-white/10 mb-2" />
+                  <div className="h-4 w-full rounded bg-gray-200 dark:bg-white/10 mb-2" />
+                  <div className="h-4 w-2/3 rounded bg-gray-200 dark:bg-white/10 mb-4" />
                   <div className="flex gap-2">
-                    <div className="w-16 h-6 rounded bg-white/10" />
-                    <div className="w-16 h-6 rounded bg-white/10" />
+                    <div className="w-16 h-6 rounded bg-gray-200 dark:bg-white/10" />
+                    <div className="w-16 h-6 rounded bg-gray-200 dark:bg-white/10" />
                   </div>
                 </div>
               ))}
@@ -275,15 +265,15 @@ export default function Home() {
           ) : error ? (
             <div className="rounded-2xl border border-red-500/30 bg-red-500/10 p-8 text-center">
               <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-red-500/20 flex items-center justify-center">
-                <svg className="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-red-500 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-red-300 mb-2">Something went wrong</h3>
-              <p className="text-red-400/80 text-sm mb-4">{error}</p>
+              <h3 className="text-lg font-semibold text-red-600 dark:text-red-300 mb-2">Something went wrong</h3>
+              <p className="text-red-500 dark:text-red-400/80 text-sm mb-4">{error}</p>
               <button
                 onClick={() => window.location.reload()}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/20 border border-red-500/30 text-red-300 hover:bg-red-500/30 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 dark:bg-red-500/20 border border-red-500/20 dark:border-red-500/30 text-red-600 dark:text-red-300 hover:bg-red-500/20 dark:hover:bg-red-500/30 transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -292,17 +282,17 @@ export default function Home() {
               </button>
             </div>
           ) : repositories.length === 0 ? (
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-12 text-center">
-              <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-white/5 flex items-center justify-center">
-                <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="rounded-2xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 p-12 text-center">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gray-200 dark:bg-white/5 flex items-center justify-center">
+                <svg className="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2">No repositories found</h3>
-              <p className="text-gray-400 mb-6">Try adjusting your search or filters to find what you're looking for.</p>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No repositories found</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">Try adjusting your search or filters to find what you're looking for.</p>
               <button
                 onClick={() => handleSearch({ sort: "stars", order: "desc", page: 1 })}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#FF0B55] text-black font-medium hover:bg-[#FF0B55]/90 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#FF0B55] text-white font-medium hover:bg-[#FF0B55]/90 transition-colors"
               >
                 Clear Filters
               </button>
@@ -313,7 +303,7 @@ export default function Home() {
                 {repositories.map((repo, index) => (
                   <div
                     key={repo.id}
-                    className="group relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 hover:shadow-lg hover:shadow-[#FF0B55]/10 transition-all duration-300"
+                    className="group relative rounded-2xl border border-gray-200 dark:border-white/10 bg-gradient-to-br from-gray-50 dark:from-white/5 to-transparent p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 hover:shadow-lg hover:shadow-[#FF0B55]/10 transition-all duration-300"
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
                     {/* Hover gradient */}

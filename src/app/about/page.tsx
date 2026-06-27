@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300">
       <main>
         {/* Hero Section with Grid Background */}
         <div className="relative min-h-[60vh] flex items-center overflow-hidden">
@@ -20,17 +20,17 @@ export default function About() {
               transition={{ duration: 0.6 }}
               className="text-center"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 backdrop-blur-sm mb-6">
                 <span className="w-2 h-2 bg-[#FF0B55] rounded-full animate-pulse" />
-                <span className="text-sm text-gray-300">About Us</span>
+                <span className="text-sm text-gray-700 dark:text-gray-300">About Us</span>
               </div>
-              <h1 className="text-5xl md:text-7xl mb-6 font-extrabold">
+              <h1 className="text-5xl md:text-7xl mb-6 font-extrabold text-gray-900 dark:text-white">
                 About <span className="text-[#FF0B55]">OpenSc0ut</span>
               </h1>
-              <p className="text-2xl text-gray-300 mb-2 font-light">
+              <p className="text-2xl text-gray-700 dark:text-gray-300 mb-2 font-light">
                 Discover. Contribute. Grow.
               </p>
-              <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
                 Your gateway to meaningful open source contributions and developer growth.
               </p>
             </motion.div>
@@ -50,16 +50,16 @@ export default function About() {
               className="relative group"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-[#FF0B55]/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="relative bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+              <div className="relative bg-gray-50 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-[#FF0B55]/20 flex items-center justify-center">
                     <svg className="w-5 h-5 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h2 className="text-2xl font-bold text-white">What is OpenSc0ut?</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">What is OpenSc0ut?</h2>
                 </div>
-                <p className="text-gray-300 mb-6 leading-relaxed">
+                <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
                   OpenSc0ut is a platform designed to help developers find meaningful open-source projects
                   where they can contribute and grow their skills. Our mission is to connect developers with
                   projects that match their interests and skill levels, fostering collaboration within the
@@ -72,7 +72,7 @@ export default function About() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-semibold text-white">How It Works</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">How It Works</h3>
                 </div>
                 <ul className="space-y-3 mb-6">
                   {[
@@ -87,7 +87,7 @@ export default function About() {
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                       </div>
-                      <span className="text-gray-300">{item}</span>
+                      <span className="text-gray-700 dark:text-gray-300">{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -103,14 +103,14 @@ export default function About() {
               className="relative group"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-[#FF0B55]/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="relative bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+              <div className="relative bg-gray-50 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-[#FF0B55]/20 flex items-center justify-center">
                     <svg className="w-5 h-5 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-semibold text-white">Why Open Source?</h3>
+                  <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">Why Open Source?</h3>
                 </div>
                 <div className="space-y-4">
                   {[
@@ -126,8 +126,8 @@ export default function About() {
                         </svg>
                       </div>
                       <div>
-                        <h4 className="text-white font-semibold">{item.title}</h4>
-                        <p className="text-gray-400 text-sm">{item.desc}</p>
+                        <h4 className="text-gray-900 dark:text-white font-semibold">{item.title}</h4>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -145,29 +145,29 @@ export default function About() {
             className="relative group mt-8"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-[#FF0B55]/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="relative bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+            <div className="relative bg-gray-50 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl p-8">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-[#FF0B55]/20 flex items-center justify-center">
                   <svg className="w-5 h-5 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4a2 2 0 010-16 2 2 0 010 16z" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-semibold text-white">Technical Details</h3>
+                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">Technical Details</h3>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                  <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
                     <svg className="w-5 h-5 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                     GitHub API Integration
                   </h4>
-                  <p className="text-gray-300 mb-4">
+                  <p className="text-gray-700 dark:text-gray-300 mb-4">
                     This project uses the GitHub API to fetch repository data. Rate limits:
                   </p>
                   <ul className="space-y-2">
                     {["Unauthenticated: 60 requests/hour", "Authenticated: 5,000 requests/hour"].map((item, i) => (
-                      <li key={i} className="flex items-center gap-3 text-gray-300">
+                      <li key={i} className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
                         <span className="w-2 h-2 bg-[#FF0B55] rounded-full" />
                         {item}
                       </li>
@@ -175,7 +175,7 @@ export default function About() {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
                     <svg className="w-5 h-5 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
                     </svg>
