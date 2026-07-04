@@ -102,7 +102,7 @@ export default function Home() {
                 </h1>
 
                 {/* Subheading */}
-                <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-xl mx-auto lg:mx-0">
+                <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 max-w-xl mx-auto lg:mx-0">
                   Your ultimate destination for discovering, analyzing, and contributing to the most impactful open-source projects worldwide.
                 </p>
 
