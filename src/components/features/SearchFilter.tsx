@@ -8,6 +8,7 @@ interface SearchFilterProps {
   initialParams?: Partial<SearchParams>;
   searchLabel?: string;
   searchPlaceholder?: string;
+  hideSort?: boolean;
 }
 
 const SORT_OPTIONS = [
@@ -21,6 +22,7 @@ export default function SearchFilter({
   initialParams = {},
   searchLabel = "Language",
   searchPlaceholder = "JavaScript, Python, Rust...",
+  hideSort = false,
 }: SearchFilterProps) {
   const [languageInput, setLanguageInput] = useState<string>("");
   const [sort, setSort] = useState<string>(initialParams.sort || "stars");
@@ -42,13 +44,15 @@ export default function SearchFilter({
 
   const activeFiltersSummary = useMemo(() => {
     const parts: string[] = [];
-    if (languageInput.trim()) parts.push(`language: ${languageInput.trim()}`);
-    if (sort) parts.push(`sort: ${SORT_OPTIONS.find((o) => o.value === sort)?.label || sort}`);
-    parts.push(order === "desc" ? "desc" : "asc");
+    if (languageInput.trim()) parts.push(`search: ${languageInput.trim()}`);
+    if (!hideSort) {
+      if (sort) parts.push(`sort: ${SORT_OPTIONS.find((o) => o.value === sort)?.label || sort}`);
+      parts.push(order === "desc" ? "desc" : "asc");
+    }
     return parts.join(" · ");
-  }, [languageInput, sort, order]);
+  }, [languageInput, sort, order, hideSort]);
 
-  const hasCustomFilters = languageInput.trim() || sort !== "stars" || order !== "desc";
+  const hasCustomFilters = languageInput.trim() || (!hideSort && (sort !== "stars" || order !== "desc"));
 
   return (
     <div className="relative group z-50 rounded-2xl">
@@ -145,88 +149,90 @@ export default function SearchFilter({
             </div>
 
             {/* Sort + Order */}
-            <div className="flex-1 w-full">
-              <label className="block text-[10px] font-bold text-gray-600 mb-2 uppercase tracking-widest">
-                Sort By
-              </label>
-              <div className="flex gap-2">
-                {/* Sort dropdown */}
-                <div className="relative flex-1">
+            {!hideSort && (
+              <div className="flex-1 w-full">
+                <label className="block text-[10px] font-bold text-gray-600 mb-2 uppercase tracking-widest">
+                  Sort By
+                </label>
+                <div className="flex gap-2">
+                  {/* Sort dropdown */}
+                  <div className="relative flex-1">
+                    <button
+                      type="button"
+                      onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
+                      className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-left text-gray-200 flex justify-between items-center hover:border-white/15 focus:border-[#FF0B55]/40 transition-all duration-300 focus:outline-none text-sm"
+                      suppressHydrationWarning
+                    >
+                      <span className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                        </svg>
+                        <span className="text-gray-300">
+                          {SORT_OPTIONS.find((o) => o.value === sort)?.label || "Sort option"}
+                        </span>
+                      </span>
+                      <svg
+                        className={`w-4 h-4 text-gray-600 transition-transform duration-300 ${isSortDropdownOpen ? "rotate-180" : ""}`}
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+
+                    {isSortDropdownOpen && (
+                      <div className="absolute z-[1000] mt-2 w-full bg-[#0d0d0d]/98 border border-white/[0.08] rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden backdrop-blur-xl">
+                        <div className="p-1.5 flex flex-col gap-0.5">
+                          {SORT_OPTIONS.map((option) => (
+                            <button
+                              key={option.value}
+                              type="button"
+                              onClick={() => {
+                                setSort(option.value);
+                                setIsSortDropdownOpen(false);
+                              }}
+                              className={`text-left px-3 py-2.5 text-sm rounded-lg transition-all flex items-center gap-3 ${
+                                sort === option.value
+                                  ? "bg-[#FF0B55]/15 text-[#FF0B55] font-semibold border border-[#FF0B55]/20"
+                                  : "text-gray-500 hover:bg-white/[0.05] hover:text-gray-200"
+                              }`}
+                              suppressHydrationWarning
+                            >
+                              <span className="text-base leading-none">{option.icon}</span>
+                              {option.label}
+                              {sort === option.value && (
+                                <svg className="ml-auto w-3.5 h-3.5 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                                </svg>
+                              )}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Order toggle */}
                   <button
                     type="button"
-                    onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
-                    className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-left text-gray-200 flex justify-between items-center hover:border-white/15 focus:border-[#FF0B55]/40 transition-all duration-300 focus:outline-none text-sm"
+                    onClick={() => setOrder(order === "desc" ? "asc" : "desc")}
+                    className={`px-3.5 py-3 rounded-xl border transition-all duration-300 focus:outline-none flex items-center justify-center group ${
+                      order === "asc"
+                        ? "bg-[#FF0B55]/10 border-[#FF0B55]/30 text-[#FF0B55]"
+                        : "bg-white/[0.04] border-white/[0.08] text-gray-500 hover:text-gray-200 hover:border-white/15"
+                    }`}
+                    title={`Sort ${order === "desc" ? "Descending" : "Ascending"}`}
                     suppressHydrationWarning
                   >
-                    <span className="flex items-center gap-2">
-                      <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
-                      </svg>
-                      <span className="text-gray-300">
-                        {SORT_OPTIONS.find((o) => o.value === sort)?.label || "Sort option"}
-                      </span>
-                    </span>
                     <svg
-                      className={`w-4 h-4 text-gray-600 transition-transform duration-300 ${isSortDropdownOpen ? "rotate-180" : ""}`}
+                      className={`w-4 h-4 transition-transform duration-300 ${order === "asc" ? "rotate-180" : ""}`}
                       fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                     </svg>
                   </button>
-
-                  {isSortDropdownOpen && (
-                    <div className="absolute z-[1000] mt-2 w-full bg-[#0d0d0d]/98 border border-white/[0.08] rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden backdrop-blur-xl">
-                      <div className="p-1.5 flex flex-col gap-0.5">
-                        {SORT_OPTIONS.map((option) => (
-                          <button
-                            key={option.value}
-                            type="button"
-                            onClick={() => {
-                              setSort(option.value);
-                              setIsSortDropdownOpen(false);
-                            }}
-                            className={`text-left px-3 py-2.5 text-sm rounded-lg transition-all flex items-center gap-3 ${
-                              sort === option.value
-                                ? "bg-[#FF0B55]/15 text-[#FF0B55] font-semibold border border-[#FF0B55]/20"
-                                : "text-gray-500 hover:bg-white/[0.05] hover:text-gray-200"
-                            }`}
-                            suppressHydrationWarning
-                          >
-                            <span className="text-base leading-none">{option.icon}</span>
-                            {option.label}
-                            {sort === option.value && (
-                              <svg className="ml-auto w-3.5 h-3.5 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                              </svg>
-                            )}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
                 </div>
-
-                {/* Order toggle */}
-                <button
-                  type="button"
-                  onClick={() => setOrder(order === "desc" ? "asc" : "desc")}
-                  className={`px-3.5 py-3 rounded-xl border transition-all duration-300 focus:outline-none flex items-center justify-center group ${
-                    order === "asc"
-                      ? "bg-[#FF0B55]/10 border-[#FF0B55]/30 text-[#FF0B55]"
-                      : "bg-white/[0.04] border-white/[0.08] text-gray-500 hover:text-gray-200 hover:border-white/15"
-                  }`}
-                  title={`Sort ${order === "desc" ? "Descending" : "Ascending"}`}
-                  suppressHydrationWarning
-                >
-                  <svg
-                    className={`w-4 h-4 transition-transform duration-300 ${order === "asc" ? "rotate-180" : ""}`}
-                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                  </svg>
-                </button>
               </div>
-            </div>
+            )}
 
             {/* Search Button */}
             <div className="w-full lg:w-auto">

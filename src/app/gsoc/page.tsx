@@ -79,6 +79,7 @@ export default function GsocPage() {
               initialParams={searchParams} 
               searchLabel="Search Organizations"
               searchPlaceholder="Organization Name, Category, or Tags..."
+              hideSort={true}
             />
           </div>
 
