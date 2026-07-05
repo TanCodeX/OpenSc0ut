@@ -6,6 +6,8 @@ import { SearchParams } from "../../types/types";
 interface SearchFilterProps {
   onSearch: (params: SearchParams) => void;
   initialParams?: Partial<SearchParams>;
+  searchLabel?: string;
+  searchPlaceholder?: string;
 }
 
 const SORT_OPTIONS = [
@@ -17,6 +19,8 @@ const SORT_OPTIONS = [
 export default function SearchFilter({
   onSearch,
   initialParams = {},
+  searchLabel = "Language",
+  searchPlaceholder = "JavaScript, Python, Rust...",
 }: SearchFilterProps) {
   const [languageInput, setLanguageInput] = useState<string>("");
   const [sort, setSort] = useState<string>(initialParams.sort || "stars");
@@ -106,7 +110,7 @@ export default function SearchFilter({
             {/* Language Input */}
             <div className="flex-1 w-full">
               <label className="block text-[10px] font-bold text-gray-600 mb-2 uppercase tracking-widest">
-                Language
+                {searchLabel}
               </label>
               <div className="relative rounded-xl">
                 {/* Focus glow */}
@@ -133,7 +137,7 @@ export default function SearchFilter({
                   onChange={(e) => setLanguageInput(e.target.value)}
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
-                  placeholder="JavaScript, Python, Rust..."
+                  placeholder={searchPlaceholder}
                   className="w-full pl-10 pr-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-gray-200 placeholder-gray-700 focus:outline-none hover:border-white/15 focus:border-[#FF0B55]/40 transition-all duration-300 text-sm"
                   suppressHydrationWarning
                 />
