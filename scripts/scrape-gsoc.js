@@ -2,48 +2,74 @@ const fs = require('fs');
 const path = require('path');
 
 async function scrapeGSoCOrgs() {
-  const url = 'https://summerofcode.withgoogle.com/api/program/2026/organizations/';
-  console.log(`Fetching data from ${url}...`);
+  const existingPath = path.join(process.cwd(), 'src/data/gsoc-orgs.json');
+  let orgMap = new Map();
 
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch data. HTTP Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    
-    // The API usually returns an array directly, but we handle potential wrapping objects just in case.
-    const orgs = Array.isArray(data) ? data : (data.organizations || data.results || []);
-
-    if (!orgs || orgs.length === 0) {
-      console.warn('⚠️ No organizations found in the response.');
-      return;
-    }
-
-    const scaffoldedOrgs = orgs.map((org) => {
-      // Safely extract fields, falling back to empty strings if the API structure varies
-      return {
-        name: org.name || '',
-        slug: org.slug || org.id?.toString() || '',
-        desc: org.tagline || org.description || '', // GSOC API often uses 'tagline'
-        ideas: org.idea_list || org.ideas_link || org.ideas || '', // Varies slightly between years
-        githubRepo: '',
-        cat: '',
-        tags: []
-      };
+  // Load existing data to preserve enriched fields (githubRepo, cat, tags)
+  if (fs.existsSync(existingPath)) {
+    const existingData = JSON.parse(fs.readFileSync(existingPath, 'utf8'));
+    existingData.forEach(org => {
+      orgMap.set(org.slug, { ...org, years: org.years || [] });
     });
-
-    const outputPath = path.join(process.cwd(), 'gsoc-orgs-scaffold.json');
-    fs.writeFileSync(outputPath, JSON.stringify(scaffoldedOrgs, null, 4), 'utf-8');
-
-    console.log(`\n✅ Success! Scraped ${scaffoldedOrgs.length} organizations.`);
-    console.log(`💾 Saved beautifully formatted JSON to: ${outputPath}`);
-
-  } catch (error) {
-    console.error('\n❌ Error during scraping:', error.message);
-    console.error('Please check your network connection or if the GSoC API endpoint has changed.');
   }
+
+  const years = [2022, 2023, 2024, 2025, 2026];
+
+  for (const year of years) {
+    const url = `https://summerofcode.withgoogle.com/api/program/${year}/organizations/`;
+    console.log(`Fetching data for ${year} from ${url}...`);
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        console.warn(`⚠️ Failed to fetch ${year}. HTTP Status: ${response.status}`);
+        continue;
+      }
+
+      const data = await response.json();
+      const orgs = Array.isArray(data) ? data : (data.organizations || data.results || []);
+
+      orgs.forEach((org) => {
+        const slug = org.slug || org.id?.toString() || '';
+        if (!slug) return;
+
+        if (orgMap.has(slug)) {
+          const existing = orgMap.get(slug);
+          if (!existing.years.includes(year)) {
+            existing.years.push(year);
+          }
+          // Update ideas link if the newer year has one and the old one didn't
+          if (!existing.ideas && (org.idea_list || org.ideas_link || org.ideas)) {
+             existing.ideas = org.idea_list || org.ideas_link || org.ideas;
+          }
+        } else {
+          orgMap.set(slug, {
+            name: org.name || '',
+            slug: slug,
+            desc: org.tagline || org.description || '',
+            ideas: org.idea_list || org.ideas_link || org.ideas || '',
+            githubRepo: '',
+            cat: '',
+            tags: [],
+            years: [year]
+          });
+        }
+      });
+    } catch (error) {
+      console.error(`\n❌ Error during scraping ${year}:`, error.message);
+    }
+  }
+
+  // Convert map to array and sort by latest year, then alphabetically
+  const finalOrgs = Array.from(orgMap.values());
+  
+  // Sort years array descending for each org
+  finalOrgs.forEach(org => org.years.sort((a, b) => b - a));
+
+  fs.writeFileSync(existingPath, JSON.stringify(finalOrgs, null, 4), 'utf-8');
+
+  console.log(`\n✅ Success! Merged ${finalOrgs.length} organizations across multiple years.`);
+  console.log(`💾 Saved dynamically to: ${existingPath}`);
 }
 
 scrapeGSoCOrgs();

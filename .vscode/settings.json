@@ -7,8 +7,14 @@
     "typescriptreact": "javascript"
   },
   "tailwindCSS.experimental.classRegex": [
-    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
-    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+    [
+      "cva\\(([^)]*)\\)",
+      "[\"'`]([^\"'`]*).*?[\"'`]"
+    ],
+    [
+      "cx\\(([^)]*)\\)",
+      "(?:'|\"|`)([^']*)(?:'|\"|`)"
+    ]
   ],
   "editor.quickSuggestions": {
     "strings": true
@@ -16,6 +22,6 @@
   "css.customData": [
     ".vscode/css_custom_data.json"
   ],
-  "editor.fontSize": 14,
+  "editor.fontSize": 12,
   "files.autoSave": "onWindowChange"
 }

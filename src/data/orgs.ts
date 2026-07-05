@@ -8,6 +8,7 @@ export interface Organization {
   tags: string[];
   description: string;
   ideas?: string;
+  years?: number[];
 }
 
 export const ORGS: Organization[] = scaffoldData.map((org) => ({
@@ -18,4 +19,5 @@ export const ORGS: Organization[] = scaffoldData.map((org) => ({
   tags: org.tags || [],
   description: org.desc || 'No description provided.',
   ideas: org.ideas || '',
+  years: org.years || [2026],
 }));

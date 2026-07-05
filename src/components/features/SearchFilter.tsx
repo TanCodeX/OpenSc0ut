@@ -9,6 +9,7 @@ interface SearchFilterProps {
   searchLabel?: string;
   searchPlaceholder?: string;
   hideSort?: boolean;
+  showYearFilter?: boolean;
 }
 
 const SORT_OPTIONS = [
@@ -23,10 +24,12 @@ export default function SearchFilter({
   searchLabel = "Language",
   searchPlaceholder = "JavaScript, Python, Rust...",
   hideSort = false,
+  showYearFilter = false,
 }: SearchFilterProps) {
   const [languageInput, setLanguageInput] = useState<string>("");
   const [sort, setSort] = useState<string>(initialParams.sort || "stars");
   const [order, setOrder] = useState<"asc" | "desc">("desc");
+  const [year, setYear] = useState<string>(initialParams.year || "2026");
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
@@ -39,20 +42,24 @@ export default function SearchFilter({
       ...(languageInput.trim() && {
         language: languageInput.trim(),
       }),
+      ...(showYearFilter && {
+        year,
+      }),
     });
   };
 
   const activeFiltersSummary = useMemo(() => {
     const parts: string[] = [];
+    if (showYearFilter && year) parts.push(`year: ${year}`);
     if (languageInput.trim()) parts.push(`search: ${languageInput.trim()}`);
     if (!hideSort) {
       if (sort) parts.push(`sort: ${SORT_OPTIONS.find((o) => o.value === sort)?.label || sort}`);
       parts.push(order === "desc" ? "desc" : "asc");
     }
     return parts.join(" · ");
-  }, [languageInput, sort, order, hideSort]);
+  }, [languageInput, sort, order, hideSort, showYearFilter, year]);
 
-  const hasCustomFilters = languageInput.trim() || (!hideSort && (sort !== "stars" || order !== "desc"));
+  const hasCustomFilters = languageInput.trim() || (!hideSort && (sort !== "stars" || order !== "desc")) || (showYearFilter && year !== "2026");
 
   return (
     <div className="relative group z-50 rounded-2xl">
@@ -94,7 +101,8 @@ export default function SearchFilter({
                   setLanguageInput("");
                   setSort("stars");
                   setOrder("desc");
-                  onSearch({ sort: "stars", order: "desc", page: 1 });
+                  setYear("2026");
+                  onSearch({ sort: "stars", order: "desc", page: 1, year: "2026" });
                 }}
                 className="text-[11px] text-[#FF0B55] hover:text-white font-semibold transition-all duration-200 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF0B55]/10 hover:bg-[#FF0B55]/20 border border-[#FF0B55]/20 hover:border-[#FF0B55]/40"
               >
@@ -147,6 +155,43 @@ export default function SearchFilter({
                 />
               </div>
             </div>
+
+            {/* Year Dropdown */}
+            {showYearFilter && (
+              <div className="w-full lg:w-40">
+                <label className="block text-[10px] font-bold text-gray-600 mb-2 uppercase tracking-widest">
+                  Year
+                </label>
+                <div className="relative rounded-xl bg-white/[0.04] border border-white/[0.08] hover:border-white/15 focus-within:border-[#FF0B55]/40 transition-all duration-300">
+                  <select
+                    value={year}
+                    onChange={(e) => {
+                      const newYear = e.target.value;
+                      setYear(newYear);
+                      onSearch({
+                        sort,
+                        order,
+                        page: 1,
+                        ...(languageInput.trim() && { language: languageInput.trim() }),
+                        year: newYear,
+                      });
+                    }}
+                    className="w-full appearance-none bg-transparent px-4 py-3 text-sm text-gray-200 focus:outline-none cursor-pointer"
+                  >
+                    <option value="2026" className="bg-[#0d0d0d] text-gray-200">2026</option>
+                    <option value="2025" className="bg-[#0d0d0d] text-gray-200">2025</option>
+                    <option value="2024" className="bg-[#0d0d0d] text-gray-200">2024</option>
+                    <option value="2023" className="bg-[#0d0d0d] text-gray-200">2023</option>
+                    <option value="2022" className="bg-[#0d0d0d] text-gray-200">2022</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                    <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Sort + Order */}
             {!hideSort && (

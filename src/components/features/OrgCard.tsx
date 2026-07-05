@@ -116,13 +116,24 @@ export function OrgCard({ org }: OrgCardProps) {
       <div className="absolute inset-0 bg-gradient-to-br from-[#FF0B55]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       
       <div className="p-6 flex-1 flex flex-col relative z-10">
-        <div className="flex justify-between items-start mb-4">
+        <div className="flex justify-between items-start mb-4 gap-4">
           <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-[#FF0B55] transition-colors">
             {org.name}
           </h3>
-          <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/10">
-            {org.category}
-          </span>
+          <div className="flex flex-col items-end gap-2 shrink-0">
+            <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/10 whitespace-nowrap">
+              {org.category}
+            </span>
+            {org.years && org.years.length > 0 && (
+              <div className="flex flex-wrap gap-1 justify-end max-w-[140px]">
+                {org.years.map((y) => (
+                  <span key={y} className="px-1.5 py-0.5 text-[9px] font-bold rounded bg-[#FF0B55]/10 text-[#FF0B55] border border-[#FF0B55]/20">
+                    {y}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
         
         <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 flex-1">
