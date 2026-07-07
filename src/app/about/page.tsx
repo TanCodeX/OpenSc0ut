@@ -343,7 +343,7 @@ export default function About() {
                       <h4 className="font-bold text-gray-900 dark:text-white">Built With</h4>
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      {["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "GSAP", "GitHub API", "Prisma"].map((tech, i) => (
+                      {["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "GSAP", "GitHub API"].map((tech, i) => (
                         <TechBadge key={tech} name={tech} delay={i * 0.05} />
                       ))}
                     </div>
