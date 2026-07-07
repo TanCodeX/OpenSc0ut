@@ -20,6 +20,7 @@ export function OrgCard({ org }: OrgCardProps) {
   const [stats, setStats] = useState<GithubStats | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [imgError, setImgError] = useState(false);
+  const [triedClearbit, setTriedClearbit] = useState(false);
 
 
   const [inView, setInView] = useState(false);
@@ -116,7 +117,15 @@ export function OrgCard({ org }: OrgCardProps) {
                 src={org.logoUrl}
                 alt={`${org.name} logo`}
                 className="w-full h-full object-contain p-1"
-                onError={() => setImgError(true)}
+                onError={(e) => {
+                  if (!triedClearbit) {
+                    setTriedClearbit(true);
+                    const domain = org.name.toLowerCase().replace(/[^a-z0-9]/g, '') + '.org';
+                    e.currentTarget.src = `https://logo.clearbit.com/${domain}`;
+                  } else {
+                    setImgError(true);
+                  }
+                }}
               />
             ) : (
               <span className="text-sm font-bold text-gray-500 dark:text-gray-400">{initials}</span>
