@@ -121,9 +121,7 @@ export function OrgCard({ org }: OrgCardProps) {
             {org.name}
           </h3>
           <div className="flex flex-col items-end gap-2 shrink-0">
-            <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/10 whitespace-nowrap">
-              {org.category}
-            </span>
+
             {org.years && org.years.length > 0 && (
               <div className="flex flex-wrap gap-1 justify-end max-w-[140px]">
                 {org.years.map((y) => (

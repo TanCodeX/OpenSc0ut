@@ -42,15 +42,27 @@ async function scrapeGSoCOrgs() {
           if (!existing.ideas && (org.idea_list || org.ideas_link || org.ideas)) {
              existing.ideas = org.idea_list || org.ideas_link || org.ideas;
           }
+          // Update logoUrl
+          if (!existing.logoUrl && org.logo_url) {
+             existing.logoUrl = org.logo_url;
+          }
+          // Update tags (topics) and cat (technologies)
+          const newTags = org.topic_tags || [];
+          existing.tags = Array.from(new Set([...(existing.tags || []), ...newTags]));
+          
+          const newTechs = org.tech_tags || [];
+          const existingCatArray = existing.cat ? existing.cat.split(', ') : [];
+          existing.cat = Array.from(new Set([...existingCatArray, ...newTechs])).filter(Boolean).join(', ');
         } else {
           orgMap.set(slug, {
             name: org.name || '',
             slug: slug,
+            logoUrl: org.logo_url || '',
             desc: org.tagline || org.description || '',
             ideas: org.idea_list || org.ideas_link || org.ideas || '',
             githubRepo: '',
-            cat: '',
-            tags: [],
+            cat: (org.tech_tags || []).join(', '),
+            tags: org.topic_tags || [],
             years: [year]
           });
         }
