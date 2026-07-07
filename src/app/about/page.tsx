@@ -306,49 +306,61 @@ export default function About() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="relative"
               >
-                {/* Glow */}
-                <div className="absolute -inset-4 bg-gradient-to-br from-[#FF0B55]/20 via-transparent to-[#FF0B55]/10 rounded-3xl blur-2xl opacity-60" />
+                <motion.div
+                  animate={{ y: [0, -12, 0] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                  className="relative group"
+                >
+                  {/* Animated glow */}
+                  <div className="absolute -inset-4 bg-gradient-to-br from-[#FF0B55]/20 via-transparent to-[#FF0B55]/10 rounded-3xl blur-2xl opacity-60 group-hover:opacity-100 group-hover:blur-3xl transition-all duration-700 pointer-events-none" />
 
-                <div className="relative bg-white/5 border border-white/10 rounded-3xl p-8 space-y-8">
-                  {/* GitHub API */}
-                  <div>
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-9 h-9 rounded-xl bg-[#FF0B55]/20 flex items-center justify-center">
-                        <svg className="w-4 h-4 text-[#FF0B55]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                      </div>
-                      <h4 className="font-bold text-gray-900 dark:text-white">GitHub API</h4>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3">
-                      {[
-                        { label: "Unauthenticated", value: "60 req/hr", color: "text-amber-500" },
-                        { label: "Authenticated", value: "5,000 req/hr", color: "text-emerald-500" },
-                      ].map((item) => (
-                        <div key={item.label} className="bg-white/10 border border-white/10 rounded-xl p-3">
-                          <div className={`text-lg font-bold ${item.color}`}>{item.value}</div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400">{item.label}</div>
+                  {/* Moving gradient border */}
+                  <div className="absolute -inset-[1px] bg-gradient-to-r from-[#FF0B55]/50 via-white/10 to-[#FF0B55]/50 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[length:200%] animate-[gradientShift_3s_ease_infinite] blur-[2px]" />
+
+                  <div className="relative bg-[#0d0d0d]/95 backdrop-blur-2xl border border-white/[0.08] group-hover:border-transparent rounded-3xl p-8 space-y-8 transition-all duration-500 shadow-2xl overflow-hidden">
+
+                    {/* Internal ambient light */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-[#FF0B55]/10 rounded-full blur-[80px] -z-10 group-hover:bg-[#FF0B55]/20 transition-colors duration-700" />
+                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 rounded-full blur-[60px] -z-10 group-hover:bg-purple-500/20 transition-colors duration-700" />
+                    {/* GitHub API */}
+                    <div>
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-9 h-9 rounded-xl bg-[#FF0B55]/20 flex items-center justify-center">
+                          <svg className="w-4 h-4 text-[#FF0B55]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" /></svg>
                         </div>
-                      ))}
+                        <h4 className="font-bold text-gray-900 dark:text-white">GitHub API</h4>
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        {[
+                          { label: "Unauthenticated", value: "60 req/hr", color: "text-amber-500" },
+                          { label: "Authenticated", value: "5,000 req/hr", color: "text-emerald-500" },
+                        ].map((item) => (
+                          <div key={item.label} className="bg-white/10 border border-white/10 rounded-xl p-3">
+                            <div className={`text-lg font-bold ${item.color}`}>{item.value}</div>
+                            <div className="text-xs text-gray-500 dark:text-gray-400">{item.label}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-white/10 to-transparent" />
+
+                    {/* Tech stack */}
+                    <div>
+                      <div className="flex items-center gap-2 mb-4">
+                        <svg className="w-4 h-4 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                        <h4 className="font-bold text-gray-900 dark:text-white">Built With</h4>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "GSAP", "GitHub API"].map((tech, i) => (
+                          <TechBadge key={tech} name={tech} delay={i * 0.05} />
+                        ))}
+                      </div>
                     </div>
                   </div>
-
-                  {/* Divider */}
-                  <div className="h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-white/10 to-transparent" />
-
-                  {/* Tech stack */}
-                  <div>
-                    <div className="flex items-center gap-2 mb-4">
-                      <svg className="w-4 h-4 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
-                      <h4 className="font-bold text-gray-900 dark:text-white">Built With</h4>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "GSAP", "GitHub API"].map((tech, i) => (
-                        <TechBadge key={tech} name={tech} delay={i * 0.05} />
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                </motion.div>
               </motion.div>
             </div>
           </div>
