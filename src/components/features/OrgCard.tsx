@@ -15,25 +15,14 @@ interface GithubStats {
   activity: string;
 }
 
-interface GFIIssue {
-  title: string;
-  url: string;
-  created_at: string;
-}
-
-interface GFIResponse {
-  total_count: number;
-  issues: GFIIssue[];
-}
 
 export function OrgCard({ org }: OrgCardProps) {
   const [stats, setStats] = useState<GithubStats | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [imgError, setImgError] = useState(false);
 
-  const [gfiData, setGfiData] = useState<GFIResponse | null>(null);
-  const [loadingGfi, setLoadingGfi] = useState<boolean>(false);
-  const [showGfi, setShowGfi] = useState<boolean>(false);
+
+  const [inView, setInView] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -46,6 +35,10 @@ export function OrgCard({ org }: OrgCardProps) {
         }
         return;
       }
+      
+      // Don't fetch until the card is actually visible on screen
+      if (!inView) return;
+
       try {
         setLoading(true);
         const res = await fetch(`/api/github?repo=${org.githubRepo}`);
@@ -67,30 +60,8 @@ export function OrgCard({ org }: OrgCardProps) {
     return () => {
       isMounted = false;
     };
-  }, [org.githubRepo]);
+  }, [org.githubRepo, inView]);
 
-  const handleFetchGfi = async () => {
-    if (showGfi) {
-      setShowGfi(false);
-      return;
-    }
-
-    setShowGfi(true);
-    if (gfiData) return;
-
-    setLoadingGfi(true);
-    try {
-      const res = await fetch(`/api/github?repo=${org.githubRepo}&gfi=1`);
-      if (res.ok) {
-        const data = await res.json();
-        setGfiData(data);
-      }
-    } catch (error) {
-      console.error("Failed to fetch GFI for", org.githubRepo);
-    } finally {
-      setLoadingGfi(false);
-    }
-  };
 
   const formatNumber = (num: number) =>
     new Intl.NumberFormat("en-US", { notation: "compact" }).format(num);
@@ -117,6 +88,8 @@ export function OrgCard({ org }: OrgCardProps) {
 
   return (
     <motion.div
+      onViewportEnter={() => setInView(true)}
+      viewport={{ once: true, amount: 0.1 }}
       whileHover={{ y: -6, scale: 1.01 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       className="relative group flex flex-col h-full rounded-2xl overflow-hidden"
@@ -239,72 +212,7 @@ export function OrgCard({ org }: OrgCardProps) {
           )}
         </div>
 
-        {/* Good First Issues */}
-        {org.githubRepo && (
-          <div className="mt-3">
-            <button
-              onClick={handleFetchGfi}
-              className="w-full py-2 px-4 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-2 border border-gray-200 dark:border-white/[0.07] bg-gray-50 dark:bg-white/[0.03] text-gray-600 dark:text-gray-400 hover:bg-[#FF0B55]/5 hover:border-[#FF0B55]/30 hover:text-[#FF0B55]"
-            >
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              {showGfi ? "Hide Good First Issues" : "Find Good First Issues"}
-              <svg
-                className={`w-3 h-3 ml-auto transition-transform duration-200 ${showGfi ? "rotate-180" : ""}`}
-                fill="none" stroke="currentColor" viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
 
-            <AnimatePresence>
-              {showGfi && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="overflow-hidden"
-                >
-                  <div className="pt-3 space-y-2">
-                    {loadingGfi ? (
-                      <div className="space-y-2">
-                        <div className="h-8 bg-gray-100 dark:bg-white/5 rounded-lg animate-pulse" />
-                        <div className="h-8 bg-gray-100 dark:bg-white/5 rounded-lg animate-pulse" />
-                      </div>
-                    ) : gfiData && gfiData.issues.length > 0 ? (
-                      <div className="space-y-1.5">
-                        <p className="text-[10px] text-gray-400 uppercase tracking-wider">
-                          {gfiData.total_count} open issues
-                        </p>
-                        {gfiData.issues.map((issue, idx) => (
-                          <a
-                            key={idx}
-                            href={issue.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-start gap-2 p-2.5 rounded-lg bg-gray-50 dark:bg-white/[0.03] border border-gray-200 dark:border-white/[0.06] hover:border-[#FF0B55]/40 hover:bg-[#FF0B55]/5 transition-all duration-200 group/issue"
-                          >
-                            <svg className="w-3.5 h-3.5 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span className="text-xs text-gray-600 dark:text-gray-400 group-hover/issue:text-[#FF0B55] line-clamp-2 transition-colors">
-                              {issue.title}
-                            </span>
-                          </a>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="text-center p-4 rounded-xl bg-gray-50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/[0.06] text-xs text-gray-400">
-                        No open &ldquo;good first issue&rdquo; right now.
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        )}
       </div>
     </motion.div>
   );
