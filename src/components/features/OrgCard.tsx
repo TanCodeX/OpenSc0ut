@@ -162,7 +162,7 @@ export function OrgCard({ org }: OrgCardProps) {
                     key={y}
                     className="px-1.5 py-0.5 text-[9px] font-bold rounded-md bg-[#FF0B55]/10 text-[#FF0B55] border border-[#FF0B55]/20 tracking-wide"
                   >
-                    GSoC {y}
+                    {y}
                   </span>
                 ))}
                 {org.years.length > 2 && (

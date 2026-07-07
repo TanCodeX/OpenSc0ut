@@ -79,7 +79,7 @@ export default function SearchFilter({
       <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-[#FF0B55]/20 via-purple-500/10 to-transparent blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10" />
 
       <div className="relative bg-[#0d0d0d]/95 backdrop-blur-2xl border border-white/[0.06] rounded-2xl p-6 shadow-2xl">
-        <form onSubmit={handleSubmit}>
+        <div className="flex flex-col">
           {/* Top strip: active filters + reset */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-2.5">
@@ -146,7 +146,17 @@ export default function SearchFilter({
                 <input
                   type="text"
                   value={languageInput}
-                  onChange={(e) => setLanguageInput(e.target.value)}
+                  onChange={(e) => {
+                    const newValue = e.target.value;
+                    setLanguageInput(newValue);
+                    onSearch({
+                      sort,
+                      order,
+                      page: 1,
+                      ...(newValue.trim() && { language: newValue.trim() }),
+                      ...(showYearFilter && { year }),
+                    });
+                  }}
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
                   placeholder={searchPlaceholder}
@@ -234,6 +244,13 @@ export default function SearchFilter({
                               onClick={() => {
                                 setSort(option.value);
                                 setIsSortDropdownOpen(false);
+                                onSearch({
+                                  sort: option.value,
+                                  order,
+                                  page: 1,
+                                  ...(languageInput.trim() && { language: languageInput.trim() }),
+                                  ...(showYearFilter && { year }),
+                                });
                               }}
                               className={`text-left px-3 py-2.5 text-sm rounded-lg transition-all flex items-center gap-3 ${
                                 sort === option.value
@@ -259,7 +276,17 @@ export default function SearchFilter({
                   {/* Order toggle */}
                   <button
                     type="button"
-                    onClick={() => setOrder(order === "desc" ? "asc" : "desc")}
+                    onClick={() => {
+                      const newOrder = order === "desc" ? "asc" : "desc";
+                      setOrder(newOrder);
+                      onSearch({
+                        sort,
+                        order: newOrder,
+                        page: 1,
+                        ...(languageInput.trim() && { language: languageInput.trim() }),
+                        ...(showYearFilter && { year }),
+                      });
+                    }}
                     className={`px-3.5 py-3 rounded-xl border transition-all duration-300 focus:outline-none flex items-center justify-center group ${
                       order === "asc"
                         ? "bg-[#FF0B55]/10 border-[#FF0B55]/30 text-[#FF0B55]"
@@ -279,26 +306,33 @@ export default function SearchFilter({
               </div>
             )}
 
-            {/* Search Button */}
-            <div className="w-full lg:w-auto">
-              <button
-                type="submit"
-                className="w-full lg:w-auto relative overflow-hidden group/btn bg-gradient-to-r from-[#FF0B55] to-[#cc0944] text-white font-bold px-8 py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 shadow-[0_0_24px_rgba(255,11,85,0.35)] hover:shadow-[0_0_36px_rgba(255,11,85,0.55)] hover:scale-[1.03] active:scale-[0.98] text-sm"
-                suppressHydrationWarning
-              >
-                {/* Shine sweep */}
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-in-out" />
-                <svg
-                  className="w-4 h-4 relative z-10"
-                  fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            {/* Clear Button */}
+            {hasCustomFilters && (
+              <div className="w-full lg:w-auto">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setLanguageInput("");
+                    setSort("stars");
+                    setOrder("desc");
+                    setYear("2026");
+                    onSearch({ sort: "stars", order: "desc", page: 1, ...(showYearFilter && { year: "2026" }) });
+                  }}
+                  className="w-full lg:w-auto relative overflow-hidden group/btn bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold px-8 py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 shadow-lg active:scale-[0.98] text-sm"
+                  suppressHydrationWarning
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <span className="relative z-10">Search</span>
-              </button>
-            </div>
+                  <svg
+                    className="w-4 h-4 relative z-10"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  <span className="relative z-10">Clear search query</span>
+                </button>
+              </div>
+            )}
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
