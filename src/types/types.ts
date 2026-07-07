@@ -22,6 +22,7 @@ export interface Repository {
 
 export interface SearchParams {
   language?: string;
+  year?: string;
   sort: string;
   order: "asc" | "desc";
   page: number;

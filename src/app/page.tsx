@@ -73,9 +73,6 @@ export default function Home() {
             <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-[#FF0B55]/25 rounded-full blur-[128px] animate-pulse" />
             <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-[#FF0B55]/15 rounded-full blur-[128px] animate-pulse delay-1000" />
 
-            {/* Corner accents */}
-            <div className="absolute top-0 left-0 w-32 h-32 border-t-2 border-l-2 border-[#FF0B55]/30 rounded-tl-3xl" />
-            <div className="absolute bottom-0 right-0 w-32 h-32 border-b-2 border-r-2 border-[#FF0B55]/30 rounded-br-3xl" />
 
             {/* Floating grid particles */}
             <div className="absolute top-1/3 left-1/4 w-2 h-2 bg-[#FF0B55]/60 rounded-full animate-ping" style={{ animationDuration: '3s' }} />
