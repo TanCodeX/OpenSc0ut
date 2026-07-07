@@ -130,7 +130,7 @@ export default function ContactUs() {
       <main>
 
         {/* ─── HERO ─── */}
-        <div className="relative min-h-[60vh] flex items-center overflow-hidden">
+        <div className="relative min-h-[75vh] flex items-center overflow-hidden">
           <PageGridBackground />
 
           {/* Radial glow */}
@@ -140,14 +140,14 @@ export default function ContactUs() {
 
           {/* Floating orbs */}
           <motion.div
-            animate={{ y: [0, -18, 0], rotate: [0, 4, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-24 right-24 w-28 h-28 rounded-full bg-gradient-to-br from-[#FF0B55]/20 to-transparent border border-[#FF0B55]/20 blur-sm hidden lg:block"
+            animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-20 right-20 w-32 h-32 rounded-full bg-gradient-to-br from-[#FF0B55]/20 to-transparent border border-[#FF0B55]/20 blur-sm hidden lg:block"
           />
           <motion.div
-            animate={{ y: [0, 14, 0], rotate: [0, -4, 0] }}
-            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-            className="absolute bottom-20 left-20 w-16 h-16 rounded-full bg-gradient-to-br from-[#FF0B55]/15 to-transparent border border-[#FF0B55]/15 blur-sm hidden lg:block"
+            animate={{ y: [0, 16, 0], rotate: [0, -5, 0] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-24 left-16 w-20 h-20 rounded-full bg-gradient-to-br from-[#FF0B55]/15 to-transparent border border-[#FF0B55]/15 blur-sm hidden lg:block"
           />
 
           <motion.div style={{ y: heroY, opacity: heroOpacity }} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-32">
@@ -162,10 +162,11 @@ export default function ContactUs() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-[#FF0B55]/30 backdrop-blur-sm mb-8 shadow-lg shadow-[#FF0B55]/10"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-[#FF0B55]/30 backdrop-blur-sm mb-8 shadow-lg shadow-[#FF0B55]/10"
               >
                 <span className="w-2 h-2 bg-[#FF0B55] rounded-full animate-ping" />
-                <span className="text-sm font-semibold text-gray-300 tracking-wide">Contact Us</span>
+                <span className="w-2 h-2 bg-[#FF0B55] rounded-full absolute" />
+                <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 tracking-wide">Contact Us</span>
               </motion.div>
 
               <h1 className="text-5xl md:text-7xl lg:text-8xl mb-6 font-extrabold tracking-tight">
