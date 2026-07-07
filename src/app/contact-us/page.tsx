@@ -9,7 +9,6 @@ export default function ContactUs() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    subject: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -37,7 +36,7 @@ export default function ContactUs() {
       });
       if (res.ok) {
         setSubmitStatus("success");
-        setFormData({ name: "", email: "", subject: "", message: "" });
+        setFormData({ name: "", email: "", message: "" });
       } else {
         setSubmitStatus("error");
       }
@@ -359,23 +358,7 @@ export default function ContactUs() {
                     </div>
                   </div>
 
-                  {/* Subject */}
-                  <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-gray-400 mb-2">
-                      Subject
-                    </label>
-                    <input
-                      type="text"
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      onFocus={() => setFocusedField("subject")}
-                      onBlur={() => setFocusedField(null)}
-                      className={getInputClass("subject")}
-                      placeholder="What is this about?"
-                    />
-                  </div>
+
 
                   {/* Message */}
                   <div>
