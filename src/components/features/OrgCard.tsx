@@ -117,20 +117,21 @@ export function OrgCard({ org }: OrgCardProps) {
       
       <div className="p-6 flex-1 flex flex-col relative z-10">
         <div className="flex justify-between items-start mb-4 gap-4">
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-[#FF0B55] transition-colors">
-            {org.name}
-          </h3>
+          <div className="flex items-center gap-3">
+            {org.logoUrl && (
+              <img 
+                src={org.logoUrl} 
+                alt={`${org.name} logo`} 
+                className="w-10 h-10 object-contain rounded-md shrink-0"
+              />
+            )}
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-[#FF0B55] transition-colors">
+              {org.name}
+            </h3>
+          </div>
           <div className="flex flex-col items-end gap-2 shrink-0">
 
-            {org.years && org.years.length > 0 && (
-              <div className="flex flex-wrap gap-1 justify-end max-w-[140px]">
-                {org.years.map((y) => (
-                  <span key={y} className="px-1.5 py-0.5 text-[9px] font-bold rounded bg-[#FF0B55]/10 text-[#FF0B55] border border-[#FF0B55]/20">
-                    {y}
-                  </span>
-                ))}
-              </div>
-            )}
+
           </div>
         </div>
         
@@ -150,16 +151,19 @@ export function OrgCard({ org }: OrgCardProps) {
         </div>
 
         <div className="pt-4 border-t border-gray-100 dark:border-white/10 mt-auto flex items-center justify-between">
-          {org.ideas && (
-            <a
-              href={org.ideas}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs font-medium text-[#FF0B55] hover:text-[#cc0944] transition-colors flex items-center gap-1"
-            >
-              Ideas List
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-            </a>
+          {org.years && org.years.length > 0 && (
+            <div className="flex flex-wrap gap-1 items-center">
+              {org.years.slice(0, 2).map((y) => (
+                <span key={y} className="px-1.5 py-0.5 text-[9px] font-bold rounded bg-[#FF0B55]/10 text-[#FF0B55] border border-[#FF0B55]/20">
+                  {y}
+                </span>
+              ))}
+              {org.years.length > 2 && (
+                <span className="px-1.5 py-0.5 text-[9px] font-bold rounded bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10">
+                  +{org.years.length - 2} more
+                </span>
+              )}
+            </div>
           )}
           {org.githubRepo ? (
             loading ? (
