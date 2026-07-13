@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { OrgCard } from "./OrgCard";
 import { ORGS, Organization } from "../../data/orgs";
 
 interface AIRecommendation {
@@ -170,27 +169,146 @@ export function GsocAIAdvisor() {
               <div className="w-1 h-6 bg-gradient-to-b from-purple-500 to-[#FF0B55] rounded-full" />
               <h3 className="text-xl font-bold text-white">Top AI Recommendations</h3>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {results.map((rec, idx) => (
-                <motion.div
-                  key={rec.slug}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className="flex flex-col h-full"
-                >
-                  <div className="mb-4 bg-[#0d0d0d]/80 border border-white/10 rounded-xl p-4 relative flex-shrink-0">
-                    <div className="absolute -top-3 -left-3 w-7 h-7 rounded-full bg-gradient-to-br from-[#FF0B55] to-purple-600 text-white flex items-center justify-center text-xs font-bold shadow-lg border border-[#FF0B55]/30">
-                      {idx + 1}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {results.map((rec, idx) => {
+                const org = rec.org!;
+                const initials = org.name
+                  .split(" ")
+                  .slice(0, 2)
+                  .map((w) => w[0])
+                  .join("")
+                  .toUpperCase();
+
+                return (
+                  <motion.div
+                    key={rec.slug}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: idx * 0.1 }}
+                    className="bg-white/80 dark:bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md rounded-lg border-[0.5px] border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] overflow-hidden hover:border-gray-400 dark:hover:border-gray-500 transition-all duration-300 flex flex-col h-full"
+                  >
+                    <div className="p-5 flex-1 flex flex-col">
+                      {/* Header: Logo + Name + rank badge */}
+                      <div className="flex items-start gap-3 mb-3">
+                        {/* Logo or initials */}
+                        <div className="shrink-0 w-10 h-10 rounded-lg overflow-hidden bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 flex items-center justify-center text-sm font-bold text-gray-500 dark:text-gray-400">
+                          {(() => {
+                            const githubOwner = org.githubRepo ? org.githubRepo.split('/')[0] : null;
+                            const primarySrc = githubOwner ? `https://github.com/${githubOwner}.png` : org.logoUrl;
+                            
+                            if (primarySrc) {
+                              return (
+                                <img
+                                  src={primarySrc}
+                                  alt={`${org.name} logo`}
+                                  className="w-full h-full object-contain p-1"
+                                  onError={(e) => {
+                                    if (githubOwner && org.logoUrl && e.currentTarget.src !== org.logoUrl) {
+                                      e.currentTarget.src = org.logoUrl;
+                                    } else {
+                                      e.currentTarget.style.display = "none";
+                                    }
+                                  }}
+                                />
+                              );
+                            }
+                            return initials;
+                          })()}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <h3 className="text-base font-bold text-gray-900 dark:text-white leading-tight">
+                              {org.name}
+                            </h3>
+                            {/* Rank badge */}
+                            <span className="shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-[#FF0B55] to-purple-600 text-white flex items-center justify-center text-[10px] font-bold shadow">
+                              {idx + 1}
+                            </span>
+                          </div>
+                          {/* Year badges */}
+                          {org.years && org.years.length > 0 && (
+                            <div className="flex flex-wrap gap-1 mt-1">
+                              {org.years.slice(0, 2).map((y) => (
+                                <span
+                                  key={y}
+                                  className="px-1.5 py-0.5 text-[9px] font-bold rounded-md bg-[#FF0B55]/10 text-[#FF0B55] border border-[#FF0B55]/20 tracking-wide"
+                                >
+                                  {y}
+                                </span>
+                              ))}
+                              {org.years.length > 2 && (
+                                <span className="px-1.5 py-0.5 text-[9px] font-bold rounded-md bg-gray-100 dark:bg-white/8 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/10">
+                                  +{org.years.length - 2} more
+                                </span>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Description */}
+                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-2">
+                        {org.description}
+                      </p>
+
+                      {/* AI Reason */}
+                      <div className="flex gap-2 mb-3 p-2.5 rounded-lg bg-[#FF0B55]/5 border border-[#FF0B55]/15">
+                        <svg className="w-3.5 h-3.5 text-[#FF0B55] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        <p className="text-xs text-gray-400 dark:text-gray-400 leading-relaxed italic">
+                          {rec.reason}
+                        </p>
+                      </div>
+
+                      {/* Tags */}
+                      {org.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mt-3">
+                          {org.tags.slice(0, 4).map((tag) => (
+                            <span
+                              key={tag}
+                              className="inline-flex items-center px-2.5 py-0.5 text-[11px] font-medium rounded-full bg-white/5 border border-white/10 text-gray-300 hover:border-[#FF0B55]/40 hover:text-white hover:bg-[#FF0B55]/8 transition-all duration-200 cursor-default tracking-wide"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                          {org.tags.length > 4 && (
+                            <span className="inline-flex items-center px-2.5 py-0.5 text-[11px] font-medium rounded-full bg-white/5 border border-white/10 text-gray-500 tracking-wide">
+                              +{org.tags.length - 4}
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </div>
-                    <p className="text-sm text-gray-300 italic text-center pt-1 leading-relaxed">"{rec.reason}"</p>
-                  </div>
-                  <div className="flex-1">
-                    {rec.org && <OrgCard org={rec.org} />}
-                  </div>
-                </motion.div>
-              ))}
+
+                    {/* Footer */}
+                    <div className="px-5 py-3 bg-gray-50 dark:bg-black/30 border-t border-[0.5px] border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] text-center">
+                      {org.ideas ? (
+                        <a
+                          href={org.ideas}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#FF0B55] hover:text-[#e00a4c] text-sm font-medium transition-colors"
+                        >
+                          View Project Ideas →
+                        </a>
+                      ) : org.githubRepo ? (
+                        <a
+                          href={`https://github.com/${org.githubRepo}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#FF0B55] hover:text-[#e00a4c] text-sm font-medium transition-colors"
+                        >
+                          View on GitHub →
+                        </a>
+                      ) : (
+                        <span className="text-gray-500 text-xs uppercase tracking-widest">No link available</span>
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
         )}

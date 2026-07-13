@@ -112,24 +112,38 @@ export function OrgCard({ org }: OrgCardProps) {
         <div className="flex items-start gap-4 mb-4">
           {/* Logo or initials fallback */}
           <div className="shrink-0 w-12 h-12 rounded-xl overflow-hidden bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 flex items-center justify-center shadow-sm group-hover:shadow-[#FF0B55]/10 group-hover:shadow-md transition-shadow duration-300">
-            {org.logoUrl && !imgError ? (
-              <img
-                src={org.logoUrl}
-                alt={`${org.name} logo`}
-                className="w-full h-full object-contain p-1"
-                onError={(e) => {
-                  if (!triedClearbit) {
-                    setTriedClearbit(true);
-                    const domain = org.name.toLowerCase().replace(/[^a-z0-9]/g, '') + '.org';
-                    e.currentTarget.src = `https://logo.clearbit.com/${domain}`;
-                  } else {
-                    setImgError(true);
-                  }
-                }}
-              />
-            ) : (
-              <span className="text-sm font-bold text-gray-500 dark:text-gray-400">{initials}</span>
-            )}
+            {(() => {
+              const githubOwner = org.githubRepo ? org.githubRepo.split('/')[0] : null;
+              const primarySrc = githubOwner ? `https://github.com/${githubOwner}.png` : org.logoUrl;
+              
+              if (primarySrc && !imgError) {
+                return (
+                  <img
+                    src={primarySrc}
+                    alt={`${org.name} logo`}
+                    className="w-full h-full object-contain p-1"
+                    onError={(e) => {
+                      if (!triedClearbit) {
+                        setTriedClearbit(true);
+                        // Try fallback to original logoUrl if github failed, else clearbit
+                        if (githubOwner && org.logoUrl) {
+                          e.currentTarget.src = org.logoUrl;
+                        } else {
+                          const domain = org.name.toLowerCase().replace(/[^a-z0-9]/g, '') + '.org';
+                          e.currentTarget.src = `https://logo.clearbit.com/${domain}`;
+                        }
+                      } else {
+                        setImgError(true);
+                      }
+                    }}
+                  />
+                );
+              }
+              
+              return (
+                <span className="text-sm font-bold text-gray-500 dark:text-gray-400">{initials}</span>
+              );
+            })()}
           </div>
 
           {/* Name + year badges */}
