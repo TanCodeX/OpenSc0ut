@@ -43,7 +43,7 @@ async function scrapeGSoCOrgs() {
              existing.ideas = org.idea_list || org.ideas_link || org.ideas;
           }
           // Update logoUrl
-          if (!existing.logoUrl && org.logo_url) {
+          if (org.logo_url) {
              existing.logoUrl = org.logo_url;
           }
           // Update tags (topics) and cat (technologies)

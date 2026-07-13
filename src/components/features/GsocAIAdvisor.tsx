@@ -191,30 +191,19 @@ export function GsocAIAdvisor() {
                     <div className="p-5 flex-1 flex flex-col">
                       {/* Header: Logo + Name + rank badge */}
                       <div className="flex items-start gap-3 mb-3">
-                        {/* Logo or initials */}
                         <div className="shrink-0 w-10 h-10 rounded-lg overflow-hidden bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 flex items-center justify-center text-sm font-bold text-gray-500 dark:text-gray-400">
-                          {(() => {
-                            const githubOwner = org.githubRepo ? org.githubRepo.split('/')[0] : null;
-                            const primarySrc = githubOwner ? `https://github.com/${githubOwner}.png` : org.logoUrl;
-                            
-                            if (primarySrc) {
-                              return (
-                                <img
-                                  src={primarySrc}
-                                  alt={`${org.name} logo`}
-                                  className="w-full h-full object-contain p-1"
-                                  onError={(e) => {
-                                    if (githubOwner && org.logoUrl && e.currentTarget.src !== org.logoUrl) {
-                                      e.currentTarget.src = org.logoUrl;
-                                    } else {
-                                      e.currentTarget.style.display = "none";
-                                    }
-                                  }}
-                                />
-                              );
-                            }
-                            return initials;
-                          })()}
+                          {org.logoUrl ? (
+                            <img
+                              src={org.logoUrl}
+                              alt={`${org.name} logo`}
+                              className="w-full h-full object-contain p-1"
+                              onError={(e) => {
+                                e.currentTarget.style.display = "none";
+                              }}
+                            />
+                          ) : (
+                            initials
+                          )}
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap">
