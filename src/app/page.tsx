@@ -87,9 +87,10 @@ export default function Home() {
               {/* Left Column - Text Content */}
               <div className="text-center lg:text-left space-y-8">
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 backdrop-blur-sm">
-                  <span className="w-2 h-2 bg-[#FF0B55] rounded-full animate-pulse" />
-                  <span className="text-sm text-gray-700 dark:text-gray-300">Now Live</span>
+                <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-[#FF0B55]/30 backdrop-blur-sm shadow-lg shadow-[#FF0B55]/10">
+                  <span className="w-2 h-2 bg-[#FF0B55] rounded-full animate-ping" />
+                  <span className="w-2 h-2 bg-[#FF0B55] rounded-full absolute" />
+                  <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 tracking-wide">Now Live</span>
                 </div>
 
                 {/* Main Heading */}
