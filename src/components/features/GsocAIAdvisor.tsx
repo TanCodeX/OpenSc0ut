@@ -186,7 +186,7 @@ export function GsocAIAdvisor() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: idx * 0.1 }}
-                    className="bg-white/80 dark:bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md rounded-lg border-[0.5px] border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] overflow-hidden hover:border-gray-400 dark:hover:border-gray-500 transition-all duration-300 flex flex-col h-full"
+                    className="bg-white/80 dark:bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md rounded-lg border-[0.5px] border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] overflow-hidden hover:border-gray-400 dark:hover:border-gray-500 transition-all duration-300 flex flex-col h-full min-h-[280px]"
                   >
                     <div className="p-5 flex-1 flex flex-col">
                       {/* Header: Logo + Name + rank badge */}

@@ -17,68 +17,8 @@ interface GithubStats {
 
 
 export function OrgCard({ org }: OrgCardProps) {
-  const [stats, setStats] = useState<GithubStats | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
   const [imgError, setImgError] = useState(false);
   const [triedClearbit, setTriedClearbit] = useState(false);
-
-
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    async function fetchStats() {
-      if (!org.githubRepo) {
-        if (isMounted) {
-          setStats(null);
-          setLoading(false);
-        }
-        return;
-      }
-      
-      // Don't fetch until the card is actually visible on screen
-      if (!inView) return;
-
-      try {
-        setLoading(true);
-        const res = await fetch(`/api/github?repo=${org.githubRepo}`);
-        if (res.ok) {
-          const data = await res.json();
-          if (isMounted) setStats(data);
-        } else {
-          if (isMounted) setStats({ stars: 0, forks: 0, issues: 0, activity: "unknown" });
-        }
-      } catch (error) {
-        console.error("Failed to fetch stats for", org.githubRepo);
-        if (isMounted) setStats({ stars: 0, forks: 0, issues: 0, activity: "unknown" });
-      } finally {
-        if (isMounted) setLoading(false);
-      }
-    }
-
-    fetchStats();
-    return () => {
-      isMounted = false;
-    };
-  }, [org.githubRepo, inView]);
-
-
-  const formatNumber = (num: number) =>
-    new Intl.NumberFormat("en-US", { notation: "compact" }).format(num);
-
-  const getActivityBadge = (activity: string) => {
-    switch (activity) {
-      case "active":
-        return { dot: "bg-emerald-400", text: "text-emerald-400", label: "Active" };
-      case "moderate":
-        return { dot: "bg-amber-400", text: "text-amber-400", label: "Moderate" };
-      case "low":
-        return { dot: "bg-red-400", text: "text-red-400", label: "Low" };
-      default:
-        return { dot: "bg-gray-400", text: "text-gray-400", label: "Unknown" };
-    }
-  };
 
   const initials = org.name
     .split(" ")
@@ -89,11 +29,9 @@ export function OrgCard({ org }: OrgCardProps) {
 
   return (
     <motion.div
-      onViewportEnter={() => setInView(true)}
-      viewport={{ once: true, amount: 0.1 }}
       whileHover={{ y: -6, scale: 1.01 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="relative group flex flex-col h-full rounded-2xl overflow-hidden"
+      className="relative group flex flex-col h-full min-h-[280px] rounded-2xl overflow-hidden"
       style={{ isolation: "isolate" }}
     >
       {/* Card background */}
@@ -178,7 +116,7 @@ export function OrgCard({ org }: OrgCardProps) {
 
         {/* Tags */}
         {org.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-4">
+          <div className="flex flex-wrap gap-1.5 mb-2 flex-1 items-end">
             {org.tags.slice(0, 5).map((tag) => (
               <span
                 key={tag}
@@ -194,48 +132,31 @@ export function OrgCard({ org }: OrgCardProps) {
             )}
           </div>
         )}
-
-        {/* Footer: GitHub stats */}
-        <div className="mt-auto pt-4 border-t border-gray-100 dark:border-white/[0.06]">
-          {org.githubRepo ? (
-            loading ? (
-              <div className="flex gap-3 animate-pulse">
-                <div className="h-4 w-14 bg-gray-200 dark:bg-white/10 rounded-full" />
-                <div className="h-4 w-14 bg-gray-200 dark:bg-white/10 rounded-full" />
-              </div>
-            ) : stats ? (
-              <div className="flex items-center justify-between">
-                <div className="flex gap-4">
-                  <div className="flex items-center gap-1.5">
-                    <svg className="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                    </svg>
-                    <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">{formatNumber(stats.stars)}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <svg className="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                    </svg>
-                    <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">{formatNumber(stats.forks)}</span>
-                  </div>
-                </div>
-                {(() => {
-                  const badge = getActivityBadge(stats.activity);
-                  return (
-                    <div className="flex items-center gap-1.5">
-                      <span className={`w-1.5 h-1.5 rounded-full ${badge.dot} animate-pulse`} />
-                      <span className={`text-[10px] font-semibold uppercase tracking-wider ${badge.text}`}>{badge.label}</span>
-                    </div>
-                  );
-                })()}
-              </div>
-            ) : null
-          ) : (
-            <span className="text-[10px] text-gray-400 dark:text-gray-600 uppercase tracking-widest">No Repository Linked</span>
-          )}
-        </div>
-
-
+      </div>
+      
+      {/* Footer */}
+      <div className="relative z-10 px-5 py-3 bg-gray-50 dark:bg-black/30 border-t border-[0.5px] border-gray-200 dark:border-white/[0.06] text-center mt-auto">
+        {org.ideas ? (
+          <a
+            href={org.ideas}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#FF0B55] hover:text-[#e00a4c] text-sm font-medium transition-colors"
+          >
+            View Project Ideas →
+          </a>
+        ) : org.githubRepo ? (
+          <a
+            href={`https://github.com/${org.githubRepo}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#FF0B55] hover:text-[#e00a4c] text-sm font-medium transition-colors"
+          >
+            View on GitHub →
+          </a>
+        ) : (
+          <span className="text-gray-500 text-xs uppercase tracking-widest">No link available</span>
+        )}
       </div>
     </motion.div>
   );
