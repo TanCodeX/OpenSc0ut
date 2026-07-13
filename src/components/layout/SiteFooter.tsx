@@ -9,12 +9,20 @@ export default function SiteFooter() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FF0B55] to-[#FF0B55]/60 flex items-center justify-center">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FF0B55] to-[#ff6b9d] flex items-center justify-center shadow-lg shadow-[#FF0B55]/30">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="M21 21l-4.35-4.35" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">OpenSc0ut</h3>
+              <h3 className="text-[1.25rem] font-extrabold tracking-tight">
+                <span className="text-gray-900 dark:text-white">
+                  Open
+                </span>
+                <span className="bg-gradient-to-r from-[#FF0B55] via-[#ff4d85] to-[#ff9bc0] bg-clip-text text-transparent">
+                  Sc0ut
+                </span>
+              </h3>
             </div>
             <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 max-w-sm">
               Discover, contribute, and grow with open source projects from around the world.

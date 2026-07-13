@@ -20,15 +20,13 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleNavigation = (href: string, e: React.MouseEvent) => {
-    e.preventDefault();
     setMobileOpen(false);
     if (href === "/" && pathname === "/") {
+      e.preventDefault();
       window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      router.push(href);
-      if (href === "/") {
-        setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
-      }
+    } else if (href === "/") {
+      // Allow Link to navigate, but add scroll delay
+      setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
     }
   };
 
