@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo, useState, useRef } from "react";
-import { SearchFilter, OrgList, PageGridBackground } from "../../components";
+import { SearchFilter, OrgList, PageGridBackground, GsocAIAdvisor } from "../../components";
 import { ORGS } from "../../data/orgs";
 import { SearchParams } from "../../types/types";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -141,6 +141,8 @@ export default function GsocPage() {
         {/* ─── MAIN CONTENT ─── */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 -mt-4 relative z-20">
 
+          <GsocAIAdvisor />
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -177,6 +179,10 @@ export default function GsocPage() {
         @keyframes gradientShift {
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
+        }
+        @keyframes shimmer {
+          0% { background-position: 200% center; }
+          100% { background-position: -200% center; }
         }
       `}</style>
     </div>

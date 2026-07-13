@@ -11,6 +11,7 @@ export { default as RepositoryCard } from './features/RepositoryCard';
 export { default as SearchFilter } from './features/SearchFilter';
 export { OrgCard } from './features/OrgCard';
 export { OrgList } from './features/OrgList';
+export { GsocAIAdvisor } from './features/GsocAIAdvisor';
 
 // UI components
 export { default as Pagination } from './ui/Pagination';
