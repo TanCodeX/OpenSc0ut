@@ -30,6 +30,7 @@ export default function SearchFilter({
   const [sort, setSort] = useState<string>(initialParams.sort || "stars");
   const [order, setOrder] = useState<"asc" | "desc">("desc");
   const [year, setYear] = useState<string>(initialParams.year || "2026");
+  const [perPage, setPerPage] = useState<number>(initialParams.per_page || 12);
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
@@ -45,6 +46,7 @@ export default function SearchFilter({
       ...(showYearFilter && {
         year,
       }),
+      per_page: perPage,
     });
   };
 
@@ -56,10 +58,11 @@ export default function SearchFilter({
       if (sort) parts.push(`sort: ${SORT_OPTIONS.find((o) => o.value === sort)?.label || sort}`);
       parts.push(order === "desc" ? "desc" : "asc");
     }
+    if (perPage !== 12) parts.push(`items: ${perPage}`);
     return parts.join(" · ");
-  }, [languageInput, sort, order, hideSort, showYearFilter, year]);
+  }, [languageInput, sort, order, hideSort, showYearFilter, year, perPage]);
 
-  const hasCustomFilters = languageInput.trim() || (!hideSort && (sort !== "stars" || order !== "desc")) || (showYearFilter && year !== "2026");
+  const hasCustomFilters = languageInput.trim() || (!hideSort && (sort !== "stars" || order !== "desc")) || (showYearFilter && year !== "2026") || perPage !== 12;
 
   return (
     <div className="relative group z-50 rounded-2xl">
@@ -102,7 +105,8 @@ export default function SearchFilter({
                   setSort("stars");
                   setOrder("desc");
                   setYear("2026");
-                  onSearch({ sort: "stars", order: "desc", page: 1, year: "2026" });
+                  setPerPage(12);
+                  onSearch({ sort: "stars", order: "desc", page: 1, year: "2026", per_page: 12 });
                 }}
                 className="text-[11px] text-[#FF0B55] hover:text-white font-semibold transition-all duration-200 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF0B55]/10 hover:bg-[#FF0B55]/20 border border-[#FF0B55]/20 hover:border-[#FF0B55]/40"
               >
@@ -155,6 +159,7 @@ export default function SearchFilter({
                       page: 1,
                       ...(newValue.trim() && { language: newValue.trim() }),
                       ...(showYearFilter && { year }),
+                      per_page: perPage,
                     });
                   }}
                   onFocus={() => setIsFocused(true)}
@@ -184,6 +189,7 @@ export default function SearchFilter({
                         page: 1,
                         ...(languageInput.trim() && { language: languageInput.trim() }),
                         year: newYear,
+                        per_page: perPage,
                       });
                     }}
                     className="w-full appearance-none bg-transparent px-4 py-3 text-sm text-gray-200 focus:outline-none cursor-pointer"
@@ -250,6 +256,7 @@ export default function SearchFilter({
                                   page: 1,
                                   ...(languageInput.trim() && { language: languageInput.trim() }),
                                   ...(showYearFilter && { year }),
+                                  per_page: perPage,
                                 });
                               }}
                               className={`text-left px-3 py-2.5 text-sm rounded-lg transition-all flex items-center gap-3 ${
@@ -285,6 +292,7 @@ export default function SearchFilter({
                         page: 1,
                         ...(languageInput.trim() && { language: languageInput.trim() }),
                         ...(showYearFilter && { year }),
+                        per_page: perPage,
                       });
                     }}
                     className={`px-3.5 py-3 rounded-xl border transition-all duration-300 focus:outline-none flex items-center justify-center group ${
@@ -306,6 +314,40 @@ export default function SearchFilter({
               </div>
             )}
 
+            {/* Items Per Page */}
+            <div className="w-full lg:w-28">
+              <label className="block text-[10px] font-bold text-gray-600 mb-2 uppercase tracking-widest">
+                Show
+              </label>
+              <div className="relative rounded-xl bg-white/[0.04] border border-white/[0.08] hover:border-white/15 focus-within:border-[#FF0B55]/40 transition-all duration-300">
+                <select
+                  value={perPage}
+                  onChange={(e) => {
+                    const newPerPage = parseInt(e.target.value);
+                    setPerPage(newPerPage);
+                    onSearch({
+                      sort,
+                      order,
+                      page: 1,
+                      ...(languageInput.trim() && { language: languageInput.trim() }),
+                      ...(showYearFilter && { year }),
+                      per_page: newPerPage,
+                    });
+                  }}
+                  className="w-full appearance-none bg-transparent px-4 py-3 text-sm text-gray-200 focus:outline-none cursor-pointer"
+                >
+                  <option value={12} className="bg-[#0d0d0d] text-gray-200">12</option>
+                  <option value={24} className="bg-[#0d0d0d] text-gray-200">24</option>
+                  <option value={50} className="bg-[#0d0d0d] text-gray-200">50</option>
+                </select>
+                <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
             {/* Clear Button */}
             {hasCustomFilters && (
               <div className="w-full lg:w-auto">
@@ -316,7 +358,8 @@ export default function SearchFilter({
                     setSort("stars");
                     setOrder("desc");
                     setYear("2026");
-                    onSearch({ sort: "stars", order: "desc", page: 1, ...(showYearFilter && { year: "2026" }) });
+                    setPerPage(12);
+                    onSearch({ sort: "stars", order: "desc", page: 1, ...(showYearFilter && { year: "2026" }), per_page: 12 });
                   }}
                   className="w-full lg:w-auto relative overflow-hidden group/btn bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold px-8 py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 shadow-lg active:scale-[0.98] text-sm"
                   suppressHydrationWarning

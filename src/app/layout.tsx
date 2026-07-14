@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { PageTransition, Header, SiteFooter } from "@/components";
+import { Toaster } from "react-hot-toast";
 import "../styles/globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -25,6 +26,13 @@ export default function RootLayout({
         className={`${jakarta.variable} font-sans bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300`}
         suppressHydrationWarning
       >
+        <Toaster position="bottom-right" toastOptions={{
+          className: 'dark:bg-[#1a1a1a] dark:text-white',
+          style: {
+            background: 'var(--bg-color)',
+            color: 'var(--text-color)',
+          },
+        }} />
         <Header />
         <PageTransition>{children}</PageTransition>
         <SiteFooter />

@@ -19,6 +19,7 @@ export async function searchRepositories(
         location: params.location,
         labels: params.labels,
         page: params.page || 1,
+        per_page: params.per_page || 12,
         sort: params.sort || "stars",
         order: params.order || "desc",
       },

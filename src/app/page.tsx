@@ -16,6 +16,7 @@ export default function Home() {
     sort: "stars",
     order: "desc",
     page: 1,
+    per_page: 12,
   };
 
   const {
@@ -33,7 +34,7 @@ export default function Home() {
   const { heroRef, contentRef } = useScrollAnimation();
 
   // Calculate total pages
-  const totalPages = Math.ceil(totalCount / 12); // 12 items per page
+  const totalPages = Math.ceil(totalCount / (searchParams.per_page || 12));
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300">
@@ -312,7 +313,7 @@ export default function Home() {
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No repositories found</h3>
               <p className="text-gray-600 dark:text-gray-400 mb-6">Try adjusting your search or filters to find what you're looking for.</p>
               <button
-                onClick={() => handleSearch({ sort: "stars", order: "desc", page: 1 })}
+                onClick={() => handleSearch({ sort: "stars", order: "desc", page: 1, per_page: 12 })}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#FF0B55] text-white font-medium hover:bg-[#FF0B55]/90 transition-colors"
               >
                 Clear Filters
