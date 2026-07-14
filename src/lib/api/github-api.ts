@@ -40,7 +40,11 @@ export async function searchRepositories(
     
     // Handle API errors
     if (error.response?.data?.error) {
-      throw new Error(error.response.data.error);
+      const apiError = new Error(error.response.data.error);
+      if (error.response.data.resetTime) {
+        (apiError as any).resetTime = error.response.data.resetTime;
+      }
+      throw apiError;
     }
     
     throw error;
