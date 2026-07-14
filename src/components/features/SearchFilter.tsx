@@ -65,7 +65,7 @@ export default function SearchFilter({
   const hasCustomFilters = languageInput.trim() || (!hideSort && (sort !== "stars" || order !== "desc")) || (showYearFilter && year !== "2026") || perPage !== 12;
 
   return (
-    <div className="relative group z-50 rounded-2xl">
+    <form className="relative group z-50 rounded-2xl" onSubmit={handleSubmit} role="search" aria-label="Repository search and filters">
       {/* Animated gradient border */}
       <div
         className={`absolute -inset-px rounded-2xl transition-opacity duration-500 ${
@@ -87,12 +87,12 @@ export default function SearchFilter({
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-2.5">
               {/* Filter icon */}
-              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#FF0B55]/20 to-[#FF0B55]/5 border border-[#FF0B55]/20 flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#FF0B55]/20 to-[#FF0B55]/5 border border-[#FF0B55]/20 flex items-center justify-center" aria-hidden="true">
                 <svg className="w-3.5 h-3.5 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                 </svg>
               </div>
-              <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-widest">
+              <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-widest" aria-live="polite">
                 {activeFiltersSummary}
               </span>
             </div>
@@ -108,7 +108,8 @@ export default function SearchFilter({
                   setPerPage(12);
                   onSearch({ sort: "stars", order: "desc", page: 1, year: "2026", per_page: 12 });
                 }}
-                className="text-[11px] text-[#FF0B55] hover:text-white font-semibold transition-all duration-200 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF0B55]/10 hover:bg-[#FF0B55]/20 border border-[#FF0B55]/20 hover:border-[#FF0B55]/40"
+                className="text-[11px] text-[#FF0B55] hover:text-white font-semibold transition-all duration-200 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF0B55]/10 hover:bg-[#FF0B55]/20 border border-[#FF0B55]/20 hover:border-[#FF0B55]/40 focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/50"
+                aria-label="Reset all filters"
               >
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
@@ -125,7 +126,7 @@ export default function SearchFilter({
           <div className="flex flex-col lg:flex-row gap-4 items-end">
             {/* Language Input */}
             <div className="flex-1 w-full">
-              <label className="block text-[10px] font-bold text-gray-600 mb-2 uppercase tracking-widest">
+              <label htmlFor="language-search" className="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest">
                 {searchLabel}
               </label>
               <div className="relative rounded-xl">
@@ -148,7 +149,9 @@ export default function SearchFilter({
                   </svg>
                 </div>
                 <input
-                  type="text"
+                  id="language-search"
+                  type="search"
+                  aria-label={searchLabel}
                   value={languageInput}
                   onChange={(e) => {
                     const newValue = e.target.value;
@@ -174,11 +177,12 @@ export default function SearchFilter({
             {/* Year Dropdown */}
             {showYearFilter && (
               <div className="w-full lg:w-40">
-                <label className="block text-[10px] font-bold text-gray-600 mb-2 uppercase tracking-widest">
+                <label htmlFor="year-filter" className="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest">
                   Year
                 </label>
                 <div className="relative rounded-xl bg-white/[0.04] border border-white/[0.08] hover:border-white/15 focus-within:border-[#FF0B55]/40 transition-all duration-300">
                   <select
+                    id="year-filter"
                     value={year}
                     onChange={(e) => {
                       const newYear = e.target.value;
@@ -212,16 +216,20 @@ export default function SearchFilter({
             {/* Sort + Order */}
             {!hideSort && (
               <div className="flex-1 w-full">
-                <label className="block text-[10px] font-bold text-gray-600 mb-2 uppercase tracking-widest">
+                <label id="sort-label" className="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest">
                   Sort By
                 </label>
                 <div className="flex gap-2">
                   {/* Sort dropdown */}
                   <div className="relative flex-1">
                     <button
+                      id="sort-button"
                       type="button"
+                      aria-haspopup="listbox"
+                      aria-expanded={isSortDropdownOpen}
+                      aria-labelledby="sort-label sort-button"
                       onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
-                      className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-left text-gray-200 flex justify-between items-center hover:border-white/15 focus:border-[#FF0B55]/40 transition-all duration-300 focus:outline-none text-sm"
+                      className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-left text-gray-200 flex justify-between items-center hover:border-white/15 focus:border-[#FF0B55]/40 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/50 text-sm"
                       suppressHydrationWarning
                     >
                       <span className="flex items-center gap-2">
@@ -241,12 +249,18 @@ export default function SearchFilter({
                     </button>
 
                     {isSortDropdownOpen && (
-                      <div className="absolute z-[1000] mt-2 w-full bg-[#0d0d0d]/98 border border-white/[0.08] rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden backdrop-blur-xl">
+                      <div 
+                        className="absolute z-[1000] mt-2 w-full bg-[#0d0d0d]/98 border border-white/[0.08] rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden backdrop-blur-xl"
+                        role="listbox"
+                        aria-labelledby="sort-label"
+                      >
                         <div className="p-1.5 flex flex-col gap-0.5">
                           {SORT_OPTIONS.map((option) => (
                             <button
                               key={option.value}
                               type="button"
+                              role="option"
+                              aria-selected={sort === option.value}
                               onClick={() => {
                                 setSort(option.value);
                                 setIsSortDropdownOpen(false);
@@ -295,12 +309,13 @@ export default function SearchFilter({
                         per_page: perPage,
                       });
                     }}
-                    className={`px-3.5 py-3 rounded-xl border transition-all duration-300 focus:outline-none flex items-center justify-center group ${
+                    className={`px-3.5 py-3 rounded-xl border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/50 flex items-center justify-center group ${
                       order === "asc"
                         ? "bg-[#FF0B55]/10 border-[#FF0B55]/30 text-[#FF0B55]"
-                        : "bg-white/[0.04] border-white/[0.08] text-gray-500 hover:text-gray-200 hover:border-white/15"
+                        : "bg-white/[0.04] border-white/[0.08] text-gray-400 hover:text-gray-200 hover:border-white/15"
                     }`}
                     title={`Sort ${order === "desc" ? "Descending" : "Ascending"}`}
+                    aria-label={`Toggle sort order to ${order === "desc" ? "Ascending" : "Descending"}`}
                     suppressHydrationWarning
                   >
                     <svg
@@ -316,11 +331,12 @@ export default function SearchFilter({
 
             {/* Items Per Page */}
             <div className="w-full lg:w-28">
-              <label className="block text-[10px] font-bold text-gray-600 mb-2 uppercase tracking-widest">
+              <label htmlFor="per-page-filter" className="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest">
                 Show
               </label>
               <div className="relative rounded-xl bg-white/[0.04] border border-white/[0.08] hover:border-white/15 focus-within:border-[#FF0B55]/40 transition-all duration-300">
                 <select
+                  id="per-page-filter"
                   value={perPage}
                   onChange={(e) => {
                     const newPerPage = parseInt(e.target.value);
@@ -361,7 +377,8 @@ export default function SearchFilter({
                     setPerPage(12);
                     onSearch({ sort: "stars", order: "desc", page: 1, ...(showYearFilter && { year: "2026" }), per_page: 12 });
                   }}
-                  className="w-full lg:w-auto relative overflow-hidden group/btn bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold px-8 py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 shadow-lg active:scale-[0.98] text-sm"
+                  className="w-full lg:w-auto relative overflow-hidden group/btn bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold px-8 py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 shadow-lg active:scale-[0.98] text-sm focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/50"
+                  aria-label="Clear search query"
                   suppressHydrationWarning
                 >
                   <svg
@@ -377,6 +394,6 @@ export default function SearchFilter({
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
