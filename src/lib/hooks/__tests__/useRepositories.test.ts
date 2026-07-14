@@ -8,6 +8,11 @@ jest.mock('../../api/github-api', () => ({
   searchRepositories: jest.fn(),
 }));
 
+jest.mock('react-hot-toast', () => ({
+  error: jest.fn(),
+  success: jest.fn(),
+}));
+
 const mockSearchRepositories = searchRepositories as jest.MockedFunction<typeof searchRepositories>;
 
 const initialParams: SearchParams = {

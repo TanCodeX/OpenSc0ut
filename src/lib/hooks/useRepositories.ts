@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { searchRepositories } from '../api/github-api';
 import { Repository, SearchParams } from '../../types/types';
+import toast from 'react-hot-toast';
 
 export function useRepositories(initialParams: SearchParams) {
   const [repositories, setRepositories] = useState<Repository[]>([]);
@@ -22,13 +23,20 @@ export function useRepositories(initialParams: SearchParams) {
     } catch (err: any) {
       const errorMessage =
         err instanceof Error ? err.message : 'An unexpected error occurred';
-      setError(errorMessage);
+      
       if (err.resetTime) {
         setResetTime(err.resetTime);
       }
+      
+      toast.error(`Error: ${errorMessage}`);
       console.error('Search error:', err);
-      setRepositories([]);
-      setTotalCount(0);
+      
+      // Only clear repositories if we don't have any yet, 
+      // to avoid breaking UI flow on pagination/filter errors.
+      if (repositories.length === 0) {
+        setError(errorMessage);
+        setTotalCount(0);
+      }
     } finally {
       setLoading(false);
     }
