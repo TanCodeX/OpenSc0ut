@@ -16,6 +16,8 @@ export async function searchRepositories(
     const response = await apiInstance.get("/github/search", {
       params: {
         language: params.language,
+        location: params.location,
+        labels: params.labels,
         page: params.page || 1,
         sort: params.sort || "stars",
         order: params.order || "desc",
@@ -38,40 +40,13 @@ export async function searchRepositories(
     
     // Handle API errors
     if (error.response?.data?.error) {
-      throw new Error(error.response.data.error);
+      const apiError = new Error(error.response.data.error);
+      if (error.response.data.resetTime) {
+        (apiError as any).resetTime = error.response.data.resetTime;
+      }
+      throw apiError;
     }
     
     throw error;
-  }
-}
-
-export async function getRepository(
-  owner: string,
-  repo: string
-): Promise<Repository | null> {
-  try {
-    // For now, we'll return null since we don't have a specific API route for this
-    // You can create one later if needed: /api/github/repos/[owner]/[repo]/route.ts
-    console.warn("getRepository function not implemented with API route yet");
-    return null;
-  } catch (error) {
-    console.error("Error fetching repository details:", error);
-    return null;
-  }
-}
-
-export async function getRepositoryIssues(
-  owner: string,
-  repo: string,
-  labels?: string
-) {
-  try {
-    // For now, we'll return empty array since we don't have a specific API route for this
-    // You can create one later if needed: /api/github/repos/[owner]/[repo]/issues/route.ts
-    console.warn("getRepositoryIssues function not implemented with API route yet");
-    return [];
-  } catch (error) {
-    console.error("Error fetching repository issues:", error);
-    return [];
   }
 }

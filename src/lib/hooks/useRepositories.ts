@@ -7,11 +7,13 @@ export function useRepositories(initialParams: SearchParams) {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [totalCount, setTotalCount] = useState<number>(0);
+  const [resetTime, setResetTime] = useState<string | null>(null);
   const [searchParams, setSearchParams] = useState<SearchParams>(initialParams);
 
   const fetchRepositories = async (params: SearchParams) => {
     setLoading(true);
     setError(null);
+    setResetTime(null);
 
     try {
       const { items, total_count } = await searchRepositories(params);
@@ -21,6 +23,9 @@ export function useRepositories(initialParams: SearchParams) {
       const errorMessage =
         err instanceof Error ? err.message : 'An unexpected error occurred';
       setError(errorMessage);
+      if (err.resetTime) {
+        setResetTime(err.resetTime);
+      }
       console.error('Search error:', err);
       setRepositories([]);
       setTotalCount(0);
@@ -46,6 +51,7 @@ export function useRepositories(initialParams: SearchParams) {
     repositories,
     loading,
     error,
+    resetTime,
     totalCount,
     searchParams,
     handleSearch,
