@@ -38,6 +38,7 @@ export async function GET(request: NextRequest) {
     const location = searchParams.get('location');
     const labels = searchParams.get('labels');
     const page = searchParams.get('page') || '1';
+    const perPage = searchParams.get('per_page') || '12';
     // The sort and order params are not used in the GitHub query, but we leave them
     const sort = searchParams.get('sort') || 'stars';
     const order = searchParams.get('order') || 'desc';
@@ -81,7 +82,7 @@ export async function GET(request: NextRequest) {
       q: query.trim(),
       sort: sort,
       order: order,
-      per_page: "12",
+      per_page: perPage,
       page: page.toString(),
     });
 

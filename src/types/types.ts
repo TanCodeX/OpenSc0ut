@@ -28,6 +28,7 @@ export interface SearchParams {
   sort: string;
   order: "asc" | "desc";
   page: number;
+  per_page?: number;
 }
 
 export type SortOption = "stars" | "forks" | "updated" | "created";
