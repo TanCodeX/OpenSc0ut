@@ -44,34 +44,3 @@ export async function searchRepositories(
     throw error;
   }
 }
-
-export async function getRepository(
-  owner: string,
-  repo: string
-): Promise<Repository | null> {
-  try {
-    // For now, we'll return null since we don't have a specific API route for this
-    // You can create one later if needed: /api/github/repos/[owner]/[repo]/route.ts
-    console.warn("getRepository function not implemented with API route yet");
-    return null;
-  } catch (error) {
-    console.error("Error fetching repository details:", error);
-    return null;
-  }
-}
-
-export async function getRepositoryIssues(
-  owner: string,
-  repo: string,
-  labels?: string
-) {
-  try {
-    // For now, we'll return empty array since we don't have a specific API route for this
-    // You can create one later if needed: /api/github/repos/[owner]/[repo]/issues/route.ts
-    console.warn("getRepositoryIssues function not implemented with API route yet");
-    return [];
-  } catch (error) {
-    console.error("Error fetching repository issues:", error);
-    return [];
-  }
-}
