@@ -67,10 +67,10 @@ export default function Pagination({
         <button
           onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className={`relative inline-flex items-center px-3 py-2 rounded-l-md border border-[0.5px] text-sm font-medium ${
+          className={`relative inline-flex items-center px-3 py-2 rounded-l-md border border-[0.5px] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/50 z-0 ${
             currentPage === 1
-              ? "border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] bg-gray-100 dark:bg-black/30 text-gray-400 dark:text-gray-600 cursor-not-allowed"
-              : "border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] bg-gray-100 dark:bg-black/30 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-black/50 hover:text-gray-800 dark:hover:text-gray-300"
+              ? "border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] bg-gray-100 dark:bg-black/30 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+              : "border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] bg-gray-100 dark:bg-black/30 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black/50 hover:text-gray-900 dark:hover:text-gray-100"
           }`}
         >
           <span className="sr-only">Previous</span>
@@ -95,7 +95,8 @@ export default function Pagination({
             return (
               <span
                 key={`ellipsis-${index}`}
-                className="relative inline-flex items-center px-4 py-2 border border-[0.5px] border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] bg-gray-100 dark:bg-black/30 text-sm font-medium text-gray-600 dark:text-gray-400"
+                className="relative inline-flex items-center px-4 py-2 border border-[0.5px] border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] bg-gray-100 dark:bg-black/30 text-sm font-medium text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
               >
                 ...
               </span>
@@ -106,12 +107,13 @@ export default function Pagination({
             <button
               key={pageNumber}
               onClick={() => onPageChange(pageNumber)}
-              className={`relative inline-flex items-center px-4 py-2 text-sm font-medium ${
+              className={`relative inline-flex items-center px-4 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/50 ${
                 currentPage === pageNumber
-                  ? "z-10 bg-[#FF0B55] text-white dark:text-black"
-                  : "bg-gray-100 dark:bg-black/30 border border-[0.5px] border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-black/50 hover:text-gray-800 dark:hover:text-gray-300"
+                  ? "z-10 bg-[#FF0B55] text-white dark:text-black border border-[#FF0B55]"
+                  : "bg-gray-100 dark:bg-black/30 border border-[0.5px] border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black/50 hover:text-gray-900 dark:hover:text-gray-100"
               }`}
               aria-current={currentPage === pageNumber ? "page" : undefined}
+              aria-label={`Go to page ${pageNumber}`}
             >
               {pageNumber}
             </button>
@@ -123,10 +125,10 @@ export default function Pagination({
             currentPage < totalPages && onPageChange(currentPage + 1)
           }
           disabled={currentPage === totalPages}
-          className={`relative inline-flex items-center px-3 py-2 rounded-r-md border border-[0.5px] text-sm font-medium ${
+          className={`relative inline-flex items-center px-3 py-2 rounded-r-md border border-[0.5px] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/50 z-0 ${
             currentPage === totalPages
-              ? "border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] bg-gray-100 dark:bg-black/30 text-gray-400 dark:text-gray-600 cursor-not-allowed"
-              : "border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] bg-gray-100 dark:bg-black/30 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-black/50 hover:text-gray-800 dark:hover:text-gray-300"
+              ? "border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] bg-gray-100 dark:bg-black/30 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+              : "border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] bg-gray-100 dark:bg-black/30 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black/50 hover:text-gray-900 dark:hover:text-gray-100"
           }`}
         >
           <span className="sr-only">Next</span>
