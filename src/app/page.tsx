@@ -10,6 +10,7 @@ import {
 } from "../components";
 import AnimatedText from "../components/ui/AnimatedText";
 import RateLimitTimer from "../components/ui/RateLimitTimer";
+import HeroCards from "../components/ui/HeroCards";
 
 export default function Home() {
   const initialParams: SearchParams = {
@@ -140,52 +141,8 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Right Column - Grid Cards */}
-              <div className="hidden lg:grid grid-cols-2 gap-4">
-                {/* Card 1 */}
-                <div className="group relative bg-gradient-to-br from-gray-100 dark:from-white/5 to-transparent border border-gray-200 dark:border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 transition-all duration-300 hover:scale-105">
-                  <div className="w-12 h-12 bg-[#FF0B55]/20 rounded-xl flex items-center justify-center mb-4">
-                    <svg className="w-6 h-6 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Discover</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Explore curated open source projects</p>
-                </div>
-
-                {/* Card 2 */}
-                <div className="group relative bg-gradient-to-br from-gray-100 dark:from-white/5 to-transparent border border-gray-200 dark:border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 transition-all duration-300 hover:scale-105 translate-y-8">
-                  <div className="w-12 h-12 bg-[#FF0B55]/20 rounded-xl flex items-center justify-center mb-4">
-                    <svg className="w-6 h-6 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Contribute</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Make meaningful contributions</p>
-                </div>
-
-                {/* Card 3 */}
-                <div className="group relative bg-gradient-to-br from-gray-100 dark:from-white/5 to-transparent border border-gray-200 dark:border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 transition-all duration-300 hover:scale-105">
-                  <div className="w-12 h-12 bg-[#FF0B55]/20 rounded-xl flex items-center justify-center mb-4">
-                    <svg className="w-6 h-6 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Analyze</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">AI-powered code insights</p>
-                </div>
-
-                {/* Card 4 */}
-                <div className="group relative bg-gradient-to-br from-gray-100 dark:from-white/5 to-transparent border border-gray-200 dark:border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 transition-all duration-300 hover:scale-105 translate-y-8">
-                  <div className="w-12 h-12 bg-[#FF0B55]/20 rounded-xl flex items-center justify-center mb-4">
-                    <svg className="w-6 h-6 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Grow</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Level up your skills</p>
-                </div>
-              </div>
+              {/* Right Column - Grid Cards (GSAP animated) */}
+              <HeroCards />
             </div>
           </div>
 
