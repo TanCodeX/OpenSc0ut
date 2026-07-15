@@ -4,10 +4,9 @@ A modern web application to discover and explore GitHub repositories from around
 
 ## Features
 
-- **Global Repository Search** with optional location filtering
+- **Global Repository Search**
 - **Advanced Filtering Options**:
   - Multiple programming languages (JavaScript, Python, Java, TypeScript, etc.)
-  - Extensive label filtering (Good First Issue, Help Wanted, Hacktoberfest, etc.)
   - Sort by stars, forks, recent updates, or creation date
   - Ascending/descending order options
 - **Modern UI/UX**:
@@ -83,9 +82,7 @@ To avoid rate limiting, it's recommended to use a GitHub Personal Access Token.
 
 The application provides a powerful interface to search GitHub repositories with multiple filtering options:
 
-- Location-based filtering (optional)
 - Multiple programming language selection
-- Comprehensive label filtering
 - Advanced sorting options
 - Real-time search updates with pagination
 
