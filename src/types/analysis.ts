@@ -22,6 +22,8 @@ export interface RepoSignals {
   averagePRMergeTimeDays: number | null;
   goodFirstIssueCount: number;
   startHereIssues: StartHereIssue[];
+  languages: string[];
+  contributorsCount: number;
 }
 
 export interface AICategoryScore {
