@@ -1,65 +1,113 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/TanCodeX/OpenSc0ut/main/src/app/icon.svg" alt="OpenSc0ut Logo" width="120" />
-  <h1>OpenSc0ut</h1>
-  
-  <p>
-    <strong>Your gateway to meaningful open source contributions and developer growth.</strong>
-  </p>
 
-  <p>
-    <a href="#features">Features</a> •
-    <a href="#getting-started">Getting Started</a> •
-    <a href="#tech-stack">Tech Stack</a> •
-    <a href="#contributing">Contributing</a> •
-    <a href="#license">License</a>
-  </p>
+<img src="https://raw.githubusercontent.com/TanCodeX/OpenSc0ut/main/src/app/icon.svg" alt="OpenSc0ut Logo" width="100" />
 
-  <p>
-    <img src="https://img.shields.io/badge/Next.js-13.5-black?style=flat-square&logo=next.js" alt="Next.js" />
-    <img src="https://img.shields.io/badge/TypeScript-Ready-blue?style=flat-square&logo=typescript" alt="TypeScript" />
-    <img src="https://img.shields.io/badge/Tailwind_CSS-3.3-38B2AC?style=flat-square&logo=tailwind-css" alt="Tailwind CSS" />
-    <img src="https://img.shields.io/github/license/TanCodeX/OpenSc0ut?style=flat-square" alt="License" />
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome" />
-  </p>
+<br />
+
+# `OpenSc0ut`
+
+**Your gateway to meaningful open source contributions and developer growth.**
+
+<sub>Built for devs, by a dev.</sub>
+
+<br />
+
+[![Next.js](https://img.shields.io/badge/Next.js-App_Router-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-Animated-EF4088?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
+
+<br />
+
+[![License](https://img.shields.io/github/license/TanCodeX/OpenSc0ut?style=flat-square&color=FF0B55)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
+[![Code of Conduct](https://img.shields.io/badge/Contributor_Covenant-2.1-4baaaa.svg?style=flat-square)](CODE_OF_CONDUCT.md)
+
+<br />
+
+[**Features**](#-features) · [**Getting Started**](#-getting-started) · [**Tech Stack**](#️-tech-stack) · [**Contributing**](#-contributing) · [**License**](#-license)
+
 </div>
 
-<hr />
+<br />
+
+---
 
 ## 🌟 About OpenSc0ut
 
-OpenSc0ut is a modern web application designed to help developers seamlessly discover and explore GitHub repositories from around the world. Whether you're looking for your first open-source project to contribute to, exploring for GSOC, or looking for high-quality tools, OpenSc0ut makes finding the perfect match effortless.
+> *Discover. Contribute. Grow.*
+
+**OpenSc0ut** is a modern, beautifully designed web application that helps developers seamlessly discover, evaluate, and contribute to open-source GitHub repositories from around the world.
+
+Whether you're hunting for your very **first contribution**, preparing for **Google Summer of Code**, or searching for high-quality tools — OpenSc0ut cuts through the noise and puts the right projects right in front of you.
+
+<br />
 
 ---
 
 ## ✨ Features
 
-- **Global Repository Search**: Find repositories by name, topic, or keyword.
-- **Advanced Filtering Options**:
-  - Filter by multiple programming languages (JavaScript, Python, Rust, Go, etc.)
-  - Sort by stars, forks, recent updates, or creation date.
-  - Ascending/descending order controls.
-- **Repo Scout (AI Analysis)**: 
-  - Analyze a GitHub repository's contribution readiness in seconds using advanced AI synthesis.
-  - Get an instant score and grading on how welcoming the repository is for newcomers.
-- **Modern, Premium UI/UX**:
-  - Dark mode by default with stunning glass-morphism effects and neon accents.
-  - Real-time search updates with smooth framer-motion animations.
-  - Loading states, error handling, and robust pagination.
-- **Rich Project Context**:
-  - View repository stars, forks, detailed descriptions, and language statistics at a glance.
-  - See active issue counts and "good first issue" links directly from the dashboard.
+<details>
+<summary><b>🔍 Global Repository Search</b></summary>
+<br />
+
+Find repositories by name, topic, or keyword in real-time with a powerful search interface.
+
+</details>
+
+<details>
+<summary><b>⚙️ Advanced Filtering & Sorting</b></summary>
+<br />
+
+- Filter by multiple programming languages — JavaScript, Python, Rust, Go, and more.
+- Sort by stars, forks, recent updates, or creation date.
+- Ascending / descending order controls.
+
+</details>
+
+<details open>
+<summary><b>🤖 Repo Scout — AI-Powered Analysis</b></summary>
+<br />
+
+Analyze any GitHub repository's **contribution readiness** in seconds using Google Gemini AI.
+
+- Instant letter grade (A → F) with an overall score out of 100.
+- AI-synthesized narrative on the project's health and community.
+- Direct links to **"good first issues"** so you know exactly where to start.
+
+> 🎥 **Demo**:  
+> *<!-- TODO: Drag and drop your repo-feature.mp4 video from your desktop here when editing on GitHub! -->*
+
+</details>
+
+<details>
+<summary><b>🎨 Premium UI / UX</b></summary>
+<br />
+
+- Dark mode by default with stunning glass-morphism effects and neon accents.
+- Smooth Framer Motion animations throughout.
+- Fully responsive, with skeleton loading states and robust error handling.
+
+</details>
+
+<br />
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Framework**: [Next.js (App Router)](https://nextjs.org/)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **Data Fetching**: Axios / Next.js Native Fetch
-- **APIs**: GitHub REST API, Google Gemini AI (for Repo Scout)
-- **Deployment**: Vercel (Recommended)
+| Layer | Technology |
+|---|---|
+| **Framework** | [Next.js (App Router)](https://nextjs.org/) |
+| **Language** | [TypeScript](https://www.typescriptlang.org/) |
+| **Styling** | [Tailwind CSS](https://tailwindcss.com/) |
+| **Animations** | [Framer Motion](https://www.framer.com/motion/) |
+| **AI** | [Google Gemini API](https://deepmind.google/technologies/gemini/) |
+| **Data** | [GitHub REST API](https://docs.github.com/en/rest) |
+| **Email** | Nodemailer (via Gmail SMTP) |
+| **Deployment** | [Vercel](https://vercel.com/) *(Recommended)* |
+
+<br />
 
 ---
 
@@ -67,84 +115,107 @@ OpenSc0ut is a modern web application designed to help developers seamlessly dis
 
 ### Prerequisites
 
-Ensure you have the following installed on your local machine:
-- **Node.js** (v18 or later recommended)
-- **npm** or **yarn** or **pnpm**
-- A GitHub Personal Access Token (to avoid rate limits).
+Make sure you have the following installed:
+
+- <kbd>Node.js</kbd> v18 or later
+- <kbd>npm</kbd> / <kbd>yarn</kbd> / <kbd>pnpm</kbd>
+- A GitHub Personal Access Token *(strongly recommended to avoid rate limits)*
 
 ### Installation
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/TanCodeX/OpenSc0ut.git
-   cd OpenSc0ut
-   ```
+**1. Clone the repository**
+```bash
+git clone https://github.com/TanCodeX/OpenSc0ut.git
+cd OpenSc0ut
+```
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   # or yarn install
-   ```
+**2. Install dependencies**
+```bash
+npm install
+```
 
-3. **Set up environment variables:**
-   Create a `.env` or `.env.local` file in the root directory and add the following keys:
-   ```env
-   # Recommended to prevent GitHub API rate limiting
-   NEXT_PUBLIC_GITHUB_TOKEN=your_github_personal_access_token
+**3. Configure environment variables**
 
-   # Required for the Repo Scout AI features
-   GEMINI_API_KEY=your_gemini_api_key
+Create a `.env.local` file in the root directory:
+```env
+# GitHub — prevents rate limiting (5,000 req/hr vs 60/hr unauthenticated)
+NEXT_PUBLIC_GITHUB_TOKEN=your_github_personal_access_token
 
-   # Required for contact form emails (if using nodemailer)
-   EMAIL_USER=your_email@gmail.com
-   EMAIL_PASS=your_email_app_password
-   ```
+# Gemini AI — powers the Repo Scout feature
+GEMINI_API_KEY=your_gemini_api_key
 
-4. **Start the development server:**
-   ```bash
-   npm run dev
-   # or yarn dev
-   ```
+# Nodemailer — powers the contact form
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_email_app_password
+```
 
-5. **Open the app:**
-   Visit [http://localhost:3000](http://localhost:3000) in your browser.
+**4. Run the development server**
+```bash
+npm run dev
+```
+
+**5. Open in your browser**
+
+Navigate to [http://localhost:3000](http://localhost:3000) and start exploring! 🎉
+
+<br />
 
 ---
 
 ## 💡 GitHub API Rate Limits
 
-This project heavily relies on the GitHub API to fetch live repository data. 
-- **Unauthenticated requests**: 60 requests per hour.
-- **Authenticated requests (with Token)**: 5,000 requests per hour.
+> [!NOTE]
+> This project relies heavily on the GitHub API for live repository data.
 
-We **strongly advise** setting the `NEXT_PUBLIC_GITHUB_TOKEN` environment variable to ensure a smooth, uninterrupted experience.
+| Request Type | Rate Limit |
+|---|---|
+| Unauthenticated | 60 requests / hour |
+| Authenticated (with token) | **5,000 requests / hour** |
+
+Setting `NEXT_PUBLIC_GITHUB_TOKEN` is **strongly recommended** for a smooth experience.
+
+<br />
 
 ---
 
 ## 🤝 Contributing
 
-We believe in the power of open source and community collaboration! Contributions of any kind are welcome—whether it's fixing bugs, improving documentation, or proposing new features.
+We believe in the power of community! Every contribution, no matter how small, makes a difference.
 
-Please read our [Contributing Guidelines](CONTRIBUTING.md) for detailed information on how to get started, the pull request process, and our coding standards.
+> [!TIP]
+> Read the [**Contributing Guidelines**](CONTRIBUTING.md) for a detailed walkthrough of the process, branch naming conventions, and coding standards.
 
-Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+> [!IMPORTANT]
+> This project is released with a [**Code of Conduct**](CODE_OF_CONDUCT.md). By participating, you agree to uphold its terms.
+
+<br />
 
 ---
 
 ## 💬 Contact & Support
 
-If you have questions, feedback, or want to say hi, feel free to reach out:
+Have questions, feedback, or just want to say hi?
 
-- **Maintainer**: Tanmay Patwary
-- **GitHub**: [@TanCodeX](https://github.com/TanCodeX)
-- **LinkedIn**: [Tanmay Patwary](https://www.linkedin.com/in/tanmaypatwary)
+| Platform | Link |
+|---|---|
+| **GitHub** | [@TanCodeX](https://github.com/TanCodeX) |
+| **LinkedIn** | [Tanmay Patwary](https://www.linkedin.com/in/tanmaypatwary) |
+| **Email** | tanmaypatwary@gmail.com |
+
+<br />
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more information.
+Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for more information.
+
+<br />
+
+---
 
 <div align="center">
-  <p>Built with ❤️ by a dev, for devs.</p>
+
+<sub>Built with ❤️ by <a href="https://github.com/TanCodeX">Tanmay</a> — for devs, by a dev.</sub>
+
 </div>

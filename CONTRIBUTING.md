@@ -1,64 +1,172 @@
-# Contributing to OpenSc0ut
+<div align="center">
 
-First off, thank you for considering contributing to OpenSc0ut! It's people like you that make open source such a great community to learn, inspire, and create.
+# 🛠️ Contributing to `OpenSc0ut`
 
-## Code of Conduct
+**Thank you for considering a contribution!**
 
-By participating in this project, you are expected to uphold our [Code of Conduct](CODE_OF_CONDUCT.md). Please report unacceptable behavior to tanmaypatwary@gmail.com.
+<sub>Every bug fix, feature, and typo correction helps make OpenSc0ut better for everyone.</sub>
 
-## How Can I Contribute?
+<br />
 
-### Reporting Bugs
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](https://github.com/TanCodeX/OpenSc0ut/pulls)
+[![Code of Conduct](https://img.shields.io/badge/Contributor_Covenant-2.1-4baaaa.svg?style=for-the-badge)](CODE_OF_CONDUCT.md)
 
-This section guides you through submitting a bug report for OpenSc0ut. Following these guidelines helps maintainers and the community understand your report, reproduce the behavior, and find related reports.
+</div>
 
-*   Use a clear and descriptive title for the issue to identify the problem.
-*   Describe the exact steps which reproduce the problem in as many details as possible.
-*   Provide specific examples to demonstrate the steps. Include links to files or copy/paste snippets, which you use in those examples.
+<br />
 
-### Suggesting Enhancements
+---
 
-This section guides you through submitting an enhancement suggestion for OpenSc0ut, including completely new features and minor improvements to existing functionality.
+## 📋 Table of Contents
 
-*   Use a clear and descriptive title for the issue to identify the suggestion.
-*   Provide a step-by-step description of the suggested enhancement in as many details as possible.
-*   Explain why this enhancement would be useful to most OpenSc0ut users.
+- [Code of Conduct](#-code-of-conduct)
+- [How Can I Contribute?](#-how-can-i-contribute)
+  - [Reporting Bugs](#-reporting-bugs)
+  - [Suggesting Enhancements](#-suggesting-enhancements)
+  - [Pull Requests](#-pull-requests)
+- [Local Development Setup](#-local-development-setup)
+- [Coding Standards](#-coding-standards)
 
-### Pull Requests
+<br />
 
-The process described here has several goals:
-*   Maintain OpenSc0ut's quality
-*   Fix problems that are important to users
-*   Engage the community in working toward the best possible OpenSc0ut
-*   Enable a sustainable system for OpenSc0ut's maintainers to review contributions
+---
 
-Please follow these steps to have your contribution considered by the maintainers:
+## 🧭 Code of Conduct
 
-1.  **Fork** the repo on GitHub.
-2.  **Clone** the project to your own machine.
-3.  **Create a branch** for your feature or bug fix: `git checkout -b feature/your-feature-name` or `git checkout -b bugfix/issue-number`.
-4.  **Install dependencies** and ensure you can run the project locally (see `README.md` for getting started instructions).
-5.  **Commit** your changes with a descriptive commit message. 
-    *   _Good:_ `feat: add new sorting option by issue count`
-    *   _Bad:_ `fixed stuff`
-6.  **Push** your work back up to your fork: `git push origin feature/your-feature-name`.
-7.  **Submit a Pull Request** so that we can review your changes.
+By participating in this project, you are expected to uphold our [**Code of Conduct**](CODE_OF_CONDUCT.md).
 
-NOTE: Be sure to merge the latest from "upstream" before making a pull request!
+Please report unacceptable behavior to **tanmaypatwary@gmail.com**.
 
-## Local Development Setup
+<br />
 
-To get a local copy up and running, follow these simple example steps:
+---
 
-1.  Clone the repository.
-2.  Install NPM packages via `npm install`.
-3.  Setup your environment variables by copying `.env.example` (or creating `.env.local` based on the README) and filling in your API keys (GitHub & Gemini).
-4.  Run `npm run dev` and open `http://localhost:3000` in your browser.
+## 💡 How Can I Contribute?
 
-## Coding Style and Guidelines
+### 🐛 Reporting Bugs
 
-*   **TypeScript:** We strictly use TypeScript. Ensure your code is properly typed.
-*   **Styling:** We use Tailwind CSS for all styling. Try to reuse existing UI components and colors where possible.
-*   **Linting/Formatting:** Ensure your code passes all lint checks (`npm run lint` if configured) and is formatted correctly.
+> [!IMPORTANT]
+> Before submitting a bug report, please check if the issue already exists to avoid duplicates.
 
-Thank you for contributing!
+A great bug report includes:
+
+- ✅ A **clear, descriptive title** that identifies the problem
+- ✅ **Exact steps to reproduce** the behavior
+- ✅ What you **expected** to happen vs. what **actually** happened
+- ✅ Screenshots, error logs, or code snippets that illustrate the issue
+
+[→ Open a Bug Report](https://github.com/TanCodeX/OpenSc0ut/issues/new)
+
+<br />
+
+### 💬 Suggesting Enhancements
+
+Have an idea that would make OpenSc0ut better? We'd love to hear it!
+
+A great enhancement proposal includes:
+
+- ✅ A **clear, descriptive title** for the suggestion
+- ✅ A **step-by-step description** of the proposed feature
+- ✅ An explanation of **why this would benefit** most users
+- ✅ Any relevant mockups, diagrams, or examples
+
+[→ Open a Feature Request](https://github.com/TanCodeX/OpenSc0ut/issues/new)
+
+<br />
+
+### 🔀 Pull Requests
+
+> [!NOTE]
+> Please ensure there is an open issue for the work you're doing before starting. This avoids duplicate effort.
+
+**Follow these steps:**
+
+| Step | Action |
+|------|--------|
+| **1** | **Fork** the repository |
+| **2** | **Create** a feature or bugfix branch |
+| **3** | **Write** your code following our [coding standards](#-coding-standards) |
+| **4** | **Commit** with a clear, descriptive message |
+| **5** | **Push** to your fork and open a Pull Request |
+
+**Branch Naming Convention:**
+```
+feature/your-feature-name
+bugfix/issue-number-short-description
+docs/update-readme
+```
+
+**Commit Message Convention:**
+```bash
+# ✅ Good
+feat: add sorting by open issue count
+fix: correct API rate limit handling on GitHub endpoint
+docs: update environment variable instructions
+
+# ❌ Bad
+fixed stuff
+update
+wip
+```
+
+> [!WARNING]
+> Always merge the latest changes from `upstream/main` into your branch before opening a PR to avoid merge conflicts.
+
+<br />
+
+---
+
+## 💻 Local Development Setup
+
+**1. Fork & Clone**
+```bash
+git clone https://github.com/YOUR_USERNAME/OpenSc0ut.git
+cd OpenSc0ut
+```
+
+**2. Install dependencies**
+```bash
+npm install
+```
+
+**3. Set up environment variables**
+
+Create a `.env.local` file in the root:
+```env
+NEXT_PUBLIC_GITHUB_TOKEN=your_github_token
+GEMINI_API_KEY=your_gemini_api_key
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_password
+```
+
+**4. Start the dev server**
+```bash
+npm run dev
+```
+
+Visit <kbd>http://localhost:3000</kbd> and you're ready to go! 🚀
+
+<br />
+
+---
+
+## 📐 Coding Standards
+
+| Category | Standard |
+|----------|----------|
+| **Language** | TypeScript — strict typing required |
+| **Styling** | Tailwind CSS — reuse existing tokens and components |
+| **Linting** | Code must pass `npm run lint` with no errors |
+| **Formatting** | Follow the existing Prettier config |
+| **Components** | Keep components focused, reusable, and well-named |
+| **Animations** | Use Framer Motion consistently with the existing patterns |
+
+<br />
+
+---
+
+<div align="center">
+
+<sub>Thank you for helping make <b>OpenSc0ut</b> better. You're awesome. 🌟</sub>
+
+</div>
