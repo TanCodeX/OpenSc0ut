@@ -35,7 +35,6 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const language = searchParams.get('language');
-    const location = searchParams.get('location');
     const labels = searchParams.get('labels');
     const page = searchParams.get('page') || '1';
     const perPage = searchParams.get('per_page') || '12';
@@ -49,13 +48,6 @@ export async function GET(request: NextRequest) {
       const languages = language.split(",");
       query += ` (${languages
         .map((lang) => `language:${lang.trim()}`)
-        .join(" OR ")})`;
-    }
-
-    if (location) {
-      const locations = location.split(",");
-      query += ` (${locations
-        .map((loc) => `location:"${loc.trim()}"`)
         .join(" OR ")})`;
     }
 
