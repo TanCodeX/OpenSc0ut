@@ -125,14 +125,9 @@ We **strongly advise** setting the `NEXT_PUBLIC_GITHUB_TOKEN` environment variab
 
 We believe in the power of open source and community collaboration! Contributions of any kind are welcome—whether it's fixing bugs, improving documentation, or proposing new features.
 
-### How to Contribute
-1. **Fork** the repository.
-2. Create your **feature branch** (`git checkout -b feature/AmazingFeature`).
-3. **Commit** your changes (`git commit -m 'Add some AmazingFeature'`).
-4. **Push** to the branch (`git push origin feature/AmazingFeature`).
-5. Open a **Pull Request**.
+Please read our [Contributing Guidelines](CONTRIBUTING.md) for detailed information on how to get started, the pull request process, and our coding standards.
 
-Please ensure your code adheres to the existing styling conventions (Tailwind/Prettier) and is free of linting errors.
+Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 ---
 
