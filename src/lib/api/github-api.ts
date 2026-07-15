@@ -16,8 +16,6 @@ export async function searchRepositories(
     const response = await apiInstance.get("/github/search", {
       params: {
         language: params.language,
-        location: params.location,
-        labels: params.labels,
         page: params.page || 1,
         per_page: params.per_page || 12,
         sort: params.sort || "stars",

@@ -168,6 +168,7 @@ export default function GsocPage() {
               searchPlaceholder="Organization Name, Category, or Tags..."
               hideSort={true}
               showYearFilter={true}
+              hidePerPage={true}
             />
           </div>
 

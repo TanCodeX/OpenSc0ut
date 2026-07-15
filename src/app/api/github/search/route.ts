@@ -35,8 +35,6 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const language = searchParams.get('language');
-    const location = searchParams.get('location');
-    const labels = searchParams.get('labels');
     const page = searchParams.get('page') || '1';
     const perPage = searchParams.get('per_page') || '12';
     // The sort and order params are not used in the GitHub query, but we leave them
@@ -50,28 +48,6 @@ export async function GET(request: NextRequest) {
       query += ` (${languages
         .map((lang) => `language:${lang.trim()}`)
         .join(" OR ")})`;
-    }
-
-    if (location) {
-      const locations = location.split(",");
-      query += ` (${locations
-        .map((loc) => `location:"${loc.trim()}"`)
-        .join(" OR ")})`;
-    }
-
-    if (labels) {
-      const labelArray = labels.split(",");
-      labelArray.forEach((label) => {
-        const trimmed = label.trim().toLowerCase();
-        if (trimmed === "good first issue" || trimmed === "good-first-issues") {
-          query += " good-first-issues:>0";
-        } else if (trimmed === "help wanted" || trimmed === "help-wanted-issues") {
-          query += " help-wanted-issues:>0";
-        } else {
-          const topic = trimmed.replace(/\s+/g, "-");
-          query += ` topic:${topic}`;
-        }
-      });
     }
     
     query += " stars:>50 forks:>5";

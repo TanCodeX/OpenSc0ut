@@ -23,8 +23,6 @@ export interface Repository {
 export interface SearchParams {
   language?: string;
   year?: string;
-  location?: string;
-  labels?: string;
   sort: string;
   order: "asc" | "desc";
   page: number;
