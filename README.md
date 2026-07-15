@@ -1,97 +1,155 @@
-# OpenSc0ut
+<div align="center">
+  <img src="https://raw.githubusercontent.com/TanCodeX/OpenSc0ut/main/src/app/icon.svg" alt="OpenSc0ut Logo" width="120" />
+  <h1>OpenSc0ut</h1>
+  
+  <p>
+    <strong>Your gateway to meaningful open source contributions and developer growth.</strong>
+  </p>
 
-A modern web application to discover and explore GitHub repositories from around the world.
+  <p>
+    <a href="#features">Features</a> •
+    <a href="#getting-started">Getting Started</a> •
+    <a href="#tech-stack">Tech Stack</a> •
+    <a href="#contributing">Contributing</a> •
+    <a href="#license">License</a>
+  </p>
 
-## Features
+  <p>
+    <img src="https://img.shields.io/badge/Next.js-13.5-black?style=flat-square&logo=next.js" alt="Next.js" />
+    <img src="https://img.shields.io/badge/TypeScript-Ready-blue?style=flat-square&logo=typescript" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/Tailwind_CSS-3.3-38B2AC?style=flat-square&logo=tailwind-css" alt="Tailwind CSS" />
+    <img src="https://img.shields.io/github/license/TanCodeX/OpenSc0ut?style=flat-square" alt="License" />
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome" />
+  </p>
+</div>
 
-- **Global Repository Search**
+<hr />
+
+## 🌟 About OpenSc0ut
+
+OpenSc0ut is a modern web application designed to help developers seamlessly discover and explore GitHub repositories from around the world. Whether you're looking for your first open-source project to contribute to, exploring for GSOC, or looking for high-quality tools, OpenSc0ut makes finding the perfect match effortless.
+
+---
+
+## ✨ Features
+
+- **Global Repository Search**: Find repositories by name, topic, or keyword.
 - **Advanced Filtering Options**:
-  - Multiple programming languages (JavaScript, Python, Java, TypeScript, etc.)
-  - Sort by stars, forks, recent updates, or creation date
-  - Ascending/descending order options
-- **Modern UI/UX**:
-  - Responsive design with dark mode
-  - Real-time search updates
-  - Loading states and error handling
-  - Pagination support
-  - Beautiful glass-morphism design
-- **Project Details Display**:
-  - Repository stars, forks, and description
-  - Last updated information
-  - Language statistics
-  - Issue labels and counts
+  - Filter by multiple programming languages (JavaScript, Python, Rust, Go, etc.)
+  - Sort by stars, forks, recent updates, or creation date.
+  - Ascending/descending order controls.
+- **Repo Scout (AI Analysis)**: 
+  - Analyze a GitHub repository's contribution readiness in seconds using advanced AI synthesis.
+  - Get an instant score and grading on how welcoming the repository is for newcomers.
+- **Modern, Premium UI/UX**:
+  - Dark mode by default with stunning glass-morphism effects and neon accents.
+  - Real-time search updates with smooth framer-motion animations.
+  - Loading states, error handling, and robust pagination.
+- **Rich Project Context**:
+  - View repository stars, forks, detailed descriptions, and language statistics at a glance.
+  - See active issue counts and "good first issue" links directly from the dashboard.
 
-## Tech Stack
+---
 
-- **Frontend**: Next.js 13.5, React 18, TypeScript
-- **Styling**: Tailwind CSS with custom glass-morphism effects
-- **API**: GitHub REST API
-- **State Management**: React Hooks
-- **HTTP Client**: Axios
+## 🛠️ Tech Stack
 
-## Getting Started
+- **Framework**: [Next.js (App Router)](https://nextjs.org/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Data Fetching**: Axios / Next.js Native Fetch
+- **APIs**: GitHub REST API, Google Gemini AI (for Repo Scout)
+- **Deployment**: Vercel (Recommended)
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js (v14 or later)
-- npm or yarn
+Ensure you have the following installed on your local machine:
+- **Node.js** (v18 or later recommended)
+- **npm** or **yarn** or **pnpm**
+- A GitHub Personal Access Token (to avoid rate limits).
 
 ### Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/TanCodeX/OpenSc0ut.git
+   cd OpenSc0ut
+   ```
 
-```bash
-git clone https://github.com/yourusername/opensc0ut.git
-cd opensc0ut
-```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   # or yarn install
+   ```
 
-2. Install dependencies:
+3. **Set up environment variables:**
+   Create a `.env` or `.env.local` file in the root directory and add the following keys:
+   ```env
+   # Recommended to prevent GitHub API rate limiting
+   NEXT_PUBLIC_GITHUB_TOKEN=your_github_personal_access_token
 
-```bash
-npm install
-# or
-yarn install
-```
+   # Required for the Repo Scout AI features
+   GEMINI_API_KEY=your_gemini_api_key
 
-3. Create a `.env.local` file in the root directory and add your GitHub Personal Access Token (optional, but recommended to avoid rate limiting):
+   # Required for contact form emails (if using nodemailer)
+   EMAIL_USER=your_email@gmail.com
+   EMAIL_PASS=your_email_app_password
+   ```
 
-```
-NEXT_PUBLIC_GITHUB_TOKEN=your_github_personal_access_token
-```
+4. **Start the development server:**
+   ```bash
+   npm run dev
+   # or yarn dev
+   ```
 
-4. Start the development server:
+5. **Open the app:**
+   Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+---
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+## 💡 GitHub API Rate Limits
 
-## GitHub API Usage
+This project heavily relies on the GitHub API to fetch live repository data. 
+- **Unauthenticated requests**: 60 requests per hour.
+- **Authenticated requests (with Token)**: 5,000 requests per hour.
 
-This project uses the GitHub API to search for repositories. The GitHub API has rate limits:
+We **strongly advise** setting the `NEXT_PUBLIC_GITHUB_TOKEN` environment variable to ensure a smooth, uninterrupted experience.
 
-- For unauthenticated requests: 60 requests per hour
-- For authenticated requests: 5,000 requests per hour
+---
 
-To avoid rate limiting, it's recommended to use a GitHub Personal Access Token.
+## 🤝 Contributing
 
-## How It Works
+We believe in the power of open source and community collaboration! Contributions of any kind are welcome—whether it's fixing bugs, improving documentation, or proposing new features.
 
-The application provides a powerful interface to search GitHub repositories with multiple filtering options:
+### How to Contribute
+1. **Fork** the repository.
+2. Create your **feature branch** (`git checkout -b feature/AmazingFeature`).
+3. **Commit** your changes (`git commit -m 'Add some AmazingFeature'`).
+4. **Push** to the branch (`git push origin feature/AmazingFeature`).
+5. Open a **Pull Request**.
 
-- Multiple programming language selection
-- Advanced sorting options
-- Real-time search updates with pagination
+Please ensure your code adheres to the existing styling conventions (Tailwind/Prettier) and is free of linting errors.
 
-The search results are presented in a modern, card-based layout with essential repository information and direct links to issues and the repository.
+---
 
-## Contributing
+## 💬 Contact & Support
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+If you have questions, feedback, or want to say hi, feel free to reach out:
 
-## License
+- **Maintainer**: Tanmay Patwary
+- **GitHub**: [@TanCodeX](https://github.com/TanCodeX)
+- **LinkedIn**: [Tanmay Patwary](https://www.linkedin.com/in/tanmaypatwary)
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more information.
+
+<div align="center">
+  <p>Built with ❤️ by a dev, for devs.</p>
+</div>
