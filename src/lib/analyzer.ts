@@ -24,6 +24,27 @@ async function fetchGitHub(endpoint: string, options: RequestInit = {}) {
   return response.json();
 }
 
+async function fetchGitHubResponse(endpoint: string, options: RequestInit = {}) {
+  const headers: HeadersInit = {
+    'Accept': 'application/vnd.github.v3+json',
+  };
+  
+  if (process.env.GITHUB_TOKEN) {
+    headers['Authorization'] = `Bearer ${process.env.GITHUB_TOKEN}`;
+  }
+
+  const response = await fetch(`${GITHUB_API_URL}${endpoint}`, {
+    ...options,
+    headers: { ...headers, ...options.headers },
+  });
+
+  if (!response.ok) {
+    throw new Error(`GitHub API error: ${response.status} on ${endpoint}`);
+  }
+
+  return response;
+}
+
 export async function fetchRepoSignals(owner: string, repo: string): Promise<RepoSignals> {
   const repoPath = `/repos/${owner}/${repo}`;
   
@@ -101,6 +122,36 @@ export async function fetchRepoSignals(owner: string, repo: string): Promise<Rep
     console.warn("Failed to fetch commits", e);
   }
 
+  // 6. Languages (Required Skills)
+  let languages: string[] = [];
+  try {
+    const langData = await fetchGitHub(`${repoPath}/languages`);
+    languages = Object.keys(langData);
+  } catch (e) {
+    console.warn("Failed to fetch languages", e);
+  }
+
+  // 7. Contributors Count
+  let contributorsCount = 0;
+  try {
+    const res = await fetchGitHubResponse(`${repoPath}/contributors?per_page=1&anon=1`);
+    const linkHeader = res.headers.get('link');
+    if (linkHeader) {
+      const match = linkHeader.match(/page=(\d+)>; rel="last"/);
+      if (match) {
+        contributorsCount = parseInt(match[1], 10);
+      } else {
+        contributorsCount = 1; // Only 1 page but link header exists? Rare, but possible
+      }
+    } else {
+      // If no link header, then all contributors fit on 1 page (so 1 or 0)
+      const data = await res.json();
+      contributorsCount = data.length || 0;
+    }
+  } catch (e) {
+    console.warn("Failed to fetch contributors count", e);
+  }
+
   return {
     owner,
     repo,
@@ -117,6 +168,8 @@ export async function fetchRepoSignals(owner: string, repo: string): Promise<Rep
     averagePRMergeTimeDays: null, // Hard to calculate quickly without massive queries
     goodFirstIssueCount,
     startHereIssues,
+    languages,
+    contributorsCount,
   };
 }
 
