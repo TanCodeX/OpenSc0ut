@@ -40,7 +40,7 @@ export default function SitePageHero({
             {title}
           </h1>
           {subtitle ? (
-            <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 font-light mb-2">{subtitle}</p>
+            <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 font-light mb-2">{subtitle}</p>
           ) : null}
           {description ? (
             <p
