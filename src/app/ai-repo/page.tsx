@@ -151,7 +151,7 @@ export default function AIRepoPage() {
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-2">
                           <svg className="w-5 h-5 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                          <h3 className="text-lg font-bold">AI Synthesis</h3>
+                          <h3 className="text-lg font-bold">Summary</h3>
                         </div>
                         <button onClick={() => setIsSummaryExpanded(!isSummaryExpanded)} className="text-gray-400 hover:text-white">
                           <svg className={`w-5 h-5 transition-transform ${isSummaryExpanded ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
