@@ -76,7 +76,8 @@ Analyze any GitHub repository's **contribution readiness** in seconds using Goog
 - Direct links to **"good first issues"** so you know exactly where to start.
 
 > 🎥 **Demo**:  
-> *<!-- TODO: Drag and drop your repo-feature.mp4 video from your desktop here when editing on GitHub! -->*
+> <video src="https://github.com/user-attachments/assets/e96ed2c6-0f3f-4a54-b4ac-63d126e63565" controls width="100%"></video>
+
 
 </details>
 
