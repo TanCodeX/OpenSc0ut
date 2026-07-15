@@ -9,7 +9,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/gsoc", label: "GSOC" },
-  { href: "/ai-repo", label: "AI Analysis" },
+  { href: "/ai-repo", label: "Repo Scout" },
   { href: "/contact-us", label: "Contact us" },
 ];
 
