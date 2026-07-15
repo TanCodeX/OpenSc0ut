@@ -10,6 +10,7 @@ interface SearchFilterProps {
   searchPlaceholder?: string;
   hideSort?: boolean;
   showYearFilter?: boolean;
+  hidePerPage?: boolean;
 }
 
 const SORT_OPTIONS = [
@@ -25,6 +26,7 @@ export default function SearchFilter({
   searchPlaceholder = "JavaScript, Python, Rust...",
   hideSort = false,
   showYearFilter = false,
+  hidePerPage = false,
 }: SearchFilterProps) {
   const [languageInput, setLanguageInput] = useState<string>("");
   const [sort, setSort] = useState<string>(initialParams.sort || "stars");
@@ -58,11 +60,11 @@ export default function SearchFilter({
       if (sort) parts.push(`sort: ${SORT_OPTIONS.find((o) => o.value === sort)?.label || sort}`);
       parts.push(order === "desc" ? "desc" : "asc");
     }
-    if (perPage !== 12) parts.push(`items: ${perPage}`);
+    if (!hidePerPage && perPage !== 12) parts.push(`items: ${perPage}`);
     return parts.join(" · ");
-  }, [languageInput, sort, order, hideSort, showYearFilter, year, perPage]);
+  }, [languageInput, sort, order, hideSort, showYearFilter, year, perPage, hidePerPage]);
 
-  const hasCustomFilters = languageInput.trim() || (!hideSort && (sort !== "stars" || order !== "desc")) || (showYearFilter && year !== "2026") || perPage !== 12;
+  const hasCustomFilters = languageInput.trim() || (!hideSort && (sort !== "stars" || order !== "desc")) || (showYearFilter && year !== "2026") || (!hidePerPage && perPage !== 12);
 
   return (
     <form className="relative group z-50 rounded-2xl" onSubmit={handleSubmit} role="search" aria-label="Repository search and filters">
@@ -330,39 +332,41 @@ export default function SearchFilter({
             )}
 
             {/* Items Per Page */}
-            <div className="w-full lg:w-28">
-              <label htmlFor="per-page-filter" className="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest">
-                Show
-              </label>
-              <div className="relative rounded-xl bg-white/[0.04] border border-white/[0.08] hover:border-white/15 focus-within:border-[#FF0B55]/40 transition-all duration-300">
-                <select
-                  id="per-page-filter"
-                  value={perPage}
-                  onChange={(e) => {
-                    const newPerPage = parseInt(e.target.value);
-                    setPerPage(newPerPage);
-                    onSearch({
-                      sort,
-                      order,
-                      page: 1,
-                      ...(languageInput.trim() && { language: languageInput.trim() }),
-                      ...(showYearFilter && { year }),
-                      per_page: newPerPage,
-                    });
-                  }}
-                  className="w-full appearance-none bg-transparent px-4 py-3 text-sm text-gray-200 focus:outline-none cursor-pointer"
-                >
-                  <option value={12} className="bg-[#0d0d0d] text-gray-200">12</option>
-                  <option value={24} className="bg-[#0d0d0d] text-gray-200">24</option>
-                  <option value={50} className="bg-[#0d0d0d] text-gray-200">50</option>
-                </select>
-                <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+            {!hidePerPage && (
+              <div className="w-full lg:w-28">
+                <label htmlFor="per-page-filter" className="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest">
+                  Show
+                </label>
+                <div className="relative rounded-xl bg-white/[0.04] border border-white/[0.08] hover:border-white/15 focus-within:border-[#FF0B55]/40 transition-all duration-300">
+                  <select
+                    id="per-page-filter"
+                    value={perPage}
+                    onChange={(e) => {
+                      const newPerPage = parseInt(e.target.value);
+                      setPerPage(newPerPage);
+                      onSearch({
+                        sort,
+                        order,
+                        page: 1,
+                        ...(languageInput.trim() && { language: languageInput.trim() }),
+                        ...(showYearFilter && { year }),
+                        per_page: newPerPage,
+                      });
+                    }}
+                    className="w-full appearance-none bg-transparent px-4 py-3 text-sm text-gray-200 focus:outline-none cursor-pointer"
+                  >
+                    <option value={12} className="bg-[#0d0d0d] text-gray-200">12</option>
+                    <option value={24} className="bg-[#0d0d0d] text-gray-200">24</option>
+                    <option value={50} className="bg-[#0d0d0d] text-gray-200">50</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                    <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Clear Button */}
             {hasCustomFilters && (
