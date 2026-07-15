@@ -69,10 +69,16 @@ export default function AIRepoPage() {
           badge="AI tools"
           title={
             <>
-              <span className="text-[#FF0B55]">AI</span> repository scout
+              <span className="text-white">Repo </span>
+              <span className="relative inline-block">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF0B55] via-[#ff4d7d] to-[#FF0B55] bg-[length:200%] animate-[gradientShift_3s_ease_infinite]">
+                  Scout
+                </span>
+                <span className="absolute -bottom-2 left-0 w-full h-0.5 bg-gradient-to-r from-[#FF0B55] to-transparent" />
+              </span>
             </>
           }
-          description="Paste a GitHub URL and get a structured health and quality snapshot."
+          subtitle="Analyze any GitHub repo's contribution readiness in seconds."
         />
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 -mt-8 relative z-10 flex flex-col">
