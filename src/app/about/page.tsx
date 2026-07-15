@@ -185,7 +185,7 @@ export default function About() {
                 Discover. Contribute. <span className="text-[#FF0B55] font-semibold">Grow.</span>
               </p>
               <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                Your gateway to meaningful open source contributions and developer growth — built for devs, by devs.
+                Your gateway to meaningful open source contributions and developer growth — built for devs, by a dev.
               </p>
 
               {/* Scroll cue */}
