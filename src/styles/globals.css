@@ -120,3 +120,7 @@ body {
   align-items: center;  
   gap: 0.75rem;       
 }
+input:focus, textarea:focus, select:focus, button:focus {
+  outline: none !important;
+}
+

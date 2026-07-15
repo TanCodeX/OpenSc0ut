@@ -64,7 +64,7 @@ export default function SearchFilter({
     return parts.join(" · ");
   }, [languageInput, sort, order, hideSort, showYearFilter, year, perPage, hidePerPage]);
 
-  const hasCustomFilters = languageInput.trim() || (!hideSort && (sort !== "stars" || order !== "desc")) || (showYearFilter && year !== "2026") || (!hidePerPage && perPage !== 12);
+  const hasCustomFilters = languageInput.trim() || (!hideSort && sort !== "stars") || (showYearFilter && year !== "2026") || (!hidePerPage && perPage !== 12);
 
   return (
     <form className="relative group z-50 rounded-2xl" onSubmit={handleSubmit} role="search" aria-label="Repository search and filters">
@@ -170,7 +170,7 @@ export default function SearchFilter({
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
                   placeholder={searchPlaceholder}
-                  className="w-full pl-10 pr-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-gray-200 placeholder-gray-700 focus:outline-none hover:border-white/15 focus:border-[#FF0B55]/40 transition-all duration-300 text-sm"
+                  className="w-full pl-10 pr-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-gray-200 placeholder-gray-700 focus:outline-none focus:ring-0 hover:border-white/15 focus:border-[#FF0B55]/40 transition-all duration-300 text-sm"
                   suppressHydrationWarning
                 />
               </div>
@@ -198,7 +198,7 @@ export default function SearchFilter({
                         per_page: perPage,
                       });
                     }}
-                    className="w-full appearance-none bg-transparent px-4 py-3 text-sm text-gray-200 focus:outline-none cursor-pointer"
+                    className="w-full appearance-none bg-transparent px-4 py-3 text-sm text-gray-200 focus:outline-none focus:ring-0 cursor-pointer"
                   >
                     <option value="2026" className="bg-[#0d0d0d] text-gray-200">2026</option>
                     <option value="2025" className="bg-[#0d0d0d] text-gray-200">2025</option>
@@ -353,7 +353,7 @@ export default function SearchFilter({
                         per_page: newPerPage,
                       });
                     }}
-                    className="w-full appearance-none bg-transparent px-4 py-3 text-sm text-gray-200 focus:outline-none cursor-pointer"
+                    className="w-full appearance-none bg-transparent px-4 py-3 text-sm text-gray-200 focus:outline-none focus:ring-0 cursor-pointer"
                   >
                     <option value={12} className="bg-[#0d0d0d] text-gray-200">12</option>
                     <option value={24} className="bg-[#0d0d0d] text-gray-200">24</option>
@@ -368,33 +368,6 @@ export default function SearchFilter({
               </div>
             )}
 
-            {/* Clear Button */}
-            {hasCustomFilters && (
-              <div className="w-full lg:w-auto">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setLanguageInput("");
-                    setSort("stars");
-                    setOrder("desc");
-                    setYear("2026");
-                    setPerPage(12);
-                    onSearch({ sort: "stars", order: "desc", page: 1, ...(showYearFilter && { year: "2026" }), per_page: 12 });
-                  }}
-                  className="w-full lg:w-auto relative overflow-hidden group/btn bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold px-8 py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 shadow-lg active:scale-[0.98] text-sm focus:outline-none focus:ring-2 focus:ring-[#FF0B55]/50"
-                  aria-label="Clear search query"
-                  suppressHydrationWarning
-                >
-                  <svg
-                    className="w-4 h-4 relative z-10"
-                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                  <span className="relative z-10">Clear search query</span>
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </div>
