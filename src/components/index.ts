@@ -16,3 +16,4 @@ export { GsocAIAdvisor } from './features/GsocAIAdvisor';
 // UI components
 export { default as Pagination } from './ui/Pagination';
 export { default as AnimatedText } from './ui/AnimatedText';
+export { default as SmoothScroll } from './ui/SmoothScroll';

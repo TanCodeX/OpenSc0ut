@@ -11,6 +11,7 @@ import {
 import AnimatedText from "../components/ui/AnimatedText";
 import RateLimitTimer from "../components/ui/RateLimitTimer";
 import HeroCards from "../components/ui/HeroCards";
+import RippleGrid from "../components/ui/RippleGrid";
 
 export default function Home() {
   const initialParams: SearchParams = {
@@ -48,40 +49,21 @@ export default function Home() {
           className="relative min-h-screen flex justify-center items-center overflow-hidden"
         >
           {/* Animated Grid Background */}
-          <div className="absolute inset-0 z-0">
-            {/* Main grid - more visible */}
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: `
-                  linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-                  linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px)
-                `,
-                backgroundSize: '50px 50px'
-              }}
+          <div className="absolute inset-0 z-0 overflow-hidden">
+            <RippleGrid
+              enableRainbow={false}
+              gridColor="#ff0b55"
+              rippleIntensity={0.005}
+              gridSize={20}
+              gridThickness={30}
+              mouseInteraction
+              mouseInteractionRadius={0.2}
+              opacity={1}
+              fadeDistance={0.6}
+              vignetteStrength={5}
+              glowIntensity={0.1}
+              gridRotation={0}
             />
-
-            {/* Secondary finer grid */}
-            <div
-              className="absolute inset-0 opacity-30"
-              style={{
-                backgroundImage: `
-                  linear-gradient(rgba(255, 11, 85, 0.08) 1px, transparent 1px),
-                  linear-gradient(90deg, rgba(255, 11, 85, 0.08) 1px, transparent 1px)
-                `,
-                backgroundSize: '100px 100px'
-              }}
-            />
-
-            {/* Glowing gradient orbs */}
-            <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-[#FF0B55]/25 rounded-full blur-[128px] animate-pulse" />
-            <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-[#FF0B55]/15 rounded-full blur-[128px] animate-pulse delay-1000" />
-
-
-            {/* Floating grid particles */}
-            <div className="absolute top-1/3 left-1/4 w-2 h-2 bg-[#FF0B55]/60 rounded-full animate-ping" style={{ animationDuration: '3s' }} />
-            <div className="absolute top-2/3 right-1/3 w-2 h-2 bg-[#FF0B55]/60 rounded-full animate-ping" style={{ animationDuration: '4s', animationDelay: '1s' }} />
-            <div className="absolute top-1/2 left-2/3 w-1 h-1 bg-black/20 dark:bg-white/40 rounded-full animate-ping" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }} />
           </div>
 
           {/* Content Container */}
@@ -99,13 +81,22 @@ export default function Home() {
 
                 {/* Main Heading */}
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight">
-                  <span className="block text-gray-600 dark:text-gray-400 text-3xl md:text-4xl mb-2 font-light">Introducing</span>
-                  <AnimatedText text="OpenSc0ut" className="text-gray-900 dark:text-white" />
+                  <span className="block text-gray-600 dark:text-gray-400 text-2xl md:text-3xl mb-2 font-light tracking-wide">Introducing</span>
+                  <span className="relative inline-block">
+                    <AnimatedText
+                      text="OpenSc0ut"
+                      className="text-gray-900 dark:text-white"
+                    />
+                    {/* Gradient underline accent */}
+                    <span className="absolute -bottom-3 left-0 h-1 w-2/3 rounded-full bg-gradient-to-r from-[#FF0B55] via-[#ff4d85] to-transparent" />
+                  </span>
                 </h1>
 
-                {/* Subheading */}
-                <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 max-w-xl mx-auto lg:mx-0">
-                  Your ultimate destination for discovering, analyzing, and contributing to the most impactful open-source projects worldwide.
+                {/* Tagline */}
+                <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                  Your gateway to{" "}
+                  <span className="font-semibold bg-gradient-to-r from-[#FF0B55] to-[#ff9bc0] bg-clip-text text-transparent">open source</span>
+                  {" "}— discover trending repositories, find beginner-friendly issues, and start contributing today.
                 </p>
 
                 {/* Search Prompt Pill */}
@@ -132,12 +123,29 @@ export default function Home() {
                         onClick={() => {
                           contentRef.current?.scrollIntoView({ behavior: 'smooth' });
                         }}
-                        className="ml-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-[#FF0B55]/10 text-[#FF0B55] hover:bg-[#FF0B55]/20 transition-colors"
+                        className="group ml-2 inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-full bg-[#FF0B55] text-white shadow-lg shadow-[#FF0B55]/40 hover:shadow-[#FF0B55]/60 hover:scale-105 active:scale-95 transition-all duration-300"
                       >
                         Explore Now
+                        <svg className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                        </svg>
                       </button>
                     </div>
                   </div>
+                </div>
+
+                {/* Quick stats strip */}
+                <div className="flex items-center justify-center lg:justify-start gap-8 pt-2">
+                  {[
+                    { value: "100M+", label: "Repositories" },
+                    { value: "Live", label: "GitHub Data" },
+                    { value: "AI", label: "Powered Insights" },
+                  ].map((stat) => (
+                    <div key={stat.label} className="text-center lg:text-left">
+                      <p className="text-xl font-extrabold bg-gradient-to-r from-[#FF0B55] to-[#ff6b9a] bg-clip-text text-transparent">{stat.value}</p>
+                      <p className="text-[11px] uppercase tracking-widest text-gray-500">{stat.label}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -247,7 +255,7 @@ export default function Home() {
               </div>
               <h3 className="text-lg font-semibold text-red-600 dark:text-red-300 mb-2">Something went wrong</h3>
               <p className="text-red-500 dark:text-red-400/80 text-sm mb-4">{error}</p>
-              
+
               {resetTime && <RateLimitTimer resetTime={resetTime} />}
 
               <button

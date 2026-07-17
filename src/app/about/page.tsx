@@ -206,7 +206,7 @@ export default function About() {
         {/* ─── STATS ─── */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <StatCard value={50000} suffix="+" label="Repositories" delay={0} />
+            <StatCard value={100} suffix="M+" label="Repositories" delay={0} />
             <StatCard value={5000} suffix="+" label="Developers" delay={0.1} />
             <StatCard value={120} suffix="+" label="Languages" delay={0.2} />
             <StatCard value={98} suffix="%" label="Satisfaction" delay={0.3} />
