@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
-import { PageTransition, Header, SiteFooter } from "@/components";
+import { PageTransition, Header, SiteFooter, SmoothScroll } from "@/components";
 import { Toaster } from "react-hot-toast";
 import "../styles/globals.css";
 
@@ -68,9 +68,11 @@ export default function RootLayout({
             color: 'var(--text-color)',
           },
         }} />
-        <Header />
-        <PageTransition>{children}</PageTransition>
-        <SiteFooter />
+        <SmoothScroll>
+          <Header />
+          <PageTransition>{children}</PageTransition>
+          <SiteFooter />
+        </SmoothScroll>
       </body>
     </html>
   );

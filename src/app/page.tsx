@@ -66,13 +66,6 @@ export default function Home() {
             />
           </div>
 
-          {/* Ambient glow orbs */}
-          <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
-            <div className="absolute -top-24 -left-24 w-[28rem] h-[28rem] bg-[#FF0B55]/15 rounded-full blur-3xl animate-pulse" style={{ animationDuration: "6s" }} />
-            <div className="absolute -bottom-32 -right-24 w-[32rem] h-[32rem] bg-purple-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: "8s" }} />
-            <div className="absolute top-1/3 left-1/2 w-72 h-72 bg-[#FF0B55]/10 rounded-full blur-3xl" />
-          </div>
-
           {/* Content Container */}
           <div className="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -88,11 +81,11 @@ export default function Home() {
 
                 {/* Main Heading */}
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight">
-                  <span className="block text-gray-600 dark:text-gray-400 text-3xl md:text-4xl mb-2 font-light tracking-wide">Introducing</span>
+                  <span className="block text-gray-600 dark:text-gray-400 text-2xl md:text-3xl mb-2 font-light tracking-wide">Introducing</span>
                   <span className="relative inline-block">
                     <AnimatedText
                       text="OpenSc0ut"
-                      className="text-gray-900 dark:text-white [text-shadow:0_0_40px_rgba(255,11,85,0.45)]"
+                      className="text-gray-900 dark:text-white"
                     />
                     {/* Gradient underline accent */}
                     <span className="absolute -bottom-3 left-0 h-1 w-2/3 rounded-full bg-gradient-to-r from-[#FF0B55] via-[#ff4d85] to-transparent" />
@@ -100,7 +93,7 @@ export default function Home() {
                 </h1>
 
                 {/* Tagline */}
-                <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-lg mx-auto lg:mx-0 leading-relaxed">
                   Your gateway to{" "}
                   <span className="font-semibold bg-gradient-to-r from-[#FF0B55] to-[#ff9bc0] bg-clip-text text-transparent">open source</span>
                   {" "}— discover trending repositories, find beginner-friendly issues, and start contributing today.
