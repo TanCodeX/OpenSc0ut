@@ -13,6 +13,13 @@ export default function AIRepoPage() {
   const [analysis, setAnalysis] = useState<AIAnalysisResult | null>(null);
   const [signals, setSignals] = useState<RepoSignals | null>(null);
   const [isSummaryExpanded, setIsSummaryExpanded] = useState(true);
+  const [abortController, setAbortController] = useState<AbortController | null>(null);
+
+  const handleStop = () => {
+    if (abortController) {
+      abortController.abort();
+    }
+  };
 
   const handleAnalyze = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,11 +30,15 @@ export default function AIRepoPage() {
     setAnalysis(null);
     setSignals(null);
 
+    const controller = new AbortController();
+    setAbortController(controller);
+
     try {
       const res = await fetch("/api/repo-analysis", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ repoUrl: url }),
+        signal: controller.signal,
       });
 
       const data = await res.json();
@@ -38,9 +49,14 @@ export default function AIRepoPage() {
       setAnalysis(data.result);
       setSignals(data.signals);
     } catch (err: any) {
-      setError(err.message || "An unexpected error occurred.");
+      if (err.name === 'AbortError') {
+        setError("Scanning stopped by user.");
+      } else {
+        setError(err.message || "An unexpected error occurred.");
+      }
     } finally {
       setLoading(false);
+      setAbortController(null);
     }
   };
 
@@ -95,17 +111,28 @@ export default function AIRepoPage() {
                   placeholder="e.g. facebook/react or https://github.com/microsoft/vscode"
                   className="w-full px-6 py-4 bg-[#0d0d0d]/90 backdrop-blur-xl border border-white/10 focus:border-[#FF0B55]/50 rounded-2xl text-white placeholder-gray-500 transition-all duration-300 focus:outline-none focus:ring-0 pr-36 shadow-2xl"
                 />
-                <motion.button
-                  type="submit"
-                  disabled={loading || !url.trim()}
-                  className={`absolute right-2 px-6 py-2.5 text-white font-bold rounded-xl transition-all duration-300 shadow-lg ${
-                    loading
-                      ? "bg-gradient-to-r from-[#FF0B55] via-[#ff4d7d] to-[#FF0B55] bg-[length:200%] animate-[shimmer_1.5s_linear_infinite] shadow-[#FF0B55]/40 min-w-[120px]"
-                      : "bg-[#FF0B55] hover:bg-[#FF0B55]/90 disabled:opacity-50 shadow-[#FF0B55]/20"
-                  }`}
-                >
-                  {loading ? "Scanning..." : "Analyze"}
-                </motion.button>
+                <div className="absolute right-2 flex items-center gap-2">
+                  {loading && (
+                    <motion.button
+                      type="button"
+                      onClick={handleStop}
+                      className="px-4 py-2.5 bg-gray-800/80 hover:bg-gray-700/80 text-gray-300 text-sm font-bold rounded-xl transition-all shadow-lg border border-white/10 backdrop-blur-sm"
+                    >
+                      Stop
+                    </motion.button>
+                  )}
+                  <motion.button
+                    type="submit"
+                    disabled={loading || !url.trim()}
+                    className={`px-6 py-2.5 text-white font-bold rounded-xl transition-all duration-300 shadow-lg ${
+                      loading
+                        ? "bg-gradient-to-r from-[#FF0B55] via-[#ff4d7d] to-[#FF0B55] bg-[length:200%] animate-[shimmer_1.5s_linear_infinite] shadow-[#FF0B55]/40 min-w-[120px]"
+                        : "bg-[#FF0B55] hover:bg-[#FF0B55]/90 disabled:opacity-50 shadow-[#FF0B55]/20"
+                    }`}
+                  >
+                    {loading ? "Scanning..." : "Analyze"}
+                  </motion.button>
+                </div>
               </form>
             </div>
             
