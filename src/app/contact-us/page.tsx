@@ -209,8 +209,17 @@ export default function ContactUs() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="lg:col-span-2 relative group"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-[#FF0B55]/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl pointer-events-none" />
-              <div className="relative bg-white/5 border border-white/10 rounded-2xl p-8 h-full">
+              {/* Animated glow */}
+              <div className="absolute -inset-4 bg-gradient-to-br from-[#FF0B55]/20 via-transparent to-[#FF0B55]/10 rounded-3xl blur-2xl opacity-60 group-hover:opacity-100 group-hover:blur-3xl transition-all duration-700 pointer-events-none" />
+
+              {/* Moving gradient border */}
+              <div className="absolute -inset-[1px] bg-gradient-to-r from-[#FF0B55]/50 via-white/10 to-[#FF0B55]/50 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[length:200%] animate-[gradientShift_3s_ease_infinite] blur-[2px]" />
+
+              <div className="relative bg-[#0d0d0d]/95 backdrop-blur-2xl border border-white/[0.08] group-hover:border-transparent rounded-3xl p-8 h-full transition-all duration-500 shadow-2xl overflow-hidden flex flex-col justify-between">
+                
+                {/* Internal ambient light */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#FF0B55]/10 rounded-full blur-[80px] -z-10 group-hover:bg-[#FF0B55]/20 transition-colors duration-700" />
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 rounded-full blur-[60px] -z-10 group-hover:bg-purple-500/20 transition-colors duration-700" />
 
                 {/* Header */}
                 <div className="flex items-center gap-3 mb-8">
@@ -272,8 +281,6 @@ export default function ContactUs() {
                   </div>
                 </div>
 
-                {/* Decorative bottom accent */}
-                <div className="absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-[#FF0B55]/30 to-transparent" />
               </div>
             </motion.div>
 
