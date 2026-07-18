@@ -143,12 +143,12 @@ export default function About() {
           <motion.div
             animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-20 right-20 w-32 h-32 rounded-full bg-gradient-to-br from-[#FF0B55]/20 to-transparent border border-[#FF0B55]/20 blur-sm hidden lg:block"
+            className="absolute top-[10vh] right-20 w-32 h-32 rounded-full bg-gradient-to-br from-[#FF0B55]/20 to-transparent border border-[#FF0B55]/20 blur-sm hidden lg:block"
           />
           <motion.div
             animate={{ y: [0, 16, 0], rotate: [0, -5, 0] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute bottom-24 left-16 w-20 h-20 rounded-full bg-gradient-to-br from-[#FF0B55]/15 to-transparent border border-[#FF0B55]/15 blur-sm hidden lg:block"
+            className="absolute top-[55vh] left-16 w-20 h-20 rounded-full bg-gradient-to-br from-[#FF0B55]/15 to-transparent border border-[#FF0B55]/15 blur-sm hidden lg:block"
           />
 
           <motion.div style={{ y: heroY, opacity: heroOpacity }} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-32">
