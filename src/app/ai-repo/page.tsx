@@ -78,6 +78,72 @@ export default function AIRepoPage() {
     }
   };
 
+  const getBuildStatusStyles = (status: string) => {
+    switch (status) {
+      case "passing":
+        return {
+          badge: "text-emerald-400 bg-emerald-400/10 border-emerald-400/30",
+          glow: "from-emerald-500/10",
+          label: "Passing",
+          icon: "✓",
+        };
+      case "failing":
+        return {
+          badge: "text-red-400 bg-red-500/10 border-red-500/30",
+          glow: "from-red-500/15",
+          label: "Failing",
+          icon: "✕",
+        };
+      case "pending":
+        return {
+          badge: "text-yellow-400 bg-yellow-400/10 border-yellow-400/30",
+          glow: "from-yellow-500/10",
+          label: "Pending",
+          icon: "…",
+        };
+      case "no_ci":
+        return {
+          badge: "text-gray-400 bg-gray-500/10 border-gray-500/30",
+          glow: "from-gray-500/10",
+          label: "No CI",
+          icon: "—",
+        };
+      default:
+        return {
+          badge: "text-gray-400 bg-gray-500/10 border-gray-500/30",
+          glow: "from-gray-500/10",
+          label: "Unknown",
+          icon: "?",
+        };
+    }
+  };
+
+  const getCodeHealthStatusStyles = (status: string) => {
+    switch (status) {
+      case "healthy":
+        return "text-emerald-400 bg-emerald-400/10 border-emerald-400/30";
+      case "at_risk":
+        return "text-orange-400 bg-orange-400/10 border-orange-400/30";
+      case "broken":
+        return "text-red-400 bg-red-500/10 border-red-500/30";
+      default:
+        return "text-gray-400 bg-gray-500/10 border-gray-500/30";
+    }
+  };
+
+  const getRiskStyles = (risk: string) => {
+    switch (risk) {
+      case "low":
+        return "text-emerald-400 bg-emerald-400/10 border-emerald-400/20";
+      case "medium":
+        return "text-yellow-400 bg-yellow-400/10 border-yellow-400/20";
+      case "high":
+        return "text-red-400 bg-red-500/10 border-red-500/20";
+      default:
+        return "text-gray-400 bg-gray-500/10 border-gray-500/20";
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white transition-colors duration-300">
       <main>
@@ -94,7 +160,7 @@ export default function AIRepoPage() {
               </span>
             </>
           }
-          subtitle="Analyze any GitHub repo's contribution readiness in seconds."
+          subtitle="Analyze contribution readiness, CI health on main, and open bugs — in seconds."
         />
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 -mt-8 relative z-10 flex flex-col">
@@ -281,6 +347,211 @@ export default function AIRepoPage() {
                   </div>
 
                 </div>
+
+                {/* Code Health & Bugs — is main broken? active bugs? */}
+                {signals.codeHealth && analysis.codeHealth && (() => {
+                  const ch = signals.codeHealth;
+                  const assessment = analysis.codeHealth;
+                  const buildStyles = getBuildStatusStyles(ch.buildStatus);
+                  return (
+                    <div className="bg-white/5 border border-white/10 rounded-3xl p-6 md:p-8 backdrop-blur-md relative overflow-hidden">
+                      <div className={`absolute inset-0 bg-gradient-to-br ${buildStyles.glow} via-transparent to-transparent pointer-events-none`} />
+
+                      <div className="relative">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                          <div className="flex items-center gap-3">
+                            <span className="w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                              <svg className="w-5 h-5 text-[#FF0B55]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                              </svg>
+                            </span>
+                            <div>
+                              <h3 className="text-lg font-bold">Code Health &amp; Bugs</h3>
+                              <p className="text-xs text-gray-500">Is the main branch broken? What bugs are open?</p>
+                            </div>
+                          </div>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className={`text-xs font-bold px-3 py-1.5 rounded-full border uppercase tracking-wide ${getCodeHealthStatusStyles(assessment.status)}`}>
+                              {assessment.status.replace("_", " ")}
+                            </span>
+                            <span className={`text-xs font-bold px-3 py-1.5 rounded-full border ${getRiskStyles(assessment.riskLevel)}`}>
+                              {assessment.riskLevel} risk
+                            </span>
+                          </div>
+                        </div>
+
+                        <p className="text-gray-300 leading-relaxed mb-6 max-w-3xl">
+                          {assessment.summary}
+                        </p>
+
+                        {assessment.warnings && assessment.warnings.length > 0 && (
+                          <div className="mb-6 flex flex-col gap-2">
+                            {assessment.warnings.map((warning, i) => (
+                              <div key={i} className="flex items-start gap-2.5 p-3 rounded-xl bg-orange-500/5 border border-orange-500/15">
+                                <svg className="w-4 h-4 text-orange-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                <p className="text-sm text-orange-200/90">{warning}</p>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                          {/* Build status card */}
+                          <div className="rounded-2xl bg-black/30 border border-white/10 p-5">
+                            <div className="flex items-center justify-between mb-4">
+                              <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                {signals.defaultBranch} branch
+                              </span>
+                              <span className={`text-xs font-bold px-2.5 py-1 rounded-full border ${buildStyles.badge}`}>
+                                {buildStyles.icon} {buildStyles.label}
+                              </span>
+                            </div>
+                            <p className="text-sm text-gray-300 mb-4">{ch.buildStatusDescription}</p>
+                            <div className="space-y-2 text-xs text-gray-500">
+                              {ch.latestCommitSha && (
+                                <div className="flex items-start gap-2">
+                                  <span className="text-gray-600 shrink-0">commit</span>
+                                  {ch.latestCommitUrl ? (
+                                    <a href={ch.latestCommitUrl} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white font-mono">
+                                      {ch.latestCommitSha}
+                                    </a>
+                                  ) : (
+                                    <span className="font-mono text-gray-300">{ch.latestCommitSha}</span>
+                                  )}
+                                  {ch.latestCommitMessage && (
+                                    <span className="text-gray-500 line-clamp-1">— {ch.latestCommitMessage}</span>
+                                  )}
+                                </div>
+                              )}
+                              {ch.latestWorkflowName && (
+                                <div className="flex items-center gap-2">
+                                  <span className="text-gray-600 shrink-0">workflow</span>
+                                  {ch.latestWorkflowUrl ? (
+                                    <a href={ch.latestWorkflowUrl} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white truncate">
+                                      {ch.latestWorkflowName}
+                                    </a>
+                                  ) : (
+                                    <span className="text-gray-300 truncate">{ch.latestWorkflowName}</span>
+                                  )}
+                                  {ch.latestWorkflowConclusion && (
+                                    <span className="text-gray-500">({ch.latestWorkflowConclusion})</span>
+                                  )}
+                                </div>
+                              )}
+                              {ch.totalCheckCount > 0 && (
+                                <div className="flex items-center gap-2">
+                                  <span className="text-gray-600">checks</span>
+                                  <span className="text-gray-300">
+                                    {ch.failingCheckCount > 0
+                                      ? `${ch.failingCheckCount} failing · ${ch.totalCheckCount} total`
+                                      : `${ch.totalCheckCount} green`}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+
+                            {ch.failingChecks.length > 0 && (
+                              <div className="mt-4 pt-4 border-t border-white/5 space-y-2">
+                                <span className="text-[10px] font-bold text-red-400/80 uppercase tracking-wider">Failing checks</span>
+                                {ch.failingChecks.slice(0, 5).map((check, i) => (
+                                  <div key={i} className="flex items-center justify-between gap-2 text-sm">
+                                    {check.url ? (
+                                      <a href={check.url} target="_blank" rel="noopener noreferrer" className="text-red-300 hover:text-red-200 truncate">
+                                        {check.name}
+                                      </a>
+                                    ) : (
+                                      <span className="text-red-300 truncate">{check.name}</span>
+                                    )}
+                                    <span className="text-[10px] text-red-400/70 shrink-0 font-mono">{check.conclusion}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Bugs card */}
+                          <div className="rounded-2xl bg-black/30 border border-white/10 p-5 flex flex-col">
+                            <div className="flex items-center justify-between mb-4">
+                              <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Open bugs</span>
+                              <div className="flex items-center gap-2">
+                                {ch.criticalBugCount > 0 && (
+                                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full border text-red-400 bg-red-500/10 border-red-500/30">
+                                    {ch.criticalBugCount} critical
+                                  </span>
+                                )}
+                                <span className={`text-xs font-bold px-2.5 py-1 rounded-full border ${
+                                  ch.openBugCount === 0
+                                    ? "text-emerald-400 bg-emerald-400/10 border-emerald-400/30"
+                                    : ch.openBugCount >= 10
+                                      ? "text-orange-400 bg-orange-400/10 border-orange-400/30"
+                                      : "text-yellow-400 bg-yellow-400/10 border-yellow-400/30"
+                                }`}>
+                                  {ch.openBugCount} bug{ch.openBugCount === 1 ? "" : "s"}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="flex-1 space-y-2">
+                              {ch.recentBugIssues.length > 0 ? (
+                                ch.recentBugIssues.map((issue) => (
+                                  <a
+                                    key={issue.number}
+                                    href={issue.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-red-500/30 transition-colors group"
+                                  >
+                                    <div className="flex items-start gap-2.5">
+                                      <svg className="w-4 h-4 text-red-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                      </svg>
+                                      <div className="min-w-0">
+                                        <h4 className="text-sm font-semibold text-gray-200 group-hover:text-white line-clamp-1">{issue.title}</h4>
+                                        <div className="flex items-center gap-2 mt-1.5">
+                                          <span className="text-xs text-gray-500">#{issue.number}</span>
+                                          <div className="flex gap-1 overflow-hidden">
+                                            {issue.labels.slice(0, 2).map((label) => (
+                                              <span key={label} className="text-[9px] px-1.5 py-0.5 bg-red-500/10 text-red-300/80 rounded truncate max-w-[80px]">{label}</span>
+                                            ))}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </a>
+                                ))
+                              ) : (
+                                <div className="h-full flex flex-col items-center justify-center text-center p-6 border border-dashed border-white/10 rounded-xl">
+                                  <svg className="w-7 h-7 text-emerald-500/60 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                                  <p className="text-gray-400 text-sm">No open bug-labeled issues found.</p>
+                                  <p className="text-gray-500 text-xs mt-1">Either the project is clean, or bugs use different labels.</p>
+                                </div>
+                              )}
+                            </div>
+
+                            {ch.openBugCount > ch.recentBugIssues.length && (
+                              <a
+                                href={`https://github.com/${signals.owner}/${signals.repo}/issues?q=is%3Aissue+is%3Aopen+label%3Abug`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="mt-3 text-xs text-center text-gray-400 hover:text-[#FF0B55] transition-colors"
+                              >
+                                View all {ch.openBugCount} bug issues on GitHub →
+                              </a>
+                            )}
+                          </div>
+                        </div>
+
+                        <p className="text-[11px] text-gray-600 text-center">
+                          Based on CI check-runs, Actions on <code className="text-gray-500">{signals.defaultBranch}</code>, and bug-labeled issues — not a full static analysis of source code.
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })()}
               </motion.div>
             )}
           </AnimatePresence>
