@@ -11,6 +11,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://opensc0ut.app"),
   title: "OpenSc0ut - Repository Explorer",
   description: "Discover, analyze, and contribute to the most impactful open-source projects worldwide. OpenSc0ut is your ultimate destination for open-source exploration.",
   keywords: ["open source", "github repositories", "explore", "developer tools", "contribute"],
