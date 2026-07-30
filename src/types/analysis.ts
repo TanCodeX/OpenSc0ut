@@ -61,6 +61,7 @@ export interface RepoSignals {
   startHereIssues: StartHereIssue[];
   languages: string[];
   contributorsCount: number;
+  topContributors?: { login: string; avatar_url: string; html_url: string; contributions: number; }[];
   /** Whether main/default branch looks broken + open bugs */
   codeHealth: CodeHealthSignals;
 }
