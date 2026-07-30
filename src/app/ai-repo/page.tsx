@@ -161,9 +161,10 @@ export default function AIRepoPage() {
             </>
           }
           subtitle="Analyze contribution readiness, CI health on main, and open bugs — in seconds."
+          minHeightClass="min-h-[40vh] md:min-h-[50vh]"
         />
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 -mt-8 relative z-10 flex flex-col">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 -mt-20 md:-mt-24 relative z-10 flex flex-col">
           
           {/* Search Bar */}
           <div className="w-full mb-12">
@@ -289,23 +290,45 @@ export default function AIRepoPage() {
                       <div className="px-3 py-1 bg-black/40 rounded-lg text-xs font-medium text-gray-300 flex items-center gap-1.5"><svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 16 16"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"></path></svg> {signals.forks.toLocaleString()} Forks</div>
                       <div className="px-3 py-1 bg-black/40 rounded-lg text-xs font-medium text-gray-300 flex items-center gap-1.5"><svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 16 16"><path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4 4 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.498 3.498 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.549-.514 3.507 3.507 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 5.5.75.75 0 0 1 11 4Zm-5.5-.5a2 2 0 1 0-.001 3.999A2 2 0 0 0 5.5 3.5Z"></path></svg> {signals.contributorsCount.toLocaleString()} Contributors</div>
                       <div className="px-3 py-1 bg-black/40 rounded-lg text-xs font-medium text-gray-300 flex items-center gap-1.5"><svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 16 16"><path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"></path></svg> {signals.openIssues.toLocaleString()} Open Issues</div>
+                      <div className="px-3 py-1 bg-black/40 rounded-lg text-xs font-medium text-gray-300 flex items-center gap-1.5">
+                        <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 16 16"><path fillRule="evenodd" d="M1.5 2.75a.25.25 0 0 1 .25-.25h12.5a.25.25 0 0 1 .25.25v8.5a.25.25 0 0 1-.25.25H1.75a.25.25 0 0 1-.25-.25v-8.5ZM1.75 1A1.75 1.75 0 0 0 0 2.75v8.5C0 12.216.784 13 1.75 13h12.5A1.75 1.75 0 0 0 16 11.25v-8.5A1.75 1.75 0 0 0 14.25 1H1.75Z"></path></svg> 
+                        {signals.license || "No License"}
+                      </div>
                       <div className="px-3 py-1 bg-black/40 rounded-lg text-xs font-medium text-gray-300">CONTRIBUTING.md: {signals.hasContributing ? "✅" : "❌"}</div>
                       <div className="px-3 py-1 bg-black/40 rounded-lg text-xs font-medium text-gray-300">CoC: {signals.hasCodeOfConduct ? "✅" : "❌"}</div>
                     </div>
 
-                    {/* Required Skills */}
-                    {signals.languages && signals.languages.length > 0 && (
-                      <div className="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-md">
-                        <span className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 block">Required Skills</span>
-                        <div className="flex flex-wrap gap-2">
-                          {signals.languages.map((lang) => (
-                            <span key={lang} className="px-3 py-1.5 bg-[#FF0B55]/10 border border-[#FF0B55]/20 text-[#FF0B55] rounded-full text-xs font-semibold">
-                              {lang}
-                            </span>
-                          ))}
+                    {/* Required Skills & Top Contributors */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {signals.languages && signals.languages.length > 0 && (
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-md">
+                          <span className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 block">Required Skills</span>
+                          <div className="flex flex-wrap gap-2">
+                            {signals.languages.map((lang) => (
+                              <span key={lang} className="px-3 py-1.5 bg-[#FF0B55]/10 border border-[#FF0B55]/20 text-[#FF0B55] rounded-full text-xs font-semibold">
+                                {lang}
+                              </span>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+
+                      {signals.topContributors && signals.topContributors.length > 0 && (
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-md">
+                          <span className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 block">Top Contributors</span>
+                          <div className="flex flex-wrap gap-2 items-center">
+                            {signals.topContributors.map((c) => (
+                              <a key={c.login} href={c.html_url} target="_blank" rel="noopener noreferrer" className="relative group">
+                                <img src={c.avatar_url} alt={c.login} className="w-8 h-8 rounded-full border border-white/20 hover:border-[#FF0B55] transition-colors" title={`${c.login} (${c.contributions} contributions)`} />
+                              </a>
+                            ))}
+                            {signals.contributorsCount > 5 && (
+                              <span className="text-xs text-gray-500 ml-2">+{signals.contributorsCount - 5}</span>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
 
                     {/* Start Here Card */}
                     <div className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md flex-1 flex flex-col">

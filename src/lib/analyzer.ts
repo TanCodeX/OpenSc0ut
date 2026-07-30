@@ -1,4 +1,3 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import {
   RepoSignals,
   AIAnalysisResult,
@@ -403,6 +402,7 @@ export async function fetchRepoSignals(owner: string, repo: string): Promise<Rep
 
   // 7. Contributors Count
   let contributorsCount = 0;
+  let topContributors: RepoSignals['topContributors'] = [];
   try {
     const res = await fetchGitHubResponse(`${repoPath}/contributors?per_page=1&anon=1`);
     const linkHeader = res.headers.get('link');
@@ -417,6 +417,18 @@ export async function fetchRepoSignals(owner: string, repo: string): Promise<Rep
       // If no link header, then all contributors fit on 1 page (so 1 or 0)
       const data = await res.json();
       contributorsCount = data.length || 0;
+    }
+
+    const topRes = await tryFetchGitHub(`${repoPath}/contributors?per_page=5`);
+    if (topRes && Array.isArray(topRes)) {
+      topContributors = topRes
+        .filter((c: any) => c.login)
+        .map((c: any) => ({
+          login: c.login,
+          avatar_url: c.avatar_url,
+          html_url: c.html_url,
+          contributions: c.contributions
+        }));
     }
   } catch (e) {
     console.warn("Failed to fetch contributors count", e);
@@ -464,17 +476,15 @@ export async function fetchRepoSignals(owner: string, repo: string): Promise<Rep
     startHereIssues,
     languages,
     contributorsCount,
+    topContributors,
     codeHealth,
   };
 }
 
 export async function generateAIAnalysis(signals: RepoSignals): Promise<AIAnalysisResult> {
-  if (!process.env.GEMINI_API_KEY) {
-    throw new Error('GEMINI_API_KEY is not set');
+  if (!process.env.GROQ_API_KEY) {
+    throw new Error('GROQ_API_KEY is not set');
   }
-
-  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
   const ch = signals.codeHealth;
   const failingCheckNames = ch.failingChecks.map((c) => c.name).slice(0, 5).join(', ') || 'none';
@@ -544,9 +554,29 @@ IMPORTANT: Return ONLY valid JSON matching this schema:
 Do not include markdown blocks like \`\`\`json. Just the raw JSON object.
 `;
 
-  const result = await model.generateContent(prompt);
-  let text = result.response.text().trim();
-  
+  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      model: 'llama-3.3-70b-versatile',
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.1,
+      response_format: { type: 'json_object' }
+    })
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Groq API error: ${response.status} - ${errText}`);
+  }
+
+  const data = await response.json();
+  let text = data.choices[0]?.message?.content || "";
+  text = text.trim();
+
   if (text.startsWith('```json')) {
     text = text.replace(/^```json\n/, '').replace(/\n```$/, '');
   } else if (text.startsWith('```')) {
