@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { ORGS } from '../../../data/orgs';
 
 // Format orgs to a minified string to save tokens (keep only essential fields for RAG)
@@ -20,12 +19,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Query is required' }, { status: 400 });
     }
 
-    if (!process.env.GEMINI_API_KEY) {
-      return NextResponse.json({ error: 'Gemini API key is not configured' }, { status: 500 });
+    if (!process.env.GROQ_API_KEY) {
+      return NextResponse.json({ error: 'GROQ API key is not configured' }, { status: 500 });
     }
-
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     const prompt = `
 You are an expert advisor helping developers find the perfect Google Summer of Code (GSoC) organization to contribute to.
@@ -49,8 +45,28 @@ Format of each object in the array:
 ]
 `;
 
-    const result = await model.generateContent(prompt);
-    const responseText = result.response.text();
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.1,
+        response_format: { type: 'json_object' }
+      })
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error('Groq API error:', response.status, errText);
+      return NextResponse.json({ error: 'AI API Error' }, { status: 500 });
+    }
+
+    const data = await response.json();
+    const responseText = data.choices[0]?.message?.content || "";
     
     // Clean up potential markdown formatting if the model still includes it
     let cleanedText = responseText.trim();
