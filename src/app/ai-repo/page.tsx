@@ -161,9 +161,10 @@ export default function AIRepoPage() {
             </>
           }
           subtitle="Analyze contribution readiness, CI health on main, and open bugs — in seconds."
+          minHeightClass="min-h-[40vh] md:min-h-[50vh]"
         />
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 -mt-8 relative z-10 flex flex-col">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 -mt-20 md:-mt-24 relative z-10 flex flex-col">
           
           {/* Search Bar */}
           <div className="w-full mb-12">
