@@ -25,7 +25,7 @@ export default function SitePageHero({
 
   return (
     <div
-      className={`relative flex items-center overflow-hidden ${minHeightClass}`}
+      className={`relative flex items-center ${minHeightClass}`}
     >
       <PageGridBackground />
 
@@ -51,7 +51,7 @@ export default function SitePageHero({
           <div
             className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-[#FF0B55]/30 backdrop-blur-sm mb-6 shadow-lg shadow-[#FF0B55]/10 ${align === "left" ? "" : "mx-auto"}`}
           >
-            <span className="w-2 h-2 bg-[#FF0B55] rounded-full animate-ping" />
+            <span className="w-2 h-2 bg-[#FF0B55] rounded-full animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite]" />
             <span className="w-2 h-2 bg-[#FF0B55] rounded-full absolute" />
             <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 tracking-wide">{badge}</span>
           </div>

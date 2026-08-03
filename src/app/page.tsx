@@ -290,14 +290,14 @@ export default function Home() {
                 {repositories.map((repo, index) => (
                   <div
                     key={repo.id}
-                    className="group relative rounded-2xl border border-gray-200 dark:border-white/10 bg-gradient-to-br from-gray-50 dark:from-white/5 to-transparent p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 hover:shadow-lg hover:shadow-[#FF0B55]/10 transition-all duration-300"
+                    className="group relative flex flex-col rounded-2xl border border-gray-200 dark:border-white/10 bg-gradient-to-br from-gray-50 dark:from-white/5 to-transparent p-6 backdrop-blur-sm hover:border-[#FF0B55]/50 hover:shadow-lg hover:shadow-[#FF0B55]/10 transition-all duration-300"
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
                     {/* Hover gradient */}
                     <div className="absolute inset-0 bg-gradient-to-br from-[#FF0B55]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
 
                     {/* Card Content */}
-                    <div className="relative z-10">
+                    <div className="relative z-10 flex-1 flex flex-col">
                       <RepositoryCard repository={repo} />
                     </div>
                   </div>
