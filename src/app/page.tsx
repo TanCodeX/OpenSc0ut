@@ -49,7 +49,7 @@ export default function Home() {
           className="relative min-h-screen flex justify-center items-center overflow-hidden"
         >
           {/* Animated Grid Background */}
-          <div className="absolute inset-0 z-0 overflow-hidden">
+          <div className="absolute inset-0 z-0 overflow-hidden hidden md:block">
             <RippleGrid
               enableRainbow={false}
               gridColor="#ff0b55"
