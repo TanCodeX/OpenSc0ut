@@ -19,9 +19,9 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
 
   return (
     <div className="bg-white/80 dark:bg-[hsla(0,1.30%,15.50%,0.44)] backdrop-blur-md rounded-lg border-[0.5px] border-gray-200 dark:border-[hsla(0,1.10%,36.10%,0.44)] overflow-hidden hover:border-gray-400 dark:hover:border-gray-500 transition-all duration-300 flex flex-col h-full">
-      <div className="p-5 flex-1">
+      <div className="p-5 flex-1 flex flex-col min-h-0">
         <div className="flex items-center mb-4">
-          <div className="w-10 h-10 relative mr-3">
+          <div className="w-10 h-10 relative mr-3 shrink-0">
             <Image
               src={repository.owner.avatar_url}
               alt={`${repository.owner.login}'s avatar`}
@@ -30,20 +30,20 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
               unoptimized
             />
           </div>
-          <div>
+          <div className="min-w-0">
             <a
               href={repository.owner.html_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#FF0B55]"
+              className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#FF0B55] truncate block"
             >
               {repository.owner.login}
             </a>
           </div>
         </div>
 
-        <div className="flex flex-col flex-1">
-          <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white hover:text-[#FF0B55]">
+        <div className="flex flex-col flex-1 min-h-0">
+          <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white hover:text-[#FF0B55] line-clamp-1">
             <a
               href={repository.html_url}
               target="_blank"
@@ -77,51 +77,60 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
               ))}
           </div>
 
-          <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 w-full mt-auto">
-            <div className="flex space-x-4">
-              <span className="flex items-center">
+          <div className="w-full mt-auto pt-3 flex flex-col gap-3 text-sm text-gray-600 dark:text-gray-400">
+            <div className="flex items-center justify-between gap-4 w-full">
+              <span
+                className="flex items-center gap-1 whitespace-nowrap"
+                title="Stars"
+              >
                 <svg
-                  className="w-4 h-4 mr-1"
+                  className="w-4 h-4 shrink-0"
                   fill="currentColor"
                   viewBox="0 0 20 20"
+                  aria-hidden="true"
                 >
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
-                {repository.stargazers_count.toLocaleString()}
+                <span className="tabular-nums">
+                  {repository.stargazers_count.toLocaleString()}
+                </span>
               </span>
-              <span className="flex items-center">
+              <span
+                className="flex items-center gap-1 whitespace-nowrap"
+                title="Forks"
+              >
                 <svg
-                  className="w-4 h-4 mr-1"
+                  className="w-4 h-4 shrink-0"
                   fill="currentColor"
-                  viewBox="0 0 20 20"
+                  viewBox="0 0 16 16"
+                  aria-hidden="true"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
+                  <path d="M5 5.372v.878c0 .192.168.1.5.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-10.20.0.5 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z" />
                 </svg>
-                {repository.forks_count.toLocaleString()}
+                <span className="tabular-nums">
+                  {repository.forks_count.toLocaleString()}
+                </span>
               </span>
-              {repository.open_issues_count > 0 && (
-                <span className="flex items-center">
-                  <svg
-                    className="w-4 h-4 mr-1"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+              <span
+                className="flex items-center gap-1 whitespace-nowrap"
+                title="Open issues"
+              >
+                <svg
+                  className="w-4 h-4 shrink-0"
+                  fill="currentColor"
+                  viewBox="0 0 16 16"
+                  aria-hidden="true"
+                >
+                  <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
+                  <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z" />
+                </svg>
+                <span className="tabular-nums">
                   {repository.open_issues_count.toLocaleString()}
                 </span>
-              )}
+              </span>
             </div>
-            <div>
-              <span className="text-xs">
+            <div className="w-full text-right">
+              <span className="text-xs text-gray-500 whitespace-nowrap">
                 Updated {formatDate(repository.updated_at)}
               </span>
             </div>

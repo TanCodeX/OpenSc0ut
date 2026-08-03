@@ -7,22 +7,51 @@ const GITHUB_API_URL = "https://api.github.com";
   // Although, if sort === 'popularity' we could sort it here, but github doesn't support 'popularity' natively.
   // Let's remove the hardcoded popularity sort so github's sorting works.
 
-const formatResponse = (data: any) => {
-  const formattedItems = data.items.map((item: any) => ({
-    id: item.id,
-    name: item.name,
-    full_name: item.full_name,
-    html_url: item.html_url,
-    description: item.description,
-    owner: item.owner,
-    stargazers_count: item.stargazers_count,
-    forks_count: item.forks_count,
-    open_issues_count: item.open_issues_count,
-    language: item.language,
-    topics: item.topics || [],
-    updated_at: item.updated_at,
-    created_at: item.created_at,
-    has_issues: item.has_issues,
+const getOpenPRCount = async (owner: string, repo: string, headers: Record<string, string>): Promise<number> => {
+  const url = `${GITHUB_API_URL}/repos/${owner}/${repo}/pulls?state=open&per_page=1`;
+  try {
+    const res = await fetch(url, { headers, next: { revalidate: 3600 } });
+    if (!res.ok) return 0;
+    
+    const linkHeader = res.headers.get('link');
+    if (!linkHeader) {
+      const data = await res.json();
+      return Array.isArray(data) ? data.length : 0;
+    }
+    
+    const match = linkHeader.match(/&page=(\d+)>; rel="last"/);
+    if (match && match[1]) {
+      return parseInt(match[1], 10);
+    }
+    return 0;
+  } catch (e) {
+    return 0;
+  }
+};
+
+const formatResponse = async (data: any, headers: Record<string, string>) => {
+  const formattedItems = await Promise.all(data.items.map(async (item: any) => {
+    // GitHub's open_issues_count includes both issues and PRs.
+    // Fetch the PR count to calculate true open issues.
+    const prCount = await getOpenPRCount(item.owner.login, item.name, headers);
+    const trueOpenIssuesCount = Math.max(0, item.open_issues_count - prCount);
+
+    return {
+      id: item.id,
+      name: item.name,
+      full_name: item.full_name,
+      html_url: item.html_url,
+      description: item.description,
+      owner: item.owner,
+      stargazers_count: item.stargazers_count,
+      forks_count: item.forks_count,
+      open_issues_count: trueOpenIssuesCount,
+      language: item.language,
+      topics: item.topics || [],
+      updated_at: item.updated_at,
+      created_at: item.created_at,
+      has_issues: item.has_issues,
+    };
   }));
 
   return NextResponse.json({
@@ -126,7 +155,7 @@ export async function GET(request: NextRequest) {
       }
 
       const data = await response.json();
-      return formatResponse(data);
+      return await formatResponse(data, headers);
     } catch (apiError: any) {
       console.error("API error:", apiError);
       return NextResponse.json(
