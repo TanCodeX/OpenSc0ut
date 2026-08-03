@@ -19,7 +19,7 @@
 
 <br />
 
-[![License](https://img.shields.io/github/license/TanCodeX/OpenSc0ut?style=flat-square&color=FF0B55)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-FF0B55?style=flat-square)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 [![Code of Conduct](https://img.shields.io/badge/Contributor_Covenant-2.1-4baaaa.svg?style=flat-square)](CODE_OF_CONDUCT.md)
 
