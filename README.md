@@ -69,7 +69,7 @@ Find repositories by name, topic, or keyword in real-time with a powerful search
 <summary><b>🤖 Repo Scout — AI-Powered Analysis</b></summary>
 <br />
 
-Analyze any GitHub repository's **contribution readiness** in seconds using Google Gemini AI.
+Analyze any GitHub repository's **contribution readiness** in seconds using Groq AI.
 
 - Instant letter grade (A → F) with an overall score out of 100.
 - AI-synthesized narrative on the project's health and community.
@@ -103,7 +103,7 @@ Analyze any GitHub repository's **contribution readiness** in seconds using Goog
 | **Language** | [TypeScript](https://www.typescriptlang.org/) |
 | **Styling** | [Tailwind CSS](https://tailwindcss.com/) |
 | **Animations** | [Framer Motion](https://www.framer.com/motion/) |
-| **AI** | [Google Gemini API](https://deepmind.google/technologies/gemini/) |
+| **AI** | [Groq API (Llama 3)](https://groq.com/) |
 | **Data** | [GitHub REST API](https://docs.github.com/en/rest) |
 | **Email** | Nodemailer (via Gmail SMTP) |
 | **Deployment** | [Vercel](https://vercel.com/) *(Recommended)* |
@@ -140,10 +140,10 @@ npm install
 Create a `.env.local` file in the root directory:
 ```env
 # GitHub — prevents rate limiting (5,000 req/hr vs 60/hr unauthenticated)
-NEXT_PUBLIC_GITHUB_TOKEN=your_github_personal_access_token
+GITHUB_TOKEN=your_github_personal_access_token
 
-# Gemini AI — powers the Repo Scout feature
-GEMINI_API_KEY=your_gemini_api_key
+# Groq AI — powers the Repo Scout and Advisor features
+GROQ_API_KEY=your_groq_api_key
 
 # Nodemailer — powers the contact form
 EMAIL_USER=your_email@gmail.com
@@ -173,7 +173,7 @@ Navigate to [http://localhost:3000](http://localhost:3000) and start exploring! 
 | Unauthenticated | 60 requests / hour |
 | Authenticated (with token) | **5,000 requests / hour** |
 
-Setting `NEXT_PUBLIC_GITHUB_TOKEN` is **strongly recommended** for a smooth experience.
+Setting `GITHUB_TOKEN` is **strongly recommended** for a smooth experience.
 
 <br />
 
