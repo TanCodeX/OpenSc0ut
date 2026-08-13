@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 import { SearchParams } from "../../types/types";
 
 interface SearchFilterProps {
@@ -35,7 +35,15 @@ export default function SearchFilter({
   const [perPage, setPerPage] = useState<number>(initialParams.per_page || 12);
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  useEffect(() => {
+    return () => {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+      }
+    };
+  }, []);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearch({
@@ -158,14 +166,21 @@ export default function SearchFilter({
                   onChange={(e) => {
                     const newValue = e.target.value;
                     setLanguageInput(newValue);
-                    onSearch({
-                      sort,
-                      order,
-                      page: 1,
-                      ...(newValue.trim() && { language: newValue.trim() }),
-                      ...(showYearFilter && { year }),
-                      per_page: perPage,
-                    });
+                    
+                    if (searchTimeoutRef.current) {
+                      clearTimeout(searchTimeoutRef.current);
+                    }
+                    
+                    searchTimeoutRef.current = setTimeout(() => {
+                      onSearch({
+                        sort,
+                        order,
+                        page: 1,
+                        ...(newValue.trim() && { language: newValue.trim() }),
+                        ...(showYearFilter && { year }),
+                        per_page: perPage,
+                      });
+                    }, 500);
                   }}
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
