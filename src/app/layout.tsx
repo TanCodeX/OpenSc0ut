@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { PageTransition, Header, SiteFooter, SmoothScroll } from "@/components";
 import { Toaster } from "react-hot-toast";
+import { Analytics } from "@vercel/analytics/next";
 import "../styles/globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -74,6 +75,7 @@ export default function RootLayout({
           <PageTransition>{children}</PageTransition>
           <SiteFooter />
         </SmoothScroll>
+        <Analytics />
       </body>
     </html>
   );
